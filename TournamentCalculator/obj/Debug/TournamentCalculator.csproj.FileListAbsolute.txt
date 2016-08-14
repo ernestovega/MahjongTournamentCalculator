@@ -1,0 +1,12 @@
+c:\users\eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\TournamentCalculator.exe.config
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\TournamentCalculator.exe
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\TournamentCalculator.pdb
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.csprojResolveAssemblyReference.cache
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.MainForm.resources
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.Properties.Resources.resources
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.csproj.GenerateResource.Cache
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.exe
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.pdb
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\FastMember.dll
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\FastMember.pdb
+C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\FastMember.xml
