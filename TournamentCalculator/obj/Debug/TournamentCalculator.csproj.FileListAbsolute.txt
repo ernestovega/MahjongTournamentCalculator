@@ -10,3 +10,6 @@ C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\Tourname
 C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\FastMember.dll
 C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\FastMember.pdb
 C:\Users\Eto\documents\visual studio 2015\Projects\TournamentCalculator\TournamentCalculator\bin\Debug\FastMember.xml
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\TournamentCalculator.exe.config
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.exe
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.pdb

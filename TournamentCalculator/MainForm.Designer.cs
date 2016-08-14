@@ -123,12 +123,17 @@
             // 
             // dataGridView
             // 
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.AllowUserToOrderColumns = true;
             this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(300, 23);
             this.dataGridView.Name = "dataGridView";
+            this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView.Size = new System.Drawing.Size(506, 384);
             this.dataGridView.TabIndex = 10;
@@ -150,11 +155,10 @@
             this.numUpDownRounds.Size = new System.Drawing.Size(50, 20);
             this.numUpDownRounds.TabIndex = 11;
             this.numUpDownRounds.Value = new decimal(new int[] {
-            1,
+            6,
             0,
             0,
             0});
-            this.numUpDownRounds.ValueChanged += new System.EventHandler(this.numUpDownRounds_ValueChanged);
             // 
             // lblStep4
             // 
