@@ -41,6 +41,7 @@
             this.numUpDownRounds = new System.Windows.Forms.NumericUpDown();
             this.lblStep4 = new System.Windows.Forms.Label();
             this.btnExportar = new System.Windows.Forms.Button();
+            this.btnFindDuplicates = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             this.SuspendLayout();
@@ -181,12 +182,24 @@
             this.btnExportar.UseVisualStyleBackColor = true;
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             // 
+            // btnFindDuplicates
+            // 
+            this.btnFindDuplicates.Enabled = false;
+            this.btnFindDuplicates.Location = new System.Drawing.Point(89, 297);
+            this.btnFindDuplicates.Name = "btnFindDuplicates";
+            this.btnFindDuplicates.Size = new System.Drawing.Size(157, 23);
+            this.btnFindDuplicates.TabIndex = 14;
+            this.btnFindDuplicates.Text = "Find duplicates";
+            this.btnFindDuplicates.UseVisualStyleBackColor = true;
+            this.btnFindDuplicates.Click += new System.EventHandler(this.btnFindDuplicates_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(835, 435);
+            this.Controls.Add(this.btnFindDuplicates);
             this.Controls.Add(this.lblStep4);
             this.Controls.Add(this.btnExportar);
             this.Controls.Add(this.numUpDownRounds);
@@ -227,6 +240,7 @@
         private System.Windows.Forms.NumericUpDown numUpDownRounds;
         private System.Windows.Forms.Label lblStep4;
         private System.Windows.Forms.Button btnExportar;
+        private System.Windows.Forms.Button btnFindDuplicates;
     }
 }
 

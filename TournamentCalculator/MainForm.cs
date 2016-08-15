@@ -24,7 +24,6 @@ namespace TournamentCalculator
         private int currentRound;
         private int currentTable;
         private Random random = new Random();
-        private int triesCounter1;
         private int triesCounter2;
         private int triesCounter3;
         private int triesCounter4;
@@ -59,6 +58,7 @@ namespace TournamentCalculator
             lblTables.Text = string.Empty;
             btnImportExcel.Enabled = false;
             btnCalculate.Enabled = false;
+            btnFindDuplicates.Enabled = false;
             btnExportar.Enabled = false;
             string path = string.Empty;
 
@@ -101,6 +101,57 @@ namespace TournamentCalculator
             numUpDownRounds.Enabled = true;
             btnCalculate.Enabled = true;
             btnExportar.Enabled = true;
+            btnFindDuplicates.Enabled = true;
+        }
+
+        private void btnFindDuplicates_Click(object sender, EventArgs e)
+        {
+            List<string> duplicados = new List<string>();
+            int numTablesPerRound = players.Count / 4;
+            int numRounds = tables.Count / numTablesPerRound;
+            for (int i = 1; i <= numRounds; i++)
+            {
+                string dups = "";
+                List<int> readedPlayersInThisRound = new List<int>();
+                List<Table> roundTables = tables.FindAll(x => x.roundId == i);
+
+                foreach (Table table in roundTables)
+                {
+                    if (readedPlayersInThisRound.Contains(table.player1Id))
+                        dups += players.Find(x => x.id == table.player1Id).name + ", ";
+                    else
+                        readedPlayersInThisRound.Add(table.player1Id);
+
+                    if (readedPlayersInThisRound.Contains(table.player2Id))
+                        dups += players.Find(x => x.id == table.player2Id).name + ", ";
+                    else
+                        readedPlayersInThisRound.Add(table.player2Id);
+
+                    if (readedPlayersInThisRound.Contains(table.player3Id))
+                        dups += players.Find(x => x.id == table.player3Id).name + ", ";
+                    else
+                        readedPlayersInThisRound.Add(table.player3Id);
+
+                    if (readedPlayersInThisRound.Contains(table.player4Id))
+                        dups += players.Find(x => x.id == table.player4Id).name + ", ";
+                    else
+                        readedPlayersInThisRound.Add(table.player4Id);
+                }
+                duplicados.Add(dups);
+            }
+            string message = "";
+            for(int i = 1; i <= duplicados.Count; i++)
+            {
+                message += "Round " + i + ": ";
+
+                if (string.IsNullOrEmpty(duplicados[i - 1]))
+                    message += "0";
+                else
+                    message += duplicados[i - 1];
+
+                message += "\n";
+            }
+            MessageBox.Show(message);
         }
 
         private void btnExportar_Click(object sender, EventArgs e)
@@ -108,67 +159,6 @@ namespace TournamentCalculator
             updateTablesWithAll();
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
             ExportToExcel();
-        }
-
-        #endregion
-
-        #region Table methods
-
-        private void generateTournament(int numRounds)
-        {
-            try
-            {
-                for (currentRound = 1; currentRound <= numRounds; currentRound++)
-                {
-                    playersNoUsadosEstaRonda = players.Select(x => x.Clone()).ToList();
-                    for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
-                    {
-                        int p1 = 0, p2 = 0, p3 = 0, p4 = 0;
-                        p1 = getRandomPlayer();
-                        p2 = getRandomPlayer(p1);
-                        p3 = getRandomPlayer(p1, p2);
-                        p4 = getRandomPlayer(p1, p2, p3);
-                        tables.Add(new Table(currentRound, currentTable, p1, p2, p3, p4));
-                    }
-                }
-            }
-            catch(Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-        }
-
-        private void updateTablesWithNamesOnly()
-        {
-            tablesWithNamesOnly = new List<TableWithNamesOnly>();
-            foreach (Table t in tables)
-            {
-                tablesWithNamesOnly.Add(new TableWithNamesOnly(
-                    t.roundId,
-                    t.tableId,
-                    getPlayerById(t.player1Id).name,
-                    getPlayerById(t.player2Id).name,
-                    getPlayerById(t.player3Id).name,
-                    getPlayerById(t.player4Id).name));
-            }
-        }
-
-        private void updateTablesWithAll()
-        {
-            tablesWithAll = new List<TableWithAll>();
-            foreach (Table t in tables)
-            {
-                Player p1 = getPlayerById(t.player1Id);
-                Player p2 = getPlayerById(t.player2Id);
-                Player p3 = getPlayerById(t.player3Id);
-                Player p4 = getPlayerById(t.player4Id);
-                tablesWithAll.Add(new TableWithAll(
-                    t.roundId, t.tableId,
-                    p1.id, p2.id, p3.id, p4.id,
-                    p1.name, p2.name, p3.name, p4.name,
-                    p1.country, p2.country, p3.country, p4.country,
-                    p1.team, p2.team, p3.team, p4.team));
-            }
         }
 
         #endregion
@@ -285,11 +275,10 @@ namespace TournamentCalculator
         private List<Player> getPlayersNoUsadosYQueNoHanJugadoYaConEste(int pId)
         {
             List<Player> playersNoUsadosYQueNoHanJugadoYaConEstos = playersNoUsadosEstaRonda.Select(x => x.Clone()).ToList();
-            List<Table> mesasDondeJugo = (from t in tables
-                                         where t.roundId < currentRound
-                                         where pId == t.player1Id || pId == t.player2Id || pId == t.player3Id || pId == t.player4Id
-                                         select t).ToList();
+            List<Table> mesasDondeJugo = tables.FindAll(x => x.roundId < currentRound  && (
+                pId == x.player1Id || pId == x.player2Id || pId == x.player3Id || pId == x.player4Id));
             List<int> pIdsConQuienJugo = new List<int>();
+
             foreach(Table mesa in mesasDondeJugo)
             {
                 if (mesa.player1Id == pId)
@@ -328,6 +317,67 @@ namespace TournamentCalculator
             }
 
             return playersNoUsadosYQueNoHanJugadoYaConEstos;
+        }
+
+        #endregion
+
+        #region Table methods
+
+        private void generateTournament(int numRounds)
+        {
+            try
+            {
+                for (currentRound = 1; currentRound <= numRounds; currentRound++)
+                {
+                    playersNoUsadosEstaRonda = players.Select(x => x.Clone()).ToList();
+                    for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
+                    {
+                        int p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+                        p1 = getRandomPlayer();
+                        p2 = getRandomPlayer(p1);
+                        p3 = getRandomPlayer(p1, p2);
+                        p4 = getRandomPlayer(p1, p2, p3);
+                        tables.Add(new Table(currentRound, currentTable, p1, p2, p3, p4));
+                    }
+                }
+            }
+            catch(Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void updateTablesWithNamesOnly()
+        {
+            tablesWithNamesOnly = new List<TableWithNamesOnly>();
+            foreach (Table t in tables)
+            {
+                tablesWithNamesOnly.Add(new TableWithNamesOnly(
+                    t.roundId,
+                    t.tableId,
+                    getPlayerById(t.player1Id).name,
+                    getPlayerById(t.player2Id).name,
+                    getPlayerById(t.player3Id).name,
+                    getPlayerById(t.player4Id).name));
+            }
+        }
+
+        private void updateTablesWithAll()
+        {
+            tablesWithAll = new List<TableWithAll>();
+            foreach (Table t in tables)
+            {
+                Player p1 = getPlayerById(t.player1Id);
+                Player p2 = getPlayerById(t.player2Id);
+                Player p3 = getPlayerById(t.player3Id);
+                Player p4 = getPlayerById(t.player4Id);
+                tablesWithAll.Add(new TableWithAll(
+                    t.roundId, t.tableId,
+                    p1.id, p2.id, p3.id, p4.id,
+                    p1.name, p2.name, p3.name, p4.name,
+                    p1.country, p2.country, p3.country, p4.country,
+                    p1.team, p2.team, p3.team, p4.team));
+            }
         }
 
         #endregion
@@ -404,23 +454,49 @@ namespace TournamentCalculator
             excelSheet.Name = "WorkSheet";
 
             //Write sheet
-            excelSheet.Cells[1, 1] = "Sample test data";
-            excelSheet.Cells[1, 2] = "Date : " + DateTime.Now.ToShortDateString();
 
+            excelSheet.Cells[1, 1] = "Round";
+            excelSheet.Cells[1, 2] = "Table";
+            excelSheet.Cells[1, 3] = "Player1 id";
+            excelSheet.Cells[1, 4] = "Player2 id";
+            excelSheet.Cells[1, 5] = "Player3 id";
+            excelSheet.Cells[1, 6] = "Player4 id";
+            excelSheet.Cells[1, 7] = "Player1 name";
+            excelSheet.Cells[1, 8] = "Player2 name";
+            excelSheet.Cells[1, 9] = "Player3 name";
+            excelSheet.Cells[1, 10] = "Player4 name";
+            excelSheet.Cells[1, 11] = "Player1 team";
+            excelSheet.Cells[1, 12] = "Player2 team";
+            excelSheet.Cells[1, 13] = "Player3 team";
+            excelSheet.Cells[1, 14] = "Player4 team";
+            excelSheet.Cells[1, 15] = "Player1 country";
+            excelSheet.Cells[1, 16] = "Player2 country";
+            excelSheet.Cells[1, 17] = "Player3 country";
+            excelSheet.Cells[1, 18] = "Player4 country";
+            for (int i = 1; i <= tablesWithAll.Count; i++)
+            {
+                excelSheet.Cells[i + 1, 1 ] = tablesWithAll[i - 1].roundId;
+                excelSheet.Cells[i + 1, 2 ] = tablesWithAll[i - 1].tableId;
+                excelSheet.Cells[i + 1, 3 ] = tablesWithAll[i - 1].player1Id;
+                excelSheet.Cells[i + 1, 4 ] = tablesWithAll[i - 1].player2Id;
+                excelSheet.Cells[i + 1, 5 ] = tablesWithAll[i - 1].player3Id;
+                excelSheet.Cells[i + 1, 6 ] = tablesWithAll[i - 1].player4Id;
+                excelSheet.Cells[i + 1, 7 ] = tablesWithAll[i - 1].player1Name;
+                excelSheet.Cells[i + 1, 8 ] = tablesWithAll[i - 1].player2Name;
+                excelSheet.Cells[i + 1, 9 ] = tablesWithAll[i - 1].player3Name;
+                excelSheet.Cells[i + 1, 10] = tablesWithAll[i - 1].player4Name;
+                excelSheet.Cells[i + 1, 11] = tablesWithAll[i - 1].player1Team;
+                excelSheet.Cells[i + 1, 12] = tablesWithAll[i - 1].player2Team;
+                excelSheet.Cells[i + 1, 13] = tablesWithAll[i - 1].player3Team;
+                excelSheet.Cells[i + 1, 14] = tablesWithAll[i - 1].player4Team;
+                excelSheet.Cells[i + 1, 15] = tablesWithAll[i - 1].player1Country;
+                excelSheet.Cells[i + 1, 16] = tablesWithAll[i - 1].player2Country;
+                excelSheet.Cells[i + 1, 17] = tablesWithAll[i - 1].player3Country;
+                excelSheet.Cells[i + 1, 18] = tablesWithAll[i - 1].player4Country;
+            }
 
-            //// now we resize the columns
-            //excelCellrange = excelSheet.Range[excelSheet.Cells[1, 1], excelSheet.Cells[tablesWithAll.Count, dataTable.Columns.Count]];
-            //excelCellrange.EntireColumn.AutoFit();
-
-            //NsExcel.Borders border = excelCellrange.Borders;
-            //border.LineStyle = NsExcel.XlLineStyle.xlContinuous;
-            //border.Weight = 2d;
-
-            ////Cabecera
-            //FormattingExcelCells(excelSheet.Range["A1"].EntireRow, "#20AA20", Color.PaleVioletRed, true);
-
-            ////Resto
-            //FormattingExcelCells(excelSheet.Range[excelSheet.Cells[2, 1], excelSheet.Cells[tablesWithAll.Count, dataTable.Columns.Count]], "#20AA20", Color.PaleVioletRed, true);
+            // now we resize the columns
+            excelSheet.UsedRange.EntireColumn.AutoFit();
         }
 
         private DataTable ConvertToDataTable<T>(IList<T> data)
