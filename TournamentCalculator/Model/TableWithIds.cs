@@ -19,5 +19,10 @@
             this.player3Id = player3Id;
             this.player4Id = player4Id;
         }
+
+        public Table()
+        {
+
+        }
     }
 }

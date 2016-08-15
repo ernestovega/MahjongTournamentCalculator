@@ -72,6 +72,44 @@ namespace TournamentCalculator.Utils
             }
         }
 
+        public static void updateDataGridView(DataGridView datagrid, List<TableWithTeamsOnly> list)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                using (var reader = ObjectReader.Create(list))
+                {
+                    dataTable.Load(reader);
+                    datagrid.DataSource = dataTable;
+                    datagrid.Columns["RoundId"].DisplayIndex = 0;
+                    datagrid.Columns["TableId"].DisplayIndex = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static void updateDataGridView(DataGridView datagrid, List<TableWithCountriesOnly> list)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                using (var reader = ObjectReader.Create(list))
+                {
+                    dataTable.Load(reader);
+                    datagrid.DataSource = dataTable;
+                    datagrid.Columns["RoundId"].DisplayIndex = 0;
+                    datagrid.Columns["TableId"].DisplayIndex = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         public static void updateDataGridView(DataGridView datagrid, List<TableWithAll> list)
         {
             DataTable dataTable = new DataTable();

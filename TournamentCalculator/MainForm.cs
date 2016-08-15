@@ -27,6 +27,8 @@ namespace TournamentCalculator
         private int triesCounter2;
         private int triesCounter3;
         private int triesCounter4;
+        private List<TableWithTeamsOnly> tablesWithTeamsOnly;
+        private List<TableWithCountriesOnly> tablesWithCountriesOnly;
 
         #endregion
 
@@ -52,14 +54,20 @@ namespace TournamentCalculator
 
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
-            players.Clear();
-            playersNoUsadosEstaRonda.Clear();
-            lblPlayers.Text = string.Empty;
-            lblTables.Text = string.Empty;
+            Cursor.Current = Cursors.WaitCursor;
             btnImportExcel.Enabled = false;
             btnCalculate.Enabled = false;
             btnFindDuplicates.Enabled = false;
             btnExportar.Enabled = false;
+            btnShowNames.Enabled = false;
+            btnShowTeams.Enabled = false;
+            btnShowCountries.Enabled = false;
+            btnShowAll.Enabled = false;
+
+            players.Clear();
+            playersNoUsadosEstaRonda.Clear();
+            lblPlayers.Text = string.Empty;
+            lblTables.Text = string.Empty;
             string path = string.Empty;
 
             if (RequestFile(ref path))
@@ -78,34 +86,52 @@ namespace TournamentCalculator
                 btnCalculate.Enabled = true;
                 numUpDownRounds.Enabled = true;
             }
+
             btnImportExcel.Enabled = true;
+            Cursor.Current = Cursors.Default;
         }
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
+            numUpDownRounds.Enabled = false;
+            btnCalculate.Enabled = false;
+            btnFindDuplicates.Enabled = false;
+            btnPlayerRivals.Enabled = false;
+            btnExportar.Enabled = false;
+
             tables.Clear();
             tablesWithNamesOnly.Clear();
             tablesWithAll.Clear();
-
-            numUpDownRounds.Enabled = false;
-            btnCalculate.Enabled = false;
-            btnExportar.Enabled = false;
 
             var numRounds = decimal.ToInt32(numUpDownRounds.Value);
 
             generateTournament(numRounds);
 
+            updateTablesWithAll();
             updateTablesWithNamesOnly();
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNamesOnly);
+            updateTablesWithTeamsOnly();
+            updateTablesWithCountriesOnly();
 
             numUpDownRounds.Enabled = true;
             btnCalculate.Enabled = true;
             btnExportar.Enabled = true;
+            btnPlayerRivals.Enabled = true;
             btnFindDuplicates.Enabled = true;
+            btnShowNames.Enabled = true;
+            btnShowTeams.Enabled = true;
+            btnShowCountries.Enabled = true;
+            btnShowAll.Enabled = true;
+
+            btnShowNames.PerformClick();
+            Cursor.Current = Cursors.Default;
         }
 
         private void btnFindDuplicates_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
+            btnFindDuplicates.Enabled = false;
+
             List<string> duplicados = new List<string>();
             int numTablesPerRound = players.Count / 4;
             int numRounds = tables.Count / numTablesPerRound;
@@ -152,13 +178,91 @@ namespace TournamentCalculator
                 message += "\n";
             }
             MessageBox.Show(message);
+
+            btnFindDuplicates.Enabled = true;
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void btnPlayerRivals_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            btnPlayerRivals.Enabled = false;
+
+            var listRivals = new List<TableWithNamesOnly>();
+            foreach (var p in players)
+            {
+                var lista = tablesWithNamesOnly.FindAll(x => p.name == x.player1Name ||
+                p.name == x.player2Name || p.name == x.player3Name || p.name == x.player4Name);                
+                listRivals.AddRange(lista);
+            }
+            DataGridViewUtils.updateDataGridView(dataGridView, listRivals);
+
+            btnPlayerRivals.Enabled = true;
+            Cursor.Current = Cursors.Default;
         }
 
         private void btnExportar_Click(object sender, EventArgs e)
         {
-            updateTablesWithAll();
+            Cursor.Current = Cursors.WaitCursor;
+            btnFindDuplicates.Enabled = false;
+
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
             ExportToExcel();
+
+            btnFindDuplicates.Enabled = true;
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void btnShowNames_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            btnShowNames.Enabled = false;
+
+
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNamesOnly);
+
+            btnShowTeams.Enabled = true;
+            btnShowCountries.Enabled = true;
+            btnShowAll.Enabled = true;
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void btnShowTeams_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            btnShowTeams.Enabled = false;
+
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithTeamsOnly);
+
+            btnShowNames.Enabled = true;
+            btnShowCountries.Enabled = true;
+            btnShowAll.Enabled = true;
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void btnShowCountries_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            btnShowCountries.Enabled = false;
+
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithCountriesOnly);
+
+            btnShowNames.Enabled = true;
+            btnShowTeams.Enabled = true;
+            btnShowAll.Enabled = true;
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            btnShowAll.Enabled = false;
+
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
+
+            btnShowNames.Enabled = true;
+            btnShowTeams.Enabled = true;
+            btnShowCountries.Enabled = true;
         }
 
         #endregion
@@ -347,21 +451,6 @@ namespace TournamentCalculator
             }
         }
 
-        private void updateTablesWithNamesOnly()
-        {
-            tablesWithNamesOnly = new List<TableWithNamesOnly>();
-            foreach (Table t in tables)
-            {
-                tablesWithNamesOnly.Add(new TableWithNamesOnly(
-                    t.roundId,
-                    t.tableId,
-                    getPlayerById(t.player1Id).name,
-                    getPlayerById(t.player2Id).name,
-                    getPlayerById(t.player3Id).name,
-                    getPlayerById(t.player4Id).name));
-            }
-        }
-
         private void updateTablesWithAll()
         {
             tablesWithAll = new List<TableWithAll>();
@@ -377,6 +466,51 @@ namespace TournamentCalculator
                     p1.name, p2.name, p3.name, p4.name,
                     p1.country, p2.country, p3.country, p4.country,
                     p1.team, p2.team, p3.team, p4.team));
+            }
+        }
+
+        private void updateTablesWithNamesOnly()
+        {
+            tablesWithNamesOnly = new List<TableWithNamesOnly>();
+            foreach (Table t in tables)
+            {
+                tablesWithNamesOnly.Add(new TableWithNamesOnly(
+                    t.roundId,
+                    t.tableId,
+                    getPlayerById(t.player1Id).name,
+                    getPlayerById(t.player2Id).name,
+                    getPlayerById(t.player3Id).name,
+                    getPlayerById(t.player4Id).name));
+            }
+        }
+
+        private void updateTablesWithTeamsOnly()
+        {
+            tablesWithTeamsOnly = new List<TableWithTeamsOnly>();
+            foreach (Table t in tables)
+            {
+                tablesWithTeamsOnly.Add(new TableWithTeamsOnly(
+                    t.roundId,
+                    t.tableId,
+                    getPlayerById(t.player1Id).team,
+                    getPlayerById(t.player2Id).team,
+                    getPlayerById(t.player3Id).team,
+                    getPlayerById(t.player4Id).team));
+            }
+        }
+
+        private void updateTablesWithCountriesOnly()
+        {
+            tablesWithCountriesOnly = new List<TableWithCountriesOnly>();
+            foreach (Table t in tables)
+            {
+                tablesWithCountriesOnly.Add(new TableWithCountriesOnly(
+                    t.roundId,
+                    t.tableId,
+                    getPlayerById(t.player1Id).country,
+                    getPlayerById(t.player2Id).country,
+                    getPlayerById(t.player3Id).country,
+                    getPlayerById(t.player4Id).country));
             }
         }
 
@@ -436,8 +570,7 @@ namespace TournamentCalculator
             NsExcel.Application excel;
             NsExcel.Workbook excelworkBook;
             NsExcel.Worksheet excelSheet;
-            NsExcel.Range excelCellrange;
-            DataTable dataTable = ConvertToDataTable<TableWithAll>(tablesWithAll);
+            DataTable dataTable = ConvertToDataTable(tablesWithAll);
 
             //start excel
             excel = new NsExcel.Application();
