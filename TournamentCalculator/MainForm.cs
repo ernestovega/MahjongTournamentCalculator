@@ -29,6 +29,8 @@ namespace TournamentCalculator
         private int triesCounter4;
         private List<TableWithTeamsOnly> tablesWithTeamsOnly;
         private List<TableWithCountriesOnly> tablesWithCountriesOnly;
+        private string path;
+        private int countTries = 0;
 
         #endregion
 
@@ -55,9 +57,16 @@ namespace TournamentCalculator
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+            if (!RequestFile(ref path))
+            {
+                Cursor.Current = Cursors.Default;
+                return;
+            }
+
             btnImportExcel.Enabled = false;
             btnCalculate.Enabled = false;
             btnFindDuplicates.Enabled = false;
+            btnPlayerRivals.Enabled = false;
             btnExportar.Enabled = false;
             btnShowNames.Enabled = false;
             btnShowTeams.Enabled = false;
@@ -68,12 +77,9 @@ namespace TournamentCalculator
             playersNoUsadosEstaRonda.Clear();
             lblPlayers.Text = string.Empty;
             lblTables.Text = string.Empty;
-            string path = string.Empty;
+            countTries = 0;
 
-            if (RequestFile(ref path))
-                ImportExcel(path);
-            else
-                return;
+            ImportExcel(path);
 
             lblPlayers.Text = "Players: " + players.Count;
             if (players.Count % 4 != 0)
@@ -85,6 +91,7 @@ namespace TournamentCalculator
                 lblTables.Text = "Tables: " + players.Count / 4;
                 btnCalculate.Enabled = true;
                 numUpDownRounds.Enabled = true;
+                numUpDownTriesMax.Enabled = true;
             }
 
             btnImportExcel.Enabled = true;
@@ -95,18 +102,32 @@ namespace TournamentCalculator
         {
             Cursor.Current = Cursors.WaitCursor;
             numUpDownRounds.Enabled = false;
+            numUpDownTriesMax.Enabled = false;
             btnCalculate.Enabled = false;
             btnFindDuplicates.Enabled = false;
             btnPlayerRivals.Enabled = false;
             btnExportar.Enabled = false;
 
-            tables.Clear();
-            tablesWithNamesOnly.Clear();
-            tablesWithAll.Clear();
-
-            var numRounds = decimal.ToInt32(numUpDownRounds.Value);
-
-            generateTournament(numRounds);
+            countTries = 0;
+            int numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
+            int numRounds = decimal.ToInt32(numUpDownRounds.Value);
+            int result = -1;
+            while (result < 0 && countTries < numTriesMax)
+            {
+                countTries++;
+                result = generateTournament(numRounds);
+            }
+            if (countTries >= numTriesMax)
+            {
+                MessageBox.Show("Can't calculate tournament after " + numTriesMax + " tries.");
+                lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
+                numUpDownRounds.Enabled = true;
+                numUpDownTriesMax.Enabled = true;
+                btnCalculate.Enabled = true;
+                DataGridViewUtils.updateDataGridView(dataGridView, players);
+                return;
+            }
+            lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
 
             updateTablesWithAll();
             updateTablesWithNamesOnly();
@@ -269,18 +290,6 @@ namespace TournamentCalculator
 
         #region Player methods
 
-        private Player getPlayerById(int id)
-        {
-            foreach(Player p in players)
-            {
-                if(p.id == id)
-                {
-                    return p;
-                }
-            }
-            return null;
-        }
-
         private int getRandomPlayer()
         {
             int r = random.Next(playersNoUsadosEstaRonda.Count);
@@ -292,6 +301,10 @@ namespace TournamentCalculator
         private int getRandomPlayer(int p1)
         {
             List<Player> pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p1);
+            if (pNoUsadosYQueNoHanJugadoYaConEste.Count == 0)
+            {
+                return -1;
+            }
             int r = random.Next(pNoUsadosYQueNoHanJugadoYaConEste.Count);
             Player playerNoUsado = pNoUsadosYQueNoHanJugadoYaConEste[r];
             int counter = 0;
@@ -304,13 +317,7 @@ namespace TournamentCalculator
             }
             if(counter == playersNoUsadosEstaRonda.Count)
             {
-                triesCounter2++;
-                if(triesCounter2 == 20)
-                {
-                    MessageBox.Show("2. Tras 20 intentos de cálculo, ha sido imposible emparejar todos los jugadores.");
-                    return 0;
-                }
-                btnCalculate.PerformClick();
+                return -2;
             }
             playersNoUsadosEstaRonda.RemoveAt(r);
             return playerNoUsado.id;
@@ -320,6 +327,10 @@ namespace TournamentCalculator
         {
             List<Player> pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p1);
             pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p2);
+            if(pNoUsadosYQueNoHanJugadoYaConEste.Count == 0)
+            {
+                return -3;
+            }
             int r = random.Next(pNoUsadosYQueNoHanJugadoYaConEste.Count);
             Player playerNoUsado = pNoUsadosYQueNoHanJugadoYaConEste[r];
             int counter = 0;
@@ -333,13 +344,7 @@ namespace TournamentCalculator
             }
             if (counter == playersNoUsadosEstaRonda.Count)
             {
-                triesCounter3++;
-                if (triesCounter3 == 20)
-                {
-                    MessageBox.Show("3. Tras 20 intentos de cálculo, ha sido imposible emparejar todos los jugadores.");
-                    return 0;
-                }
-                btnCalculate.PerformClick();
+                return -4;
             }
             playersNoUsadosEstaRonda.RemoveAt(r);
             return playerNoUsado.id;
@@ -350,6 +355,10 @@ namespace TournamentCalculator
             List<Player> pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p1);
             pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p2);
             pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p3);
+            if (pNoUsadosYQueNoHanJugadoYaConEste.Count == 0)
+            {
+                return -5;
+            }
             int r = random.Next(pNoUsadosYQueNoHanJugadoYaConEste.Count);
             Player playerNoUsado = pNoUsadosYQueNoHanJugadoYaConEste[r];
             int counter = 0;
@@ -364,13 +373,7 @@ namespace TournamentCalculator
             }
             if (counter == playersNoUsadosEstaRonda.Count)
             {
-                triesCounter4++;
-                if (triesCounter4 == 20)
-                {
-                    MessageBox.Show("4. Tras 20 intentos de cálculo, ha sido imposible emparejar todos los jugadores.");
-                    return 0;
-                }
-                btnCalculate.PerformClick();
+                return -6;
             }
             playersNoUsadosEstaRonda.RemoveAt(r);
             return playerNoUsado.id;
@@ -413,8 +416,8 @@ namespace TournamentCalculator
 
             foreach(int id in pIdsConQuienJugo)
             {
-                Player pAux = getPlayerById(id);
-                if(pAux != null && playersNoUsadosYQueNoHanJugadoYaConEstos.Contains(pAux))
+                Player pAux = playersNoUsadosYQueNoHanJugadoYaConEstos.Find(x => x.id == id);
+                if (pAux != null)
                 {
                     playersNoUsadosYQueNoHanJugadoYaConEstos.Remove(pAux);
                 }                    
@@ -423,14 +426,29 @@ namespace TournamentCalculator
             return playersNoUsadosYQueNoHanJugadoYaConEstos;
         }
 
+        private Player getPlayerById(int id)
+        {
+            foreach(Player p in players)
+            {
+                if(p.id == id)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
         #endregion
 
         #region Table methods
 
-        private void generateTournament(int numRounds)
+        private int generateTournament(int numRounds)
         {
-            try
-            {
+            //try
+            //{
+                tables.Clear();
+                tablesWithNamesOnly.Clear();
+                tablesWithAll.Clear();
                 for (currentRound = 1; currentRound <= numRounds; currentRound++)
                 {
                     playersNoUsadosEstaRonda = players.Select(x => x.Clone()).ToList();
@@ -438,17 +456,35 @@ namespace TournamentCalculator
                     {
                         int p1 = 0, p2 = 0, p3 = 0, p4 = 0;
                         p1 = getRandomPlayer();
+                        if (p1 < 0)
+                        {
+                            return -1;
+                        }
                         p2 = getRandomPlayer(p1);
+                        if (p2 < 0)
+                        {
+                            return -2;
+                        }
                         p3 = getRandomPlayer(p1, p2);
+                        if (p3 < 0)
+                        {
+                            return -3;
+                        }
                         p4 = getRandomPlayer(p1, p2, p3);
+                        if(p4 < 0)
+                        {
+                            return -4;
+                        }
                         tables.Add(new Table(currentRound, currentTable, p1, p2, p3, p4));
                     }
                 }
-            }
-            catch(Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
+                return 0;
+            //}
+            //catch(Exception exc)
+            //{
+            //    MessageBox.Show(exc.Message);
+            //    return -1;
+            //}
         }
 
         private void updateTablesWithAll()
