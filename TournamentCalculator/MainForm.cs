@@ -135,6 +135,7 @@ namespace TournamentCalculator
             updateTablesWithCountriesOnly();
 
             numUpDownRounds.Enabled = true;
+            numUpDownTriesMax.Enabled = true;
             btnCalculate.Enabled = true;
             btnExportar.Enabled = true;
             btnPlayerRivals.Enabled = true;
@@ -444,8 +445,6 @@ namespace TournamentCalculator
 
         private int generateTournament(int numRounds)
         {
-            //try
-            //{
                 tables.Clear();
                 tablesWithNamesOnly.Clear();
                 tablesWithAll.Clear();
@@ -479,12 +478,6 @@ namespace TournamentCalculator
                     }
                 }
                 return 0;
-            //}
-            //catch(Exception exc)
-            //{
-            //    MessageBox.Show(exc.Message);
-            //    return -1;
-            //}
         }
 
         private void updateTablesWithAll()
