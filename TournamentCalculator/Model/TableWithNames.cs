@@ -1,17 +1,16 @@
 ﻿namespace TournamentCalculator
 {
-    public class TableWithNamesOnly
+    public class TableWithNames
     {
         public int roundId;
         public int tableId;
-        public string player1Name;
-        public string player2Name;
-        public string player3Name;
-        public string player4Name;
+        public int player1Name;
+        public int player2Name;
+        public int player3Name;
+        public int player4Name;
 
-        public TableWithNamesOnly(int roundId, int tableId,
-            string player1Name, string player2Name, string player3Name,
-            string player4Name)
+        public TableWithNames(int roundId, int tableId,
+            int player1Name, int player2Name, int player3Name, int player4Name)
         {
             this.roundId = roundId;
             this.tableId = tableId;
@@ -21,8 +20,9 @@
             this.player4Name = player4Name;
         }
 
-        public TableWithNamesOnly()
+        public TableWithNames()
         {
+
         }
     }
 }

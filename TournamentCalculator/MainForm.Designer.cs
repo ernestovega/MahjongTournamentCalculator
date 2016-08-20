@@ -41,9 +41,6 @@
             this.numUpDownRounds = new System.Windows.Forms.NumericUpDown();
             this.lblStep4 = new System.Windows.Forms.Label();
             this.btnExportar = new System.Windows.Forms.Button();
-            this.btnFindDuplicates = new System.Windows.Forms.Button();
-            this.btnPlayerRivals = new System.Windows.Forms.Button();
-            this.lblOptional = new System.Windows.Forms.Label();
             this.btnShowNames = new System.Windows.Forms.Button();
             this.btnShowTeams = new System.Windows.Forms.Button();
             this.btnShowCountries = new System.Windows.Forms.Button();
@@ -51,6 +48,7 @@
             this.lblTriesMax = new System.Windows.Forms.Label();
             this.lblTriesNeeded = new System.Windows.Forms.Label();
             this.numUpDownTriesMax = new System.Windows.Forms.NumericUpDown();
+            this.btnShowPlayers = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
@@ -144,25 +142,6 @@
             this.btnExportar.UseVisualStyleBackColor = true;
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             // 
-            // btnFindDuplicates
-            // 
-            resources.ApplyResources(this.btnFindDuplicates, "btnFindDuplicates");
-            this.btnFindDuplicates.Name = "btnFindDuplicates";
-            this.btnFindDuplicates.UseVisualStyleBackColor = true;
-            this.btnFindDuplicates.Click += new System.EventHandler(this.btnFindDuplicates_Click);
-            // 
-            // btnPlayerRivals
-            // 
-            resources.ApplyResources(this.btnPlayerRivals, "btnPlayerRivals");
-            this.btnPlayerRivals.Name = "btnPlayerRivals";
-            this.btnPlayerRivals.UseVisualStyleBackColor = true;
-            this.btnPlayerRivals.Click += new System.EventHandler(this.btnPlayerRivals_Click);
-            // 
-            // lblOptional
-            // 
-            resources.ApplyResources(this.lblOptional, "lblOptional");
-            this.lblOptional.Name = "lblOptional";
-            // 
             // btnShowNames
             // 
             resources.ApplyResources(this.btnShowNames, "btnShowNames");
@@ -191,10 +170,10 @@
             this.btnShowAll.UseVisualStyleBackColor = true;
             this.btnShowAll.Click += new System.EventHandler(this.btnShowAll_Click);
             // 
-            // lblMTriesMax
+            // lblTriesMax
             // 
-            resources.ApplyResources(this.lblTriesMax, "lblMTriesMax");
-            this.lblTriesMax.Name = "lblMTriesMax";
+            resources.ApplyResources(this.lblTriesMax, "lblTriesMax");
+            this.lblTriesMax.Name = "lblTriesMax";
             // 
             // lblTriesNeeded
             // 
@@ -221,10 +200,18 @@
             0,
             0});
             // 
+            // btnShowPlayers
+            // 
+            resources.ApplyResources(this.btnShowPlayers, "btnShowPlayers");
+            this.btnShowPlayers.Name = "btnShowPlayers";
+            this.btnShowPlayers.UseVisualStyleBackColor = true;
+            this.btnShowPlayers.Click += new System.EventHandler(this.btnShowPlayers_Click);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnShowPlayers);
             this.Controls.Add(this.numUpDownTriesMax);
             this.Controls.Add(this.lblTriesNeeded);
             this.Controls.Add(this.lblTriesMax);
@@ -232,9 +219,6 @@
             this.Controls.Add(this.btnShowCountries);
             this.Controls.Add(this.btnShowTeams);
             this.Controls.Add(this.btnShowNames);
-            this.Controls.Add(this.lblOptional);
-            this.Controls.Add(this.btnPlayerRivals);
-            this.Controls.Add(this.btnFindDuplicates);
             this.Controls.Add(this.lblStep4);
             this.Controls.Add(this.btnExportar);
             this.Controls.Add(this.numUpDownRounds);
@@ -272,9 +256,6 @@
         private System.Windows.Forms.NumericUpDown numUpDownRounds;
         private System.Windows.Forms.Label lblStep4;
         private System.Windows.Forms.Button btnExportar;
-        private System.Windows.Forms.Button btnFindDuplicates;
-        private System.Windows.Forms.Button btnPlayerRivals;
-        private System.Windows.Forms.Label lblOptional;
         private System.Windows.Forms.Button btnShowNames;
         private System.Windows.Forms.Button btnShowTeams;
         private System.Windows.Forms.Button btnShowCountries;
@@ -282,6 +263,7 @@
         private System.Windows.Forms.Label lblTriesMax;
         private System.Windows.Forms.Label lblTriesNeeded;
         private System.Windows.Forms.NumericUpDown numUpDownTriesMax;
+        private System.Windows.Forms.Button btnShowPlayers;
     }
 }
 

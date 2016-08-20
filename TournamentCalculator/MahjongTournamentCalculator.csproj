@@ -59,11 +59,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\TableWhitCountries.cs" />
-    <Compile Include="Model\TableWhitTeams.cs" />
+    <Compile Include="Model\TableWithNames.cs" />
+    <Compile Include="Model\TableWithTeams.cs" />
+    <Compile Include="Model\TableWithCountries.cs" />
     <Compile Include="Model\TableWithAll.cs" />
-    <Compile Include="Model\TableWhitNames.cs" />
-    <Compile Include="Model\TableWithIds.cs" />
+    <Compile Include="Model\Table.cs" />
+    <Compile Include="Model\TablePlayer.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -141,7 +141,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnImportExcel.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>19</value>
   </data>
   <data name="lblPlayers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -165,7 +165,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblPlayers.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>18</value>
   </data>
   <data name="lblTables.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -189,13 +189,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTables.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>17</value>
   </data>
   <data name="lblRounds.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblRounds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>75, 102</value>
+    <value>75, 125</value>
   </data>
   <data name="lblRounds.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 13</value>
@@ -216,7 +216,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblRounds.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>16</value>
   </data>
   <data name="lblStep1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -246,7 +246,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep1.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>15</value>
   </data>
   <data name="lblStep2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -255,7 +255,7 @@
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
   </data>
   <data name="lblStep2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 102</value>
+    <value>15, 125</value>
   </data>
   <data name="lblStep2.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 13</value>
@@ -276,13 +276,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep2.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>14</value>
   </data>
   <data name="btnCalculate.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="btnCalculate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 135</value>
+    <value>78, 203</value>
   </data>
   <data name="btnCalculate.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 50</value>
@@ -303,7 +303,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnCalculate.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>13</value>
   </data>
   <data name="lblStep3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -312,7 +312,7 @@
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
   </data>
   <data name="lblStep3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 135</value>
+    <value>15, 203</value>
   </data>
   <data name="lblStep3.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 13</value>
@@ -333,7 +333,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep3.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>12</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -343,7 +343,7 @@
     <value>279, 44</value>
   </data>
   <data name="dataGridView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>522, 363</value>
+    <value>519, 363</value>
   </data>
   <data name="dataGridView.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -358,10 +358,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;dataGridView.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>11</value>
   </data>
   <data name="numUpDownRounds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 99</value>
+    <value>185, 122</value>
   </data>
   <data name="numUpDownRounds.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 20</value>
@@ -379,7 +379,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numUpDownRounds.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>10</value>
   </data>
   <data name="lblStep4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -409,7 +409,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep4.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="btnExportar.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -436,100 +436,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnExportar.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="btnFindDuplicates.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="btnFindDuplicates.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 262</value>
-  </data>
-  <data name="btnFindDuplicates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 23</value>
-  </data>
-  <data name="btnFindDuplicates.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="btnFindDuplicates.Text" xml:space="preserve">
-    <value>Find duplicates</value>
-  </data>
-  <data name="&gt;&gt;btnFindDuplicates.Name" xml:space="preserve">
-    <value>btnFindDuplicates</value>
-  </data>
-  <data name="&gt;&gt;btnFindDuplicates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnFindDuplicates.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnFindDuplicates.ZOrder" xml:space="preserve">
     <value>9</value>
-  </data>
-  <data name="btnPlayerRivals.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="btnPlayerRivals.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 291</value>
-  </data>
-  <data name="btnPlayerRivals.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 23</value>
-  </data>
-  <data name="btnPlayerRivals.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="btnPlayerRivals.Text" xml:space="preserve">
-    <value>Find rivals by player</value>
-  </data>
-  <data name="&gt;&gt;btnPlayerRivals.Name" xml:space="preserve">
-    <value>btnPlayerRivals</value>
-  </data>
-  <data name="&gt;&gt;btnPlayerRivals.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnPlayerRivals.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnPlayerRivals.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="lblOptional.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblOptional.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
-  </data>
-  <data name="lblOptional.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 262</value>
-  </data>
-  <data name="lblOptional.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 13</value>
-  </data>
-  <data name="lblOptional.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="lblOptional.Text" xml:space="preserve">
-    <value>Optional</value>
-  </data>
-  <data name="&gt;&gt;lblOptional.Name" xml:space="preserve">
-    <value>lblOptional</value>
-  </data>
-  <data name="&gt;&gt;lblOptional.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblOptional.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblOptional.ZOrder" xml:space="preserve">
-    <value>7</value>
   </data>
   <data name="btnShowNames.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="btnShowNames.Location" type="System.Drawing.Point, System.Drawing">
-    <value>279, 15</value>
+    <value>384, 15</value>
   </data>
   <data name="btnShowNames.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 23</value>
+    <value>99, 23</value>
   </data>
   <data name="btnShowNames.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -547,16 +463,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowNames.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="btnShowTeams.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="btnShowTeams.Location" type="System.Drawing.Point, System.Drawing">
-    <value>411, 15</value>
+    <value>489, 15</value>
   </data>
   <data name="btnShowTeams.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 23</value>
+    <value>99, 23</value>
   </data>
   <data name="btnShowTeams.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -574,16 +490,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowTeams.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="btnShowCountries.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="btnShowCountries.Location" type="System.Drawing.Point, System.Drawing">
-    <value>543, 15</value>
+    <value>594, 15</value>
   </data>
   <data name="btnShowCountries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 23</value>
+    <value>99, 23</value>
   </data>
   <data name="btnShowCountries.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -601,16 +517,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowCountries.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="btnShowAll.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="btnShowAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>675, 15</value>
+    <value>699, 15</value>
   </data>
   <data name="btnShowAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 23</value>
+    <value>99, 23</value>
   </data>
   <data name="btnShowAll.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -628,40 +544,40 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowAll.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
-  <data name="lblMTriesMax.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblTriesMax.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lblMTriesMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 196</value>
+  <data name="lblTriesMax.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 264</value>
   </data>
-  <data name="lblMTriesMax.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblTriesMax.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 13</value>
   </data>
-  <data name="lblMTriesMax.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblTriesMax.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
   </data>
-  <data name="lblMTriesMax.Text" xml:space="preserve">
+  <data name="lblTriesMax.Text" xml:space="preserve">
     <value>Tries max.:</value>
   </data>
-  <data name="&gt;&gt;lblMTriesMax.Name" xml:space="preserve">
-    <value>lblMTriesMax</value>
+  <data name="&gt;&gt;lblTriesMax.Name" xml:space="preserve">
+    <value>lblTriesMax</value>
   </data>
-  <data name="&gt;&gt;lblMTriesMax.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblTriesMax.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblMTriesMax.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblTriesMax.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lblMTriesMax.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;lblTriesMax.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="lblTriesNeeded.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblTriesNeeded.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 221</value>
+    <value>78, 289</value>
   </data>
   <data name="lblTriesNeeded.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 13</value>
@@ -679,13 +595,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTriesNeeded.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="numUpDownTriesMax.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="numUpDownTriesMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>142, 194</value>
+    <value>142, 262</value>
   </data>
   <data name="numUpDownTriesMax.Size" type="System.Drawing.Size, System.Drawing">
     <value>93, 20</value>
@@ -703,6 +619,36 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numUpDownTriesMax.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnShowPlayers.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnShowPlayers.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnShowPlayers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>279, 15</value>
+  </data>
+  <data name="btnShowPlayers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>99, 23</value>
+  </data>
+  <data name="btnShowPlayers.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="btnShowPlayers.Text" xml:space="preserve">
+    <value>Show players</value>
+  </data>
+  <data name="&gt;&gt;btnShowPlayers.Name" xml:space="preserve">
+    <value>btnShowPlayers</value>
+  </data>
+  <data name="&gt;&gt;btnShowPlayers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnShowPlayers.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnShowPlayers.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

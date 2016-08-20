@@ -53,7 +53,7 @@ namespace TournamentCalculator.Utils
             }
         }
 
-        public static void updateDataGridView(DataGridView datagrid, List<TableWithNamesOnly> list)
+        public static void updateDataGridView(DataGridView datagrid, List<TableWithNames> list)
         {
             DataTable dataTable = new DataTable();
             try
@@ -72,7 +72,7 @@ namespace TournamentCalculator.Utils
             }
         }
 
-        public static void updateDataGridView(DataGridView datagrid, List<TableWithTeamsOnly> list)
+        public static void updateDataGridView(DataGridView datagrid, List<TableWithTeams> list)
         {
             DataTable dataTable = new DataTable();
             try
@@ -91,7 +91,7 @@ namespace TournamentCalculator.Utils
             }
         }
 
-        public static void updateDataGridView(DataGridView datagrid, List<TableWithCountriesOnly> list)
+        public static void updateDataGridView(DataGridView datagrid, List<TableWithCountries> list)
         {
             DataTable dataTable = new DataTable();
             try

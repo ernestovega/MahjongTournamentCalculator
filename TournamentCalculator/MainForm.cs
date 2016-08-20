@@ -1,10 +1,7 @@
-﻿using FastMember;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TournamentCalculator.Utils;
@@ -17,19 +14,14 @@ namespace TournamentCalculator
         #region Fields
 
         private List<Player> players = new List<Player>();
-        private List<Player> playersNoUsadosEstaRonda;
-        private List<Table> tables = new List<Table>(); 
-        private List<TableWithNamesOnly> tablesWithNamesOnly;
-        private List<TableWithAll> tablesWithAll;       
-        private int currentRound;
-        private int currentTable;
+        private List<Table> tables = new List<Table>();
+        private List<TableWithAll> tablesWithAll = new List<TableWithAll>();
+        private List<TableWithNames> tablesWithNames = new List<TableWithNames>();
+        private List<TableWithTeams> tablesWithTeams = new List<TableWithTeams>();
+        private List<TableWithCountries> tablesWithCountries = new List<TableWithCountries>();
+        private List<TablePlayer> tablePlayers = new List<TablePlayer>();
+        private int currentRound, currentTable, currentTablePlayer;
         private Random random = new Random();
-        private int triesCounter2;
-        private int triesCounter3;
-        private int triesCounter4;
-        private List<TableWithTeamsOnly> tablesWithTeamsOnly;
-        private List<TableWithCountriesOnly> tablesWithCountriesOnly;
-        private string path;
         private int countTries = 0;
 
         #endregion
@@ -39,12 +31,6 @@ namespace TournamentCalculator
         public MainForm()
         {
             InitializeComponent();
-
-            players = new List<Player>();
-            tables = new List<Table>();
-            playersNoUsadosEstaRonda = new List<Player>();
-            tablesWithNamesOnly = new List<TableWithNamesOnly>();
-            tablesWithAll = new List<TableWithAll>();
 
             DataGridViewUtils.updateDataGridView(dataGridView, new List<Player>() {
                 new Player("1", "Example name", "Example Country", "Example Team")});
@@ -57,6 +43,8 @@ namespace TournamentCalculator
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+
+            string path = string.Empty;
             if (!RequestFile(ref path))
             {
                 Cursor.Current = Cursors.Default;
@@ -65,27 +53,24 @@ namespace TournamentCalculator
 
             btnImportExcel.Enabled = false;
             btnCalculate.Enabled = false;
-            btnFindDuplicates.Enabled = false;
-            btnPlayerRivals.Enabled = false;
             btnExportar.Enabled = false;
+            numUpDownRounds.Enabled = false;
+            numUpDownTriesMax.Enabled = false;
+            btnShowPlayers.Enabled = false;
             btnShowNames.Enabled = false;
             btnShowTeams.Enabled = false;
             btnShowCountries.Enabled = false;
             btnShowAll.Enabled = false;
 
             players.Clear();
-            playersNoUsadosEstaRonda.Clear();
             lblPlayers.Text = string.Empty;
             lblTables.Text = string.Empty;
-            countTries = 0;
 
             ImportExcel(path);
 
             lblPlayers.Text = "Players: " + players.Count;
             if (players.Count % 4 != 0)
-            {
                 MessageBox.Show("The number of players must be a multiple of 4.\nCheck the Excel.");
-            }
             else
             {
                 lblTables.Text = "Tables: " + players.Count / 4;
@@ -94,144 +79,100 @@ namespace TournamentCalculator
                 numUpDownTriesMax.Enabled = true;
             }
 
+            btnShowPlayers.PerformClick();
+
             btnImportExcel.Enabled = true;
+            btnShowPlayers.Enabled = true;
             Cursor.Current = Cursors.Default;
         }
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+            btnImportExcel.Enabled = false;
+            btnCalculate.Enabled = false;
+            btnExportar.Enabled = false;
             numUpDownRounds.Enabled = false;
             numUpDownTriesMax.Enabled = false;
-            btnCalculate.Enabled = false;
-            btnFindDuplicates.Enabled = false;
-            btnPlayerRivals.Enabled = false;
-            btnExportar.Enabled = false;
+            btnShowPlayers.Enabled = false;
+            btnShowNames.Enabled = false;
+            btnShowTeams.Enabled = false;
+            btnShowCountries.Enabled = false;
+            btnShowAll.Enabled = false;
 
-            countTries = 0;
-            int numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
             int numRounds = decimal.ToInt32(numUpDownRounds.Value);
+            int numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
             int result = -1;
+            countTries = 0;
+            //Cada vez que un cálculo es imposible, se reintenta desde cero tantas veces como se hayan indicado.
             while (result < 0 && countTries < numTriesMax)
             {
                 countTries++;
-                result = generateTournament(numRounds);
+                result = GenerateTournament(numRounds);
             }
+
+            lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
+            
+            /*Si no se ha podido calcular en los intentos indicados, se notifica,
+              se muestra la lista de jugadores y se termina*/
             if (countTries >= numTriesMax)
             {
-                MessageBox.Show("Can't calculate tournament after " + numTriesMax + " tries.");
-                lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
                 numUpDownRounds.Enabled = true;
                 numUpDownTriesMax.Enabled = true;
                 btnCalculate.Enabled = true;
-                DataGridViewUtils.updateDataGridView(dataGridView, players);
+                btnShowPlayers.PerformClick();
+                btnImportExcel.Enabled = true;
+                numUpDownRounds.Enabled = true;
+                numUpDownTriesMax.Enabled = true;
+                btnCalculate.Enabled = true;
+                MessageBox.Show("Can't calculate tournament after " + numTriesMax + " tries.");
+                Cursor.Current = Cursors.Default;
                 return;
             }
-            lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
 
-            updateTablesWithAll();
-            updateTablesWithNamesOnly();
-            updateTablesWithTeamsOnly();
-            updateTablesWithCountriesOnly();
+            //Si llegamos aqui es que todo ha ido bien, generamos todas las vistas y se muestramos las mesas
+            //generateTablesWhitAll(numRounds);
+            generateTablesWhitNames(numRounds);
+            //generateTablesWhitTeams(numRounds);
+            //generateTablesWhitCountries(numRounds);
 
+            btnShowNames.PerformClick();
+
+            btnImportExcel.Enabled = true;
             numUpDownRounds.Enabled = true;
             numUpDownTriesMax.Enabled = true;
             btnCalculate.Enabled = true;
             btnExportar.Enabled = true;
-            btnPlayerRivals.Enabled = true;
-            btnFindDuplicates.Enabled = true;
+            btnShowPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
             btnShowAll.Enabled = true;
 
-            btnShowNames.PerformClick();
-            Cursor.Current = Cursors.Default;
-        }
-
-        private void btnFindDuplicates_Click(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            btnFindDuplicates.Enabled = false;
-
-            List<string> duplicados = new List<string>();
-            int numTablesPerRound = players.Count / 4;
-            int numRounds = tables.Count / numTablesPerRound;
-            for (int i = 1; i <= numRounds; i++)
-            {
-                string dups = "";
-                List<int> readedPlayersInThisRound = new List<int>();
-                List<Table> roundTables = tables.FindAll(x => x.roundId == i);
-
-                foreach (Table table in roundTables)
-                {
-                    if (readedPlayersInThisRound.Contains(table.player1Id))
-                        dups += players.Find(x => x.id == table.player1Id).name + ", ";
-                    else
-                        readedPlayersInThisRound.Add(table.player1Id);
-
-                    if (readedPlayersInThisRound.Contains(table.player2Id))
-                        dups += players.Find(x => x.id == table.player2Id).name + ", ";
-                    else
-                        readedPlayersInThisRound.Add(table.player2Id);
-
-                    if (readedPlayersInThisRound.Contains(table.player3Id))
-                        dups += players.Find(x => x.id == table.player3Id).name + ", ";
-                    else
-                        readedPlayersInThisRound.Add(table.player3Id);
-
-                    if (readedPlayersInThisRound.Contains(table.player4Id))
-                        dups += players.Find(x => x.id == table.player4Id).name + ", ";
-                    else
-                        readedPlayersInThisRound.Add(table.player4Id);
-                }
-                duplicados.Add(dups);
-            }
-            string message = "";
-            for(int i = 1; i <= duplicados.Count; i++)
-            {
-                message += "Round " + i + ": ";
-
-                if (string.IsNullOrEmpty(duplicados[i - 1]))
-                    message += "0";
-                else
-                    message += duplicados[i - 1];
-
-                message += "\n";
-            }
-            MessageBox.Show(message);
-
-            btnFindDuplicates.Enabled = true;
-            Cursor.Current = Cursors.Default;
-        }
-
-        private void btnPlayerRivals_Click(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            btnPlayerRivals.Enabled = false;
-
-            var listRivals = new List<TableWithNamesOnly>();
-            foreach (var p in players)
-            {
-                var lista = tablesWithNamesOnly.FindAll(x => p.name == x.player1Name ||
-                p.name == x.player2Name || p.name == x.player3Name || p.name == x.player4Name);                
-                listRivals.AddRange(lista);
-            }
-            DataGridViewUtils.updateDataGridView(dataGridView, listRivals);
-
-            btnPlayerRivals.Enabled = true;
             Cursor.Current = Cursors.Default;
         }
 
         private void btnExportar_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            btnFindDuplicates.Enabled = false;
 
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
             ExportToExcel();
+            
+            Cursor.Current = Cursors.Default;
+        }
 
-            btnFindDuplicates.Enabled = true;
+        private void btnShowPlayers_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            btnShowPlayers.Enabled = false;
+
+            DataGridViewUtils.updateDataGridView(dataGridView, players);
+
+            btnShowNames.Enabled = true;
+            btnShowTeams.Enabled = true;
+            btnShowCountries.Enabled = true;
+            btnShowAll.Enabled = true;
             Cursor.Current = Cursors.Default;
         }
 
@@ -241,8 +182,9 @@ namespace TournamentCalculator
             btnShowNames.Enabled = false;
 
 
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNamesOnly);
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
 
+            btnShowPlayers.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
             btnShowAll.Enabled = true;
@@ -254,8 +196,9 @@ namespace TournamentCalculator
             Cursor.Current = Cursors.WaitCursor;
             btnShowTeams.Enabled = false;
 
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithTeamsOnly);
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithTeams);
 
+            btnShowPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowCountries.Enabled = true;
             btnShowAll.Enabled = true;
@@ -267,8 +210,9 @@ namespace TournamentCalculator
             Cursor.Current = Cursors.WaitCursor;
             btnShowCountries.Enabled = false;
 
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithCountriesOnly);
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithCountries);
 
+            btnShowPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowAll.Enabled = true;
@@ -282,6 +226,7 @@ namespace TournamentCalculator
 
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
 
+            btnShowPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
@@ -289,279 +234,116 @@ namespace TournamentCalculator
 
         #endregion
 
-        #region Player methods
+        #region Calculate tournament methods
 
-        private int getRandomPlayer()
+        private int GenerateTournament(int numRounds)
         {
-            int r = random.Next(playersNoUsadosEstaRonda.Count);
-            Player playerNoUsado = playersNoUsadosEstaRonda[r];
-            playersNoUsadosEstaRonda.RemoveAt(r);
-            return playerNoUsado.id;
-        }
+            //Limpiamos las tablas
+            tables.Clear();
+            tablePlayers.Clear();
+            for (currentRound = 1; currentRound == numRounds; currentRound++)
+            {//Iteramos por rondas
 
-        private int getRandomPlayer(int p1)
-        {
-            List<Player> pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p1);
-            if (pNoUsadosYQueNoHanJugadoYaConEste.Count == 0)
-            {
-                return -1;
-            }
-            int r = random.Next(pNoUsadosYQueNoHanJugadoYaConEste.Count);
-            Player playerNoUsado = pNoUsadosYQueNoHanJugadoYaConEste[r];
-            int counter = 0;
-            while (counter < playersNoUsadosEstaRonda.Count &&
-                playerNoUsado.team.ToLower().Equals(players[p1 - 1].team.ToLower()))
-            {
-                r = random.Next(playersNoUsadosEstaRonda.Count);
-                playerNoUsado = playersNoUsadosEstaRonda[r];
-                counter++;
-            }
-            if(counter == playersNoUsadosEstaRonda.Count)
-            {
-                return -2;
-            }
-            playersNoUsadosEstaRonda.RemoveAt(r);
-            return playerNoUsado.id;
-        }
+                //Copiamos la lista de jugadores para ir borrando los que vayamos usando cada ronda
+                List<int> playersNotUsedThisRound = players.Select(x => x.Clone()).ToList().Select(x => x.id).ToList();
 
-        private int getRandomPlayer(int p1, int p2)
-        {
-            List<Player> pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p1);
-            pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p2);
-            if(pNoUsadosYQueNoHanJugadoYaConEste.Count == 0)
-            {
-                return -3;
-            }
-            int r = random.Next(pNoUsadosYQueNoHanJugadoYaConEste.Count);
-            Player playerNoUsado = pNoUsadosYQueNoHanJugadoYaConEste[r];
-            int counter = 0;
-            while (counter < playersNoUsadosEstaRonda.Count &&
-                playerNoUsado.team.Equals(players[p1 - 1].team) &&
-                playerNoUsado.team.Equals(players[p2 - 1].team))
-            {
-                r = random.Next(playersNoUsadosEstaRonda.Count);
-                playerNoUsado = playersNoUsadosEstaRonda[r];
-                counter++;
-            }
-            if (counter == playersNoUsadosEstaRonda.Count)
-            {
-                return -4;
-            }
-            playersNoUsadosEstaRonda.RemoveAt(r);
-            return playerNoUsado.id;
-        }
+                for (currentTable = 1; currentTable == players.Count / 4; currentTable++)
+                {//Iteramos por mesas en cada ronda
 
-        private int getRandomPlayer(int p1, int p2, int p3)
-        {
-            List<Player> pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p1);
-            pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p2);
-            pNoUsadosYQueNoHanJugadoYaConEste = getPlayersNoUsadosYQueNoHanJugadoYaConEste(p3);
-            if (pNoUsadosYQueNoHanJugadoYaConEste.Count == 0)
-            {
-                return -5;
-            }
-            int r = random.Next(pNoUsadosYQueNoHanJugadoYaConEste.Count);
-            Player playerNoUsado = pNoUsadosYQueNoHanJugadoYaConEste[r];
-            int counter = 0;
-            while (counter < playersNoUsadosEstaRonda.Count &&
-                playerNoUsado.team.Equals(players[p1 - 1].team) &&
-                playerNoUsado.team.Equals(players[p2 - 1].team) &&
-                playerNoUsado.team.Equals(players[p3 - 1].team))
-            {
-                r = random.Next(playersNoUsadosEstaRonda.Count);
-                playerNoUsado = playersNoUsadosEstaRonda[r];
-                counter++;
-            }
-            if (counter == playersNoUsadosEstaRonda.Count)
-            {
-                return -6;
-            }
-            playersNoUsadosEstaRonda.RemoveAt(r);
-            return playerNoUsado.id;
-        }
+                    for (currentTablePlayer = 1; currentTablePlayer == 4; currentTablePlayer++)
+                    {//Iteramos por jugador en cada mesa
+                       
+                        //Copiamos la lista de jugadores para ir borrando los que vayamos descartando
+                        int[] arrayPlayersIdsNotDiscarded = {};
+                        playersNotUsedThisRound.CopyTo(arrayPlayersIdsNotDiscarded);
+                        List<int> playersIdsNotDiscarded = new List<int>(arrayPlayersIdsNotDiscarded);
 
-        private List<Player> getPlayersNoUsadosYQueNoHanJugadoYaConEste(int pId)
-        {
-            List<Player> playersNoUsadosYQueNoHanJugadoYaConEstos = playersNoUsadosEstaRonda.Select(x => x.Clone()).ToList();
-            List<Table> mesasDondeJugo = tables.FindAll(x => x.roundId < currentRound  && (
-                pId == x.player1Id || pId == x.player2Id || pId == x.player3Id || pId == x.player4Id));
-            List<int> pIdsConQuienJugo = new List<int>();
-
-            foreach(Table mesa in mesasDondeJugo)
-            {
-                if (mesa.player1Id == pId)
-                {
-                    pIdsConQuienJugo.Add(mesa.player2Id);
-                    pIdsConQuienJugo.Add(mesa.player3Id);
-                    pIdsConQuienJugo.Add(mesa.player4Id);
-                }
-                else if (mesa.player2Id == pId)
-                {
-                    pIdsConQuienJugo.Add(mesa.player1Id);
-                    pIdsConQuienJugo.Add(mesa.player3Id);
-                    pIdsConQuienJugo.Add(mesa.player4Id);
-                }
-                else if (mesa.player3Id == pId)
-                {
-                    pIdsConQuienJugo.Add(mesa.player1Id);
-                    pIdsConQuienJugo.Add(mesa.player2Id);
-                    pIdsConQuienJugo.Add(mesa.player4Id);
-                }
-                else
-                {
-                    pIdsConQuienJugo.Add(mesa.player1Id);
-                    pIdsConQuienJugo.Add(mesa.player2Id);
-                    pIdsConQuienJugo.Add(mesa.player3Id);
-                }
-            }
-
-            foreach(int id in pIdsConQuienJugo)
-            {
-                Player pAux = playersNoUsadosYQueNoHanJugadoYaConEstos.Find(x => x.id == id);
-                if (pAux != null)
-                {
-                    playersNoUsadosYQueNoHanJugadoYaConEstos.Remove(pAux);
-                }                    
-            }
-
-            return playersNoUsadosYQueNoHanJugadoYaConEstos;
-        }
-
-        private Player getPlayerById(int id)
-        {
-            foreach(Player p in players)
-            {
-                if(p.id == id)
-                {
-                    return p;
-                }
-            }
-            return null;
-        }
-
-        #endregion
-
-        #region Table methods
-
-        private int generateTournament(int numRounds)
-        {
-                tables.Clear();
-                tablesWithNamesOnly.Clear();
-                tablesWithAll.Clear();
-                for (currentRound = 1; currentRound <= numRounds; currentRound++)
-                {
-                    playersNoUsadosEstaRonda = players.Select(x => x.Clone()).ToList();
-                    for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
-                    {
-                        int p1 = 0, p2 = 0, p3 = 0, p4 = 0;
-                        p1 = getRandomPlayer();
-                        if (p1 < 0)
+                        bool playerFounded = false;
+                        //Si no hay jugador elegido y no hemos recorrido todos los jugadores lo reintentamos.
+                        while (!playerFounded && playersIdsNotDiscarded.Count > 0)
                         {
+                            //Obtenemos la lista de jugadores de la actual mesa
+                            List<TablePlayer> currentTableTablePlayers = tablePlayers.FindAll
+                                (x => x.round == currentRound && x.table == currentTable).ToList();
+                            List<Player> currentTablePlayers = new List<Player>();
+                            foreach(TablePlayer tp in currentTableTablePlayers)
+                                currentTablePlayers.Add(GetPlayerById(tp.playerId));
+
+                            //Elegimos un jugador al azar y lo quitamos de la lista de no descartados
+                            int r = random.Next(0, arrayPlayersIdsNotDiscarded.Count());
+                            Player choosenOne = GetPlayerById(arrayPlayersIdsNotDiscarded[r]);
+                            playersIdsNotDiscarded.Remove(choosenOne.id);
+
+                            //Obtenemos la lista de jugadores que han jugado en anteriores rondas contra el elegido
+                            List<int> playersWHPATCO = GetPlayersWhoHavePlayedAgainstTheChoosenOne(choosenOne);
+                            bool anyoneHavePlayed = false;
+                            foreach(int ctp in currentTablePlayers.Select(x => x.id))
+                            {
+                                if (playersWHPATCO.Contains(ctp))
+                                    anyoneHavePlayed = true;
+                            }
+
+                            /*Si el elegido ya ha jugado contra alguno de los de la mesa actual
+                              o es del mismo equipo que alguno de los de la mesa actual
+                              hay que buscar un nuevo candidato para esta mesa*/
+                            if (anyoneHavePlayed || currentTablePlayers.Select(x => x.team).Contains(choosenOne.team))
+                                playerFounded = false;
+                            else
+                            {/*Si no ha jugado contra ninguno ni son de su mismo equipo, lo añadimos a la mesa
+                               y lo quitamos de la lista de jugadores sin usar esta ronda*/
+
+                                playerFounded = true;
+                                tablePlayers.Add(new TablePlayer(currentRound, currentTable, currentTablePlayer, 
+                                    choosenOne.id));
+                                playersNotUsedThisRound.Remove(choosenOne.id);
+                            }
+                        }
+
+                        //Si no se ha encontrado un posible jugador delvolvemos error para volver a empezar todo.
+                        if(!playerFounded && playersIdsNotDiscarded.Count == 0)
                             return -1;
-                        }
-                        p2 = getRandomPlayer(p1);
-                        if (p2 < 0)
-                        {
-                            return -2;
-                        }
-                        p3 = getRandomPlayer(p1, p2);
-                        if (p3 < 0)
-                        {
-                            return -3;
-                        }
-                        p4 = getRandomPlayer(p1, p2, p3);
-                        if(p4 < 0)
-                        {
-                            return -4;
-                        }
-                        tables.Add(new Table(currentRound, currentTable, p1, p2, p3, p4));
                     }
                 }
-                return 0;
+            }
+            //Si llegamos aqui es que todo ha ido bien y se ha terminado el cálculo
+            return 1;
         }
 
-        private void updateTablesWithAll()
+        private List<int> GetPlayersWhoHavePlayedAgainstTheChoosenOne(Player choosenOne)
         {
-            tablesWithAll = new List<TableWithAll>();
-            foreach (Table t in tables)
-            {
-                Player p1 = getPlayerById(t.player1Id);
-                Player p2 = getPlayerById(t.player2Id);
-                Player p3 = getPlayerById(t.player3Id);
-                Player p4 = getPlayerById(t.player4Id);
-                tablesWithAll.Add(new TableWithAll(
-                    t.roundId, t.tableId,
-                    p1.id, p2.id, p3.id, p4.id,
-                    p1.name, p2.name, p3.name, p4.name,
-                    p1.country, p2.country, p3.country, p4.country,
-                    p1.team, p2.team, p3.team, p4.team));
-            }
-        }
+            //Obtenemos una lista con las mesas de las anteriores rondas
+            List<TablePlayer> anterioresRondas = tablePlayers.FindAll(x => x.round < currentRound).ToList();
 
-        private void updateTablesWithNamesOnly()
-        {
-            tablesWithNamesOnly = new List<TableWithNamesOnly>();
-            foreach (Table t in tables)
+            //Si hay anteriores rondas
+            if (anterioresRondas.Count > 0)
             {
-                tablesWithNamesOnly.Add(new TableWithNamesOnly(
-                    t.roundId,
-                    t.tableId,
-                    getPlayerById(t.player1Id).name,
-                    getPlayerById(t.player2Id).name,
-                    getPlayerById(t.player3Id).name,
-                    getPlayerById(t.player4Id).name));
-            }
-        }
+                //Obtenemos una lista con los ids de las anteriores rondas
+                List<int> roundIdsWhichHavePlayed = anterioresRondas.Select(x => x.round).ToList();
 
-        private void updateTablesWithTeamsOnly()
-        {
-            tablesWithTeamsOnly = new List<TableWithTeamsOnly>();
-            foreach (Table t in tables)
-            {
-                tablesWithTeamsOnly.Add(new TableWithTeamsOnly(
-                    t.roundId,
-                    t.tableId,
-                    getPlayerById(t.player1Id).team,
-                    getPlayerById(t.player2Id).team,
-                    getPlayerById(t.player3Id).team,
-                    getPlayerById(t.player4Id).team));
-            }
-        }
+                //Obtenemos una lista de las mesas en las que ha jugado el elegido en cada ronda
+                List<TablePlayer> tablesWhichHavePlayed = new List<TablePlayer>();
+                foreach (int roundPlayed in roundIdsWhichHavePlayed)
+                {
+                    tablesWhichHavePlayed.AddRange(anterioresRondas.FindAll(
+                        x => x.round == roundPlayed && x.playerId == choosenOne.id).ToList());
+                }
 
-        private void updateTablesWithCountriesOnly()
-        {
-            tablesWithCountriesOnly = new List<TableWithCountriesOnly>();
-            foreach (Table t in tables)
-            {
-                tablesWithCountriesOnly.Add(new TableWithCountriesOnly(
-                    t.roundId,
-                    t.tableId,
-                    getPlayerById(t.player1Id).country,
-                    getPlayerById(t.player2Id).country,
-                    getPlayerById(t.player3Id).country,
-                    getPlayerById(t.player4Id).country));
+                //Obtenemos una lista con los jugadores que ya han jugado contra el elegido en cada mesa donde él jugó
+                List<int> rivalsWhoHavePlayedAgainst = new List<int>();
+                foreach (TablePlayer tp in tablesWhichHavePlayed)
+                {
+                    if (tp.playerId != choosenOne.id)
+                        rivalsWhoHavePlayedAgainst.Add(tp.playerId);
+                }
+                return rivalsWhoHavePlayedAgainst;
             }
+            else
+                return new List<int>();
         }
 
         #endregion
 
         #region Excel methods
-
-        private static bool RequestFile(ref string path)
-        {
-            OpenFileDialog fDialog = new OpenFileDialog();
-            fDialog.Title = "Select Excel file";
-            fDialog.Filter = "Excel Files|*.xlsx;*.xls;";
-            fDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            if (fDialog.ShowDialog() == DialogResult.OK)
-            {
-                path = fDialog.FileName.ToString();
-                return true;
-            }
-
-            path = "";
-            return false;
-        }
 
         private void ImportExcel(string ruta)
         {
@@ -599,7 +381,6 @@ namespace TournamentCalculator
             NsExcel.Application excel;
             NsExcel.Workbook excelworkBook;
             NsExcel.Worksheet excelSheet;
-            DataTable dataTable = ConvertToDataTable(tablesWithAll);
 
             //start excel
             excel = new NsExcel.Application();
@@ -661,28 +442,94 @@ namespace TournamentCalculator
             excelSheet.UsedRange.EntireColumn.AutoFit();
         }
 
-        private DataTable ConvertToDataTable<T>(IList<T> data)
-        {
-            PropertyDescriptorCollection properties =
-            TypeDescriptor.GetProperties(typeof(T));
-            DataTable table = new DataTable();
-            foreach (PropertyDescriptor prop in properties)
-                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-            foreach (T item in data)
-            {
-                DataRow row = table.NewRow();
-                foreach (PropertyDescriptor prop in properties)
-                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                table.Rows.Add(row);
-            }
-            return table;
-        }
-
         public void FormattingExcelCells(NsExcel.Range range, string HTMLcolorCode, System.Drawing.Color fontColor, bool IsFontbold)
         {
             range.Interior.Color = System.Drawing.ColorTranslator.FromHtml(HTMLcolorCode);
             range.Font.Color = System.Drawing.ColorTranslator.ToOle(fontColor);
             range.Font.Bold = IsFontbold;
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private static bool RequestFile(ref string path)
+        {
+            OpenFileDialog fDialog = new OpenFileDialog();
+            fDialog.Title = "Select Excel file";
+            fDialog.Filter = "Excel Files|*.xlsx;*.xls;";
+            fDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (fDialog.ShowDialog() == DialogResult.OK)
+            {
+                path = fDialog.FileName.ToString();
+                return true;
+            }
+
+            path = "";
+            return false;
+        }
+
+        private Player GetPlayerById(int id)
+        {
+            foreach(Player p in players)
+            {
+                if(p.id == id)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        private void generateTablesWhitAll(int numRounds)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void generateTablesWhitNames(int numRounds)
+        {
+            for (currentRound = 1; currentRound == numRounds; currentRound++)
+            {
+                for (currentTable = 1; currentTable == players.Count / 4; currentTable++)
+                {
+                    TableWithNames tableWithNames = new TableWithNames();
+                    tableWithNames.roundId = currentRound;
+                    tableWithNames.tableId = currentTable;
+                    for (currentTablePlayer = 1; currentTablePlayer == 4; currentTablePlayer++)
+                    {
+                        switch(currentTablePlayer)
+                        {
+                            case 1:
+                                tableWithNames.player1Name = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                break;
+                            case 2:
+                                tableWithNames.player1Name = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                break;
+                            case 3:
+                                tableWithNames.player1Name = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                break;
+                            case 4:
+                                tableWithNames.player1Name = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                break;
+                        }
+                    }
+                    tablesWithNames.Add(tableWithNames);
+                }
+            }
+        }
+
+        private void generateTablesWhitTeams(int numRounds)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void generateTablesWhitCountries(int numRounds)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

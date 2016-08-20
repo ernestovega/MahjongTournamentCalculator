@@ -15,6 +15,11 @@
             this.team = team;
         }
 
+        public Player()
+        {
+
+        }
+
         internal Player Clone()
         {
             return new Player(id.ToString(), name, country, team);
