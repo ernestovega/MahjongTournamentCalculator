@@ -49,6 +49,10 @@
             this.lblTriesNeeded = new System.Windows.Forms.Label();
             this.numUpDownTriesMax = new System.Windows.Forms.NumericUpDown();
             this.btnShowPlayers = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
@@ -207,10 +211,38 @@
             this.btnShowPlayers.UseVisualStyleBackColor = true;
             this.btnShowPlayers.Click += new System.EventHandler(this.btnShowPlayers_Click);
             // 
+            // checkBox1
+            // 
+            resources.ApplyResources(this.checkBox1, "checkBox1");
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            resources.ApplyResources(this.checkBox2, "checkBox2");
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            resources.ApplyResources(this.checkBox3, "checkBox3");
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            resources.ApplyResources(this.checkBox4, "checkBox4");
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.btnShowPlayers);
             this.Controls.Add(this.numUpDownTriesMax);
             this.Controls.Add(this.lblTriesNeeded);
@@ -264,6 +296,10 @@
         private System.Windows.Forms.Label lblTriesNeeded;
         private System.Windows.Forms.NumericUpDown numUpDownTriesMax;
         private System.Windows.Forms.Button btnShowPlayers;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
     }
 }
 

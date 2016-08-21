@@ -141,7 +141,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnImportExcel.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>23</value>
   </data>
   <data name="lblPlayers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -165,7 +165,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblPlayers.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>22</value>
   </data>
   <data name="lblTables.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -189,13 +189,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTables.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>21</value>
   </data>
   <data name="lblRounds.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblRounds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>75, 125</value>
+    <value>75, 108</value>
   </data>
   <data name="lblRounds.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 13</value>
@@ -216,7 +216,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblRounds.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>20</value>
   </data>
   <data name="lblStep1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -246,7 +246,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep1.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>19</value>
   </data>
   <data name="lblStep2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -255,7 +255,7 @@
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
   </data>
   <data name="lblStep2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 125</value>
+    <value>15, 108</value>
   </data>
   <data name="lblStep2.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 13</value>
@@ -276,13 +276,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep2.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>18</value>
   </data>
   <data name="btnCalculate.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="btnCalculate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 203</value>
+    <value>78, 158</value>
   </data>
   <data name="btnCalculate.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 50</value>
@@ -303,7 +303,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnCalculate.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>17</value>
   </data>
   <data name="lblStep3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -312,7 +312,7 @@
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
   </data>
   <data name="lblStep3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 203</value>
+    <value>15, 158</value>
   </data>
   <data name="lblStep3.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 13</value>
@@ -333,7 +333,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep3.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>16</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -358,10 +358,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;dataGridView.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>15</value>
   </data>
   <data name="numUpDownRounds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 122</value>
+    <value>185, 105</value>
   </data>
   <data name="numUpDownRounds.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 20</value>
@@ -379,7 +379,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numUpDownRounds.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>14</value>
   </data>
   <data name="lblStep4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -388,7 +388,7 @@
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
   </data>
   <data name="lblStep4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 376</value>
+    <value>15, 313</value>
   </data>
   <data name="lblStep4.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 13</value>
@@ -409,13 +409,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep4.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>12</value>
   </data>
   <data name="btnExportar.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="btnExportar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 357</value>
+    <value>78, 294</value>
   </data>
   <data name="btnExportar.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 50</value>
@@ -436,7 +436,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnExportar.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>13</value>
   </data>
   <data name="btnShowNames.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -463,7 +463,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowNames.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>11</value>
   </data>
   <data name="btnShowTeams.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -490,7 +490,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowTeams.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="btnShowCountries.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -517,7 +517,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowCountries.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="btnShowAll.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -544,13 +544,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowAll.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="lblTriesMax.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblTriesMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 264</value>
+    <value>78, 219</value>
   </data>
   <data name="lblTriesMax.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 13</value>
@@ -571,13 +571,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTriesMax.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="lblTriesNeeded.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblTriesNeeded.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 289</value>
+    <value>78, 244</value>
   </data>
   <data name="lblTriesNeeded.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 13</value>
@@ -598,13 +598,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTriesNeeded.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <data name="numUpDownTriesMax.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="numUpDownTriesMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>142, 262</value>
+    <value>142, 217</value>
   </data>
   <data name="numUpDownTriesMax.Size" type="System.Drawing.Size, System.Drawing">
     <value>93, 20</value>
@@ -622,7 +622,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numUpDownTriesMax.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="btnShowPlayers.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -652,6 +652,120 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowPlayers.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="checkBox1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 350</value>
+  </data>
+  <data name="checkBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="checkBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="checkBox1.Text" xml:space="preserve">
+    <value>checkBox1</value>
+  </data>
+  <data name="&gt;&gt;checkBox1.Name" xml:space="preserve">
+    <value>checkBox1</value>
+  </data>
+  <data name="&gt;&gt;checkBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;checkBox1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="checkBox2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>164, 350</value>
+  </data>
+  <data name="checkBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="checkBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="checkBox2.Text" xml:space="preserve">
+    <value>checkBox2</value>
+  </data>
+  <data name="&gt;&gt;checkBox2.Name" xml:space="preserve">
+    <value>checkBox2</value>
+  </data>
+  <data name="&gt;&gt;checkBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;checkBox2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="checkBox3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 373</value>
+  </data>
+  <data name="checkBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="checkBox3.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="checkBox3.Text" xml:space="preserve">
+    <value>checkBox3</value>
+  </data>
+  <data name="&gt;&gt;checkBox3.Name" xml:space="preserve">
+    <value>checkBox3</value>
+  </data>
+  <data name="&gt;&gt;checkBox3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;checkBox3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBox4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBox4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>164, 373</value>
+  </data>
+  <data name="checkBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="checkBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="checkBox4.Text" xml:space="preserve">
+    <value>checkBox4</value>
+  </data>
+  <data name="&gt;&gt;checkBox4.Name" xml:space="preserve">
+    <value>checkBox4</value>
+  </data>
+  <data name="&gt;&gt;checkBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;checkBox4.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

@@ -390,75 +390,82 @@ namespace TournamentCalculator
 
         public void ExportToExcel()
         {
+            //Start excel
             NsExcel.Application excel;
-            NsExcel.Workbook excelworkBook;
-            NsExcel.Worksheet excelSheet;
-
-            //start excel
             excel = new NsExcel.Application();
 
-            // for making Excel visible
+            //Making Excel visible
             excel.Visible = true;
             excel.DisplayAlerts = false;
 
-            // Creation a new Workbook
-            excelworkBook = excel.Workbooks.Add(Type.Missing);
+            //Create a new Workbook
+            NsExcel.Workbook excelWorkBook;
+            excelWorkBook = excel.Workbooks.Add(Type.Missing);
 
-            // Work sheet
-            excelSheet = (NsExcel.Worksheet)excelworkBook.ActiveSheet;
-            excelSheet.Name = "WorkSheet";
+            //Using default Worksheet
+            var excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
 
-            //Write sheet
-
-            excelSheet.Cells[1, 1] = "Round";
-            excelSheet.Cells[1, 2] = "Table";
-            excelSheet.Cells[1, 3] = "Player1 id";
-            excelSheet.Cells[1, 4] = "Player2 id";
-            excelSheet.Cells[1, 5] = "Player3 id";
-            excelSheet.Cells[1, 6] = "Player4 id";
-            excelSheet.Cells[1, 7] = "Player1 name";
-            excelSheet.Cells[1, 8] = "Player2 name";
-            excelSheet.Cells[1, 9] = "Player3 name";
-            excelSheet.Cells[1, 10] = "Player4 name";
-            excelSheet.Cells[1, 11] = "Player1 team";
-            excelSheet.Cells[1, 12] = "Player2 team";
-            excelSheet.Cells[1, 13] = "Player3 team";
-            excelSheet.Cells[1, 14] = "Player4 team";
-            excelSheet.Cells[1, 15] = "Player1 country";
-            excelSheet.Cells[1, 16] = "Player2 country";
-            excelSheet.Cells[1, 17] = "Player3 country";
-            excelSheet.Cells[1, 18] = "Player4 country";
-            for (int i = 1; i <= tablesWithAll.Count; i++)
+            //Write data            
+            for (currentRound = 1; currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count(); currentRound++)
             {
-                excelSheet.Cells[i + 1, 1 ] = tablesWithAll[i - 1].roundId;
-                excelSheet.Cells[i + 1, 2 ] = tablesWithAll[i - 1].tableId;
-                excelSheet.Cells[i + 1, 3 ] = tablesWithAll[i - 1].player1Id;
-                excelSheet.Cells[i + 1, 4 ] = tablesWithAll[i - 1].player2Id;
-                excelSheet.Cells[i + 1, 5 ] = tablesWithAll[i - 1].player3Id;
-                excelSheet.Cells[i + 1, 6 ] = tablesWithAll[i - 1].player4Id;
-                excelSheet.Cells[i + 1, 7 ] = tablesWithAll[i - 1].player1Name;
-                excelSheet.Cells[i + 1, 8 ] = tablesWithAll[i - 1].player2Name;
-                excelSheet.Cells[i + 1, 9 ] = tablesWithAll[i - 1].player3Name;
-                excelSheet.Cells[i + 1, 10] = tablesWithAll[i - 1].player4Name;
-                excelSheet.Cells[i + 1, 11] = tablesWithAll[i - 1].player1Team;
-                excelSheet.Cells[i + 1, 12] = tablesWithAll[i - 1].player2Team;
-                excelSheet.Cells[i + 1, 13] = tablesWithAll[i - 1].player3Team;
-                excelSheet.Cells[i + 1, 14] = tablesWithAll[i - 1].player4Team;
-                excelSheet.Cells[i + 1, 15] = tablesWithAll[i - 1].player1Country;
-                excelSheet.Cells[i + 1, 16] = tablesWithAll[i - 1].player2Country;
-                excelSheet.Cells[i + 1, 17] = tablesWithAll[i - 1].player3Country;
-                excelSheet.Cells[i + 1, 18] = tablesWithAll[i - 1].player4Country;
+                //Adding new Worksheet
+                var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+                newSheet.Name = "Round " + (currentRound);
+                if (currentRound == 1)
+                {
+                    while (excelSheets.Count > 1)
+                    {
+                        excelSheets[excelSheets.Count - 1].Delete();
+                    }
+                }
+
+                //Write headers
+                newSheet.Cells[1, 1] = "Round";
+                newSheet.Cells[1, 2] = "Table";
+                newSheet.Cells[1, 3] = "Player1 name";
+                newSheet.Cells[1, 4] = "Player2 name";
+                newSheet.Cells[1, 5] = "Player3 name";
+                newSheet.Cells[1, 6] = "Player4 name";
+                newSheet.Cells[1, 7] = "Player1 team";
+                newSheet.Cells[1, 8] = "Player2 team";
+                newSheet.Cells[1, 9] = "Player3 team";
+                newSheet.Cells[1, 10] = "Player4 team";
+                newSheet.Cells[1, 11] = "Player1 country";
+                newSheet.Cells[1, 12] = "Player2 country";
+                newSheet.Cells[1, 13] = "Player3 country";
+                newSheet.Cells[1, 14] = "Player4 country";
+                newSheet.Cells[1, 15] = "Player1 id";
+                newSheet.Cells[1, 16] = "Player2 id";
+                newSheet.Cells[1, 17] = "Player3 id";
+                newSheet.Cells[1, 18] = "Player4 id";
+
+                var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
+
+                for (currentTable = 1; currentTable <= tablesWithAll.Select(x => x.tableId).Distinct().Count(); currentTable++)
+                {
+                    newSheet.Cells[currentTable + 1, 1 ] = currentRoundTables[currentTable - 1].roundId;
+                    newSheet.Cells[currentTable + 1, 2 ] = currentRoundTables[currentTable - 1].tableId;
+                    newSheet.Cells[currentTable + 1, 3 ] = currentRoundTables[currentTable - 1].player1Name;
+                    newSheet.Cells[currentTable + 1, 4 ] = currentRoundTables[currentTable - 1].player2Name;
+                    newSheet.Cells[currentTable + 1, 5 ] = currentRoundTables[currentTable - 1].player3Name;
+                    newSheet.Cells[currentTable + 1, 6 ] = currentRoundTables[currentTable - 1].player4Name;
+                    newSheet.Cells[currentTable + 1, 7 ] = currentRoundTables[currentTable - 1].player1Team;
+                    newSheet.Cells[currentTable + 1, 8 ] = currentRoundTables[currentTable - 1].player2Team;
+                    newSheet.Cells[currentTable + 1, 9 ] = currentRoundTables[currentTable - 1].player3Team;
+                    newSheet.Cells[currentTable + 1, 10] = currentRoundTables[currentTable - 1].player4Team;
+                    newSheet.Cells[currentTable + 1, 11] = currentRoundTables[currentTable - 1].player1Country;
+                    newSheet.Cells[currentTable + 1, 12] = currentRoundTables[currentTable - 1].player2Country;
+                    newSheet.Cells[currentTable + 1, 13] = currentRoundTables[currentTable - 1].player3Country;
+                    newSheet.Cells[currentTable + 1, 14] = currentRoundTables[currentTable - 1].player4Country;
+                    newSheet.Cells[currentTable + 1, 15] = currentRoundTables[currentTable - 1].player1Id;
+                    newSheet.Cells[currentTable + 1, 16] = currentRoundTables[currentTable - 1].player2Id;
+                    newSheet.Cells[currentTable + 1, 17] = currentRoundTables[currentTable - 1].player3Id;
+                    newSheet.Cells[currentTable + 1, 18] = currentRoundTables[currentTable - 1].player4Id;
+                }
+
+                // now we resize the columns
+                newSheet.UsedRange.EntireColumn.AutoFit();
             }
-
-            // now we resize the columns
-            excelSheet.UsedRange.EntireColumn.AutoFit();
-        }
-
-        public void FormattingExcelCells(NsExcel.Range range, string HTMLcolorCode, System.Drawing.Color fontColor, bool IsFontbold)
-        {
-            range.Interior.Color = System.Drawing.ColorTranslator.FromHtml(HTMLcolorCode);
-            range.Font.Color = System.Drawing.ColorTranslator.ToOle(fontColor);
-            range.Font.Bold = IsFontbold;
         }
 
         #endregion
