@@ -195,7 +195,7 @@
             0});
             this.numUpDownTriesMax.Name = "numUpDownTriesMax";
             this.numUpDownTriesMax.Value = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});

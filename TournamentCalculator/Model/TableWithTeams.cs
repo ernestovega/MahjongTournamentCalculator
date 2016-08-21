@@ -4,13 +4,13 @@
     {
         public int roundId;
         public int tableId;
-        public int player1Team;
-        public int player2Team;
-        public int player3Team;
-        public int player4Team;
+        public string player1Team;
+        public string player2Team;
+        public string player3Team;
+        public string player4Team;
 
         public TableWithTeams(int roundId, int tableId,
-            int player1Team, int player2Team, int player3Team, int player4Team)
+            string player1Team, string player2Team, string player3Team, string player4Team)
         {
             this.roundId = roundId;
             this.tableId = tableId;

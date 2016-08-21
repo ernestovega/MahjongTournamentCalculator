@@ -14,12 +14,11 @@ namespace TournamentCalculator
         #region Fields
 
         private List<Player> players = new List<Player>();
-        private List<Table> tables = new List<Table>();
+        private List<TablePlayer> tablePlayers = new List<TablePlayer>();
         private List<TableWithAll> tablesWithAll = new List<TableWithAll>();
         private List<TableWithNames> tablesWithNames = new List<TableWithNames>();
         private List<TableWithTeams> tablesWithTeams = new List<TableWithTeams>();
         private List<TableWithCountries> tablesWithCountries = new List<TableWithCountries>();
-        private List<TablePlayer> tablePlayers = new List<TablePlayer>();
         private int currentRound, currentTable, currentTablePlayer;
         private Random random = new Random();
         private int countTries = 0;
@@ -99,6 +98,8 @@ namespace TournamentCalculator
             btnShowTeams.Enabled = false;
             btnShowCountries.Enabled = false;
             btnShowAll.Enabled = false;
+            lblTriesNeeded.Text = "Tries needed:";
+            Application.DoEvents();
 
             int numRounds = decimal.ToInt32(numUpDownRounds.Value);
             int numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
@@ -109,9 +110,10 @@ namespace TournamentCalculator
             {
                 countTries++;
                 result = GenerateTournament(numRounds);
+                lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
+                Application.DoEvents();
             }
 
-            lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
             
             /*Si no se ha podido calcular en los intentos indicados, se notifica,
               se muestra la lista de jugadores y se termina*/
@@ -131,11 +133,12 @@ namespace TournamentCalculator
             }
 
             //Si llegamos aqui es que todo ha ido bien, generamos todas las vistas y se muestramos las mesas
-            //generateTablesWhitAll(numRounds);
+            generateTablesWhitAll(numRounds);
             generateTablesWhitNames(numRounds);
-            //generateTablesWhitTeams(numRounds);
-            //generateTablesWhitCountries(numRounds);
+            generateTablesWhitTeams(numRounds);
+            generateTablesWhitCountries(numRounds);
 
+            btnShowNames.Enabled = true;
             btnShowNames.PerformClick();
 
             btnImportExcel.Enabled = true;
@@ -144,7 +147,6 @@ namespace TournamentCalculator
             btnCalculate.Enabled = true;
             btnExportar.Enabled = true;
             btnShowPlayers.Enabled = true;
-            btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
             btnShowAll.Enabled = true;
@@ -156,7 +158,8 @@ namespace TournamentCalculator
         {
             Cursor.Current = Cursors.WaitCursor;
 
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
+            btnShowAll.PerformClick();
+
             ExportToExcel();
             
             Cursor.Current = Cursors.Default;
@@ -174,6 +177,19 @@ namespace TournamentCalculator
             btnShowCountries.Enabled = true;
             btnShowAll.Enabled = true;
             Cursor.Current = Cursors.Default;
+        }
+
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            btnShowAll.Enabled = false;
+
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
+
+            btnShowPlayers.Enabled = true;
+            btnShowNames.Enabled = true;
+            btnShowTeams.Enabled = true;
+            btnShowCountries.Enabled = true;
         }
 
         private void btnShowNames_Click(object sender, EventArgs e)
@@ -219,19 +235,6 @@ namespace TournamentCalculator
             Cursor.Current = Cursors.Default;
         }
 
-        private void btnShowAll_Click(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            btnShowAll.Enabled = false;
-
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
-
-            btnShowPlayers.Enabled = true;
-            btnShowNames.Enabled = true;
-            btnShowTeams.Enabled = true;
-            btnShowCountries.Enabled = true;
-        }
-
         #endregion
 
         #region Calculate tournament methods
@@ -239,22 +242,25 @@ namespace TournamentCalculator
         private int GenerateTournament(int numRounds)
         {
             //Limpiamos las tablas
-            tables.Clear();
             tablePlayers.Clear();
-            for (currentRound = 1; currentRound == numRounds; currentRound++)
+            tablesWithAll.Clear();
+            tablesWithNames.Clear();
+            tablesWithTeams.Clear();
+            tablesWithCountries.Clear();
+            for (currentRound = 1; currentRound <= numRounds; currentRound++)
             {//Iteramos por rondas
 
                 //Copiamos la lista de jugadores para ir borrando los que vayamos usando cada ronda
                 List<int> playersNotUsedThisRound = players.Select(x => x.Clone()).ToList().Select(x => x.id).ToList();
 
-                for (currentTable = 1; currentTable == players.Count / 4; currentTable++)
+                for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
                 {//Iteramos por mesas en cada ronda
 
-                    for (currentTablePlayer = 1; currentTablePlayer == 4; currentTablePlayer++)
+                    for (currentTablePlayer = 1; currentTablePlayer <= 4; currentTablePlayer++)
                     {//Iteramos por jugador en cada mesa
-                       
+
                         //Copiamos la lista de jugadores para ir borrando los que vayamos descartando
-                        int[] arrayPlayersIdsNotDiscarded = {};
+                        int[] arrayPlayersIdsNotDiscarded = new int[playersNotUsedThisRound.Count];
                         playersNotUsedThisRound.CopyTo(arrayPlayersIdsNotDiscarded);
                         List<int> playersIdsNotDiscarded = new List<int>(arrayPlayersIdsNotDiscarded);
 
@@ -318,19 +324,25 @@ namespace TournamentCalculator
             if (anterioresRondas.Count > 0)
             {
                 //Obtenemos una lista con los ids de las anteriores rondas
-                List<int> roundIdsWhichHavePlayed = anterioresRondas.Select(x => x.round).ToList();
+                List<int> roundIdsWhichHavePlayed = anterioresRondas.Select(x => x.round).Distinct().ToList();
 
                 //Obtenemos una lista de las mesas en las que ha jugado el elegido en cada ronda
-                List<TablePlayer> tablesWhichHavePlayed = new List<TablePlayer>();
+                List<TablePlayer> tablePlayersWhichHavePlayedChoosenOne = new List<TablePlayer>();
                 foreach (int roundPlayed in roundIdsWhichHavePlayed)
                 {
-                    tablesWhichHavePlayed.AddRange(anterioresRondas.FindAll(
+                    tablePlayersWhichHavePlayedChoosenOne.AddRange(anterioresRondas.FindAll(
                         x => x.round == roundPlayed && x.playerId == choosenOne.id).ToList());
+                }
+                List<TablePlayer> completeTablePlayersWhichHavePlayedAll = new List<TablePlayer>();
+                foreach (TablePlayer tp in tablePlayersWhichHavePlayedChoosenOne)
+                {
+                    completeTablePlayersWhichHavePlayedAll.AddRange(anterioresRondas.FindAll(
+                        x => x.round == tp.round && x.table == tp.table).ToList());
                 }
 
                 //Obtenemos una lista con los jugadores que ya han jugado contra el elegido en cada mesa donde él jugó
                 List<int> rivalsWhoHavePlayedAgainst = new List<int>();
-                foreach (TablePlayer tp in tablesWhichHavePlayed)
+                foreach (TablePlayer tp in completeTablePlayersWhichHavePlayedAll)
                 {
                     if (tp.playerId != choosenOne.id)
                         rivalsWhoHavePlayedAgainst.Add(tp.playerId);
@@ -363,7 +375,6 @@ namespace TournamentCalculator
                 sqlExcel = "SELECT * FROM [" + Sheet1 + "]";
                 OleDbDataAdapter oleDbdataAdapter = new OleDbDataAdapter(sqlExcel, conn);
                 oleDbdataAdapter.Fill(dataTable);
-                DataGridViewUtils.updateDataGridView(dataGridView, dataTable);
                 foreach (DataRow row in dataTable.Rows)
                 {
                     players.Add(
@@ -373,6 +384,7 @@ namespace TournamentCalculator
                             row[2].ToString(),
                             row[3].ToString()));
                 }
+                btnShowPlayers.PerformClick();
             }
         }
 
@@ -483,37 +495,92 @@ namespace TournamentCalculator
 
         private void generateTablesWhitAll(int numRounds)
         {
-            throw new NotImplementedException();
+            for (currentRound = 1; currentRound <= numRounds; currentRound++)
+            {
+                for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
+                {
+                    TableWithAll tableWithAll = new TableWithAll();
+                    tableWithAll.roundId = currentRound;
+                    tableWithAll.tableId = currentTable;
+                    for (currentTablePlayer = 1; currentTablePlayer <= 4; currentTablePlayer++)
+                    {
+                        switch (currentTablePlayer)
+                        {
+                            case 1:
+                                int player1Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                Player player = players.Find(x => x.id == player1Id);
+                                tableWithAll.player1Name = player.name;
+                                tableWithAll.player1Team = player.team;
+                                tableWithAll.player1Country = player.country;
+                                tableWithAll.player1Id = player.id;
+                                break;
+                            case 2:
+                                int player2Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                Player player2 = players.Find(x => x.id == player2Id);
+                                tableWithAll.player2Name = player2.name;
+                                tableWithAll.player2Team = player2.team;
+                                tableWithAll.player2Country = player2.country;
+                                tableWithAll.player2Id = player2.id;
+                                break;
+                            case 3:
+                                int player3Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                Player player3 = players.Find(x => x.id == player3Id);
+                                tableWithAll.player3Name = player3.name;
+                                tableWithAll.player3Team = player3.team;
+                                tableWithAll.player3Country = player3.country;
+                                tableWithAll.player3Id = player3.id;
+                                break;
+                            case 4:
+                                int player4Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                Player player4 = players.Find(x => x.id == player4Id);
+                                tableWithAll.player4Name = player4.name;
+                                tableWithAll.player4Team = player4.team;
+                                tableWithAll.player4Country = player4.country;
+                                tableWithAll.player4Id = player4.id;
+                                break;
+                        }
+                    }
+                    tablesWithAll.Add(tableWithAll);
+                }
+            }
         }
 
         private void generateTablesWhitNames(int numRounds)
         {
-            for (currentRound = 1; currentRound == numRounds; currentRound++)
+            for (currentRound = 1; currentRound <= numRounds; currentRound++)
             {
-                for (currentTable = 1; currentTable == players.Count / 4; currentTable++)
+                for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
                 {
                     TableWithNames tableWithNames = new TableWithNames();
                     tableWithNames.roundId = currentRound;
                     tableWithNames.tableId = currentTable;
-                    for (currentTablePlayer = 1; currentTablePlayer == 4; currentTablePlayer++)
+                    for (currentTablePlayer = 1; currentTablePlayer <= 4; currentTablePlayer++)
                     {
                         switch(currentTablePlayer)
                         {
                             case 1:
-                                tableWithNames.player1Name = tablePlayers.Find(x => x.round == currentRound &&
+                                int player1Id = tablePlayers.Find(x => x.round == currentRound &&
                                 x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithNames.player1Name = players.Find(x => x.id == player1Id).name;
                                 break;
                             case 2:
-                                tableWithNames.player1Name = tablePlayers.Find(x => x.round == currentRound &&
+                                int player2Id = tablePlayers.Find(x => x.round == currentRound &&
                                 x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithNames.player2Name = players.Find(x => x.id == player2Id).name;
                                 break;
                             case 3:
-                                tableWithNames.player1Name = tablePlayers.Find(x => x.round == currentRound &&
+                                int player3Id = tablePlayers.Find(x => x.round == currentRound &&
                                 x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithNames.player3Name = players.Find(x => x.id == player3Id).name;
                                 break;
                             case 4:
-                                tableWithNames.player1Name = tablePlayers.Find(x => x.round == currentRound &&
+                                int player4Id = tablePlayers.Find(x => x.round == currentRound &&
                                 x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithNames.player4Name = players.Find(x => x.id == player4Id).name;
                                 break;
                         }
                     }
@@ -524,12 +591,82 @@ namespace TournamentCalculator
 
         private void generateTablesWhitTeams(int numRounds)
         {
-            throw new NotImplementedException();
+            for (currentRound = 1; currentRound <= numRounds; currentRound++)
+            {
+                for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
+                {
+                    TableWithTeams tableWithTeams = new TableWithTeams();
+                    tableWithTeams.roundId = currentRound;
+                    tableWithTeams.tableId = currentTable;
+                    for (currentTablePlayer = 1; currentTablePlayer <= 4; currentTablePlayer++)
+                    {
+                        switch (currentTablePlayer)
+                        {
+                            case 1:
+                                int player1Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithTeams.player1Team = players.Find(x => x.id == player1Id).team;
+                                break;
+                            case 2:
+                                int player2Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithTeams.player2Team = players.Find(x => x.id == player2Id).team;
+                                break;
+                            case 3:
+                                int player3Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithTeams.player3Team = players.Find(x => x.id == player3Id).team;
+                                break;
+                            case 4:
+                                int player4Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithTeams.player4Team = players.Find(x => x.id == player4Id).team;
+                                break;
+                        }
+                    }
+                    tablesWithTeams.Add(tableWithTeams);
+                }
+            }
         }
 
         private void generateTablesWhitCountries(int numRounds)
         {
-            throw new NotImplementedException();
+            for (currentRound = 1; currentRound <= numRounds; currentRound++)
+            {
+                for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
+                {
+                    TableWithCountries tableWithCountrys = new TableWithCountries();
+                    tableWithCountrys.roundId = currentRound;
+                    tableWithCountrys.tableId = currentTable;
+                    for (currentTablePlayer = 1; currentTablePlayer <= 4; currentTablePlayer++)
+                    {
+                        switch (currentTablePlayer)
+                        {
+                            case 1:
+                                int player1Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithCountrys.player1Country = players.Find(x => x.id == player1Id).country;
+                                break;
+                            case 2:
+                                int player2Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithCountrys.player2Country = players.Find(x => x.id == player2Id).country;
+                                break;
+                            case 3:
+                                int player3Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithCountrys.player3Country = players.Find(x => x.id == player3Id).country;
+                                break;
+                            case 4:
+                                int player4Id = tablePlayers.Find(x => x.round == currentRound &&
+                                x.table == currentTable && x.player == currentTablePlayer).playerId;
+                                tableWithCountrys.player4Country = players.Find(x => x.id == player4Id).country;
+                                break;
+                        }
+                    }
+                    tablesWithCountries.Add(tableWithCountrys);
+                }
+            }
         }
 
         #endregion

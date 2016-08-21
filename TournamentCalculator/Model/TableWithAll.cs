@@ -4,27 +4,27 @@
     {
         public int roundId;
         public int tableId;
-        public int player1Name;
-        public int player2Name;
-        public int player3Name;
-        public int player4Name;
-        public int player1Team;
-        public int player2Team;
-        public int player3Team;
-        public int player4Team;
-        public int player1Country;
-        public int player2Country;
-        public int player3Country;
-        public int player4Country;
+        public string player1Name;
+        public string player2Name;
+        public string player3Name;
+        public string player4Name;
+        public string player1Team;
+        public string player2Team;
+        public string player3Team;
+        public string player4Team;
+        public string player1Country;
+        public string player2Country;
+        public string player3Country;
+        public string player4Country;
         public int player1Id;
         public int player2Id;
         public int player3Id;
         public int player4Id;
 
         public TableWithAll(int roundId, int tableId,
-            int player1Name, int player2Name, int player3Name, int player4Name,
-            int player1Team, int player2Team, int player3Team, int player4Team,
-            int player1Country, int player2Country, int player3Country, int player4Country,
+            string player1Name, string player2Name, string player3Name, string player4Name,
+            string player1Team, string player2Team, string player3Team, string player4Team,
+            string player1Country, string player2Country, string player3Country, string player4Country,
             int player1Id, int player2Id, int player3Id, int player4Id)
         {
             this.roundId = roundId;

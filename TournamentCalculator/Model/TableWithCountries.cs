@@ -4,13 +4,13 @@
     {
         public int roundId;
         public int tableId;
-        public int player1Country;
-        public int player2Country;
-        public int player3Country;
-        public int player4Country;
+        public string player1Country;
+        public string player2Country;
+        public string player3Country;
+        public string player4Country;
 
         public TableWithCountries(int roundId, int tableId,
-            int player1Country, int player2Country, int player3Country, int player4Country)
+            string player1Country, string player2Country, string player3Country, string player4Country)
         {
             this.roundId = roundId;
             this.tableId = tableId;
