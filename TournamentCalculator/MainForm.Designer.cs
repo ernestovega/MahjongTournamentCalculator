@@ -40,7 +40,7 @@
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.numUpDownRounds = new System.Windows.Forms.NumericUpDown();
             this.lblStep4 = new System.Windows.Forms.Label();
-            this.btnExportar = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.btnShowNames = new System.Windows.Forms.Button();
             this.btnShowTeams = new System.Windows.Forms.Button();
             this.btnShowCountries = new System.Windows.Forms.Button();
@@ -49,10 +49,11 @@
             this.lblTriesNeeded = new System.Windows.Forms.Label();
             this.numUpDownTriesMax = new System.Windows.Forms.NumericUpDown();
             this.btnShowPlayers = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.chckBxNames = new System.Windows.Forms.CheckBox();
+            this.chckBxTeams = new System.Windows.Forms.CheckBox();
+            this.chckBxCountries = new System.Windows.Forms.CheckBox();
+            this.chckBxIds = new System.Windows.Forms.CheckBox();
+            this.lblInclude = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
@@ -139,12 +140,12 @@
             resources.ApplyResources(this.lblStep4, "lblStep4");
             this.lblStep4.Name = "lblStep4";
             // 
-            // btnExportar
+            // btnExport
             // 
-            resources.ApplyResources(this.btnExportar, "btnExportar");
-            this.btnExportar.Name = "btnExportar";
-            this.btnExportar.UseVisualStyleBackColor = true;
-            this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
+            resources.ApplyResources(this.btnExport, "btnExport");
+            this.btnExport.Name = "btnExport";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // btnShowNames
             // 
@@ -211,38 +212,56 @@
             this.btnShowPlayers.UseVisualStyleBackColor = true;
             this.btnShowPlayers.Click += new System.EventHandler(this.btnShowPlayers_Click);
             // 
-            // checkBox1
+            // chckBxNames
             // 
-            resources.ApplyResources(this.checkBox1, "checkBox1");
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chckBxNames, "chckBxNames");
+            this.chckBxNames.Checked = true;
+            this.chckBxNames.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckBxNames.Name = "chckBxNames";
+            this.chckBxNames.UseVisualStyleBackColor = true;
+            this.chckBxNames.CheckedChanged += new System.EventHandler(this.chckBxNames_CheckedChanged);
             // 
-            // checkBox2
+            // chckBxTeams
             // 
-            resources.ApplyResources(this.checkBox2, "checkBox2");
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chckBxTeams, "chckBxTeams");
+            this.chckBxTeams.Checked = true;
+            this.chckBxTeams.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckBxTeams.Name = "chckBxTeams";
+            this.chckBxTeams.UseVisualStyleBackColor = true;
+            this.chckBxTeams.CheckedChanged += new System.EventHandler(this.chckBxTeams_CheckedChanged);
             // 
-            // checkBox3
+            // chckBxCountries
             // 
-            resources.ApplyResources(this.checkBox3, "checkBox3");
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chckBxCountries, "chckBxCountries");
+            this.chckBxCountries.Checked = true;
+            this.chckBxCountries.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckBxCountries.Name = "chckBxCountries";
+            this.chckBxCountries.UseVisualStyleBackColor = true;
+            this.chckBxCountries.CheckedChanged += new System.EventHandler(this.chckBxCountries_CheckedChanged);
             // 
-            // checkBox4
+            // chckBxIds
             // 
-            resources.ApplyResources(this.checkBox4, "checkBox4");
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chckBxIds, "chckBxIds");
+            this.chckBxIds.Checked = true;
+            this.chckBxIds.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckBxIds.Name = "chckBxIds";
+            this.chckBxIds.UseVisualStyleBackColor = true;
+            this.chckBxIds.CheckedChanged += new System.EventHandler(this.chckBxIds_CheckedChanged);
+            // 
+            // lblInclude
+            // 
+            resources.ApplyResources(this.lblInclude, "lblInclude");
+            this.lblInclude.Name = "lblInclude";
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.lblInclude);
+            this.Controls.Add(this.chckBxIds);
+            this.Controls.Add(this.chckBxCountries);
+            this.Controls.Add(this.chckBxTeams);
+            this.Controls.Add(this.chckBxNames);
             this.Controls.Add(this.btnShowPlayers);
             this.Controls.Add(this.numUpDownTriesMax);
             this.Controls.Add(this.lblTriesNeeded);
@@ -252,7 +271,7 @@
             this.Controls.Add(this.btnShowTeams);
             this.Controls.Add(this.btnShowNames);
             this.Controls.Add(this.lblStep4);
-            this.Controls.Add(this.btnExportar);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.numUpDownRounds);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.lblStep3);
@@ -287,7 +306,7 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.NumericUpDown numUpDownRounds;
         private System.Windows.Forms.Label lblStep4;
-        private System.Windows.Forms.Button btnExportar;
+        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnShowNames;
         private System.Windows.Forms.Button btnShowTeams;
         private System.Windows.Forms.Button btnShowCountries;
@@ -296,10 +315,11 @@
         private System.Windows.Forms.Label lblTriesNeeded;
         private System.Windows.Forms.NumericUpDown numUpDownTriesMax;
         private System.Windows.Forms.Button btnShowPlayers;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox chckBxNames;
+        private System.Windows.Forms.CheckBox chckBxTeams;
+        private System.Windows.Forms.CheckBox chckBxCountries;
+        private System.Windows.Forms.CheckBox chckBxIds;
+        private System.Windows.Forms.Label lblInclude;
     }
 }
 
