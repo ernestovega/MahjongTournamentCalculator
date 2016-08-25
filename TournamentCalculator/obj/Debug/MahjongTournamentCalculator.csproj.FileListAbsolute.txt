@@ -13,3 +13,4 @@ C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\T
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\aa-DJ\TournamentCalculator.resources.dll
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.MainForm.aa-DJ.resources
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\aa-DJ\TournamentCalculator.resources.dll
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.SplashForm.resources

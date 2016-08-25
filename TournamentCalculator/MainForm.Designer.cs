@@ -54,6 +54,7 @@
             this.chckBxCountries = new System.Windows.Forms.CheckBox();
             this.chckBxIds = new System.Windows.Forms.CheckBox();
             this.lblInclude = new System.Windows.Forms.Label();
+            this.btnGetExcelTemplate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
@@ -253,10 +254,18 @@
             resources.ApplyResources(this.lblInclude, "lblInclude");
             this.lblInclude.Name = "lblInclude";
             // 
+            // btnGetExcelTemplate
+            // 
+            resources.ApplyResources(this.btnGetExcelTemplate, "btnGetExcelTemplate");
+            this.btnGetExcelTemplate.Name = "btnGetExcelTemplate";
+            this.btnGetExcelTemplate.UseVisualStyleBackColor = true;
+            this.btnGetExcelTemplate.Click += new System.EventHandler(this.btnGetExcelTemplate_Click);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnGetExcelTemplate);
             this.Controls.Add(this.lblInclude);
             this.Controls.Add(this.chckBxIds);
             this.Controls.Add(this.chckBxCountries);
@@ -320,6 +329,7 @@
         private System.Windows.Forms.CheckBox chckBxCountries;
         private System.Windows.Forms.CheckBox chckBxIds;
         private System.Windows.Forms.Label lblInclude;
+        private System.Windows.Forms.Button btnGetExcelTemplate;
     }
 }
 

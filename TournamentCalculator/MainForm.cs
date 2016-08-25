@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using TournamentCalculator.Utils;
 using NsExcel = Microsoft.Office.Interop.Excel;
@@ -23,6 +24,7 @@ namespace TournamentCalculator
         private int currentRound, currentTable, currentTablePlayer;
         private Random random = new Random();
         private int countTries = 0;
+        private string errorMessage;
 
         #endregion
 
@@ -30,15 +32,35 @@ namespace TournamentCalculator
 
         public MainForm()
         {
-            InitializeComponent();
+            Thread t = new Thread(new ThreadStart(openSplash));
+            t.Start();
+            Thread.Sleep(3000);
+                InitializeComponent();
+                t.Abort();
 
             DataGridViewUtils.updateDataGridView(dataGridView, new List<Player>() {
                 new Player("1", "Example name", "Example Country", "Example Team")});
+        }
+        
+        public void openSplash()
+        {
+            Application.Run(new SplashForm());
         }
 
         #endregion
 
         #region Events
+
+        private void btnGetExcelTemplate_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            DisableAll();
+
+            GenerateExcelTemplate();
+
+            EnableAll();
+            Cursor.Current = Cursors.Default;
+        }
 
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
@@ -56,24 +78,48 @@ namespace TournamentCalculator
             players.Clear();
             lblPlayers.Text = string.Empty;
             lblTables.Text = string.Empty;
+            errorMessage = "Something is wrong in the excel:\n";
 
-            ImportExcel(path);
-
-            lblPlayers.Text = "Players: " + players.Count;
-            if (players.Count % 4 != 0)
-                MessageBox.Show("The number of players must be a multiple of 4.\nCheck the Excel.");
-            else
+            int excelState = ImportExcel(path);
+            if (excelState > 0)
             {
-                lblTables.Text = "Tables: " + players.Count / 4;
-                btnCalculate.Enabled = true;
-                numUpDownRounds.Enabled = true;
-                numUpDownTriesMax.Enabled = true;
+                int numPlayers = players.Count;
+                if (numPlayers <= 0)
+                {
+                    lblPlayers.Text = "Players: " + 0;
+                    errorMessage += "\n\tThere aren't enought players";
+                }
+                else
+                {
+                    lblPlayers.Text = "Players: " + players.Count;
+                    if (numPlayers % 4 != 0)
+                        errorMessage += "\n\tThe number of players must be a multiple of 4.";
+                    else if (players.Select(x => x.team).Distinct().Count() != numPlayers / 4)
+                        errorMessage += "\n\tFor " + numPlayers + " players, the number of teams must be " + numPlayers / 4 + ".";
+                    else if (ThereAre4PlayersByTeam())
+                        errorMessage += "\n\tEach team must have 4 players.";
+                    else
+                    {
+                        lblTables.Text = "Tables: " + numPlayers / 4;
+                        btnCalculate.Enabled = true;
+                        numUpDownRounds.Enabled = true;
+                        numUpDownTriesMax.Enabled = true;
+                        return;
+                    }
+                }
             }
+            else if(errorMessage.Equals("Something is wrong in the excel:\n"))
+                errorMessage += "\n\tExcel malformed.";
+
+            if (!errorMessage.Equals("Something is wrong in the excel:\n"))
+                MessageBox.Show(errorMessage);
+
+            btnGetExcelTemplate.Enabled = true;
+            btnImportExcel.Enabled = true;
+            btnShowPlayers.Enabled = true;
 
             btnShowPlayers.PerformClick();
 
-            btnImportExcel.Enabled = true;
-            btnShowPlayers.Enabled = true;
             Cursor.Current = Cursors.Default;
         }
 
@@ -350,9 +396,59 @@ namespace TournamentCalculator
 
         #region Excel methods
 
-        private void ImportExcel(string ruta)
+        private void GenerateExcelTemplate()
+        {
+            if (!isExcelInstalled())
+                return;
+
+            MessageBox.Show("Excel will be saved in your desktop");
+
+            //Start excel
+            NsExcel.Application excel;
+            excel = new NsExcel.Application();
+
+            //Make excel visible
+            excel.Visible = true;
+            excel.DisplayAlerts = false;
+
+            //Create a new Workbook
+            NsExcel.Workbook excelWorkBook;
+            excelWorkBook = excel.Workbooks.Add();
+
+            //Using default Worksheet
+            var excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
+
+            //Adding new Worksheet
+            var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+            newSheet.Name = "Players";
+            while (excelSheets.Count > 1)
+            {
+                excelSheets[excelSheets.Count - 1].Delete();
+            }
+
+            //Write headers
+            newSheet.Cells[1, 1] = "Id";
+            newSheet.Cells[1, 2] = "Name";
+            newSheet.Cells[1, 3] = "Country";
+            newSheet.Cells[1, 4] = "Team";
+
+            //Paint headers
+            newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+            newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+            newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+            //Save the excel
+            string excelName = "Players_Template";
+            excelWorkBook.SaveAs(excelName,
+                NsExcel.XlFileFormat.xlWorkbookNormal);
+            excelWorkBook.SaveCopyAs(
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + excelName + ".xls");
+        }
+
+        private int ImportExcel(string ruta)
         {
             DataTable dataTable = new DataTable();
+            bool flagWrongExcel = false;
             string strConnXlsx = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ruta
                 + ";Extended Properties=" + '"' + "Excel 12.0 Xml;HDR=YES;IMEX=1" + '"';
             string strConnXls = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + ruta
@@ -362,27 +458,112 @@ namespace TournamentCalculator
                 ? strConnXlsx : strConnXls;
             using (OleDbConnection conn = new OleDbConnection(strConn))
             {
-                conn.Open();
-                var dtSchema = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-                var Sheet1 = dtSchema.Rows[0].Field<string>("TABLE_NAME");
-                sqlExcel = "SELECT * FROM [" + Sheet1 + "]";
-                OleDbDataAdapter oleDbdataAdapter = new OleDbDataAdapter(sqlExcel, conn);
-                oleDbdataAdapter.Fill(dataTable);
-                foreach (DataRow row in dataTable.Rows)
+                try
                 {
-                    players.Add(
-                        new Player(
-                            row[0].ToString(),
-                            row[1].ToString(),
-                            row[2].ToString(),
-                            row[3].ToString()));
+                    conn.Open();
+                    var dtSchema = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                    var Sheet1 = dtSchema.Rows[0].Field<string>("TABLE_NAME");
+                    sqlExcel = "SELECT * FROM [" + Sheet1 + "]";
+                    OleDbDataAdapter oleDbdataAdapter = new OleDbDataAdapter(sqlExcel, conn);
+                    oleDbdataAdapter.Fill(dataTable);
                 }
-                btnShowPlayers.PerformClick();
+                catch
+                {
+                    errorMessage += "\n\tWrong Excel file format.";
+                    flagWrongExcel = true;
+                }
+
+                if (dataTable == null || dataTable.Rows == null || dataTable.Columns == null)
+                {
+                    flagWrongExcel = true;
+                    errorMessage += "\n\tWrong Excel file format or empty.";
+                }
+                else if(dataTable.Columns.Count < 4)
+                {
+                    flagWrongExcel = true;
+                    errorMessage += "\n\tThere aren´t enough columns.";
+                }
+                else if (dataTable.Columns.Count > 4)
+                {
+                    flagWrongExcel = true;
+                    errorMessage += "\n\tThere are too much columns.";
+                }
+
+                if (!flagWrongExcel)
+                {
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        try
+                        {
+                            if (string.IsNullOrWhiteSpace(row[0].ToString()) || string.IsNullOrWhiteSpace(row[1].ToString()) ||
+                                string.IsNullOrWhiteSpace(row[2].ToString()) || string.IsNullOrWhiteSpace(row[3].ToString()))
+                            {//Nos aseguramos de que no hay ninguna casilla vacía
+                                flagWrongExcel = true;
+                                AddNewPlayerFromExcel(row);
+                            }
+                            else
+                                AddNewPlayerFromExcel(row);
+                        }
+                        catch (Exception)
+                        {
+                            flagWrongExcel = true;
+                            AddNewPlayerFromExcel(row);
+                        }
+                    }
+                }
             }
+            if (flagWrongExcel)
+            {
+                return -1;
+            }
+            else
+                return 1;
         }
 
-        public void ExportToExcel()
+        private static bool RequestFile(ref string path)
         {
+            OpenFileDialog fDialog = new OpenFileDialog();
+            fDialog.Title = "Select Excel file";
+            fDialog.Filter = "Excel Files|*.xlsx;*.xls;";
+            fDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (fDialog.ShowDialog() == DialogResult.OK)
+            {
+                path = fDialog.FileName.ToString();
+                return true;
+            }
+
+            path = "";
+            return false;
+        }
+
+        private void AddNewPlayerFromExcel(DataRow row)
+        {
+            players.Add(new Player(
+                row.IsNull(0) || string.IsNullOrWhiteSpace(row[0].ToString()) ? "" : row[0].ToString(),
+                row.IsNull(1) || string.IsNullOrWhiteSpace(row[1].ToString()) ? "" : row[1].ToString(),
+                row.IsNull(2) || string.IsNullOrWhiteSpace(row[2].ToString()) ? "" : row[2].ToString(),
+                row.IsNull(3) || string.IsNullOrWhiteSpace(row[3].ToString()) ? "" : row[3].ToString()
+                ));
+        }
+
+        private bool ThereAre4PlayersByTeam()
+        {
+            List<string> teams = players.Select(x => x.team).Distinct().ToList();
+            bool flagWrongMembers = false;
+            foreach(string team in teams)
+            {
+                if (players.FindAll(x => x.team.Equals(team)).Count != 4)
+                    flagWrongMembers = true;
+            }
+            return flagWrongMembers;
+        }
+
+        private void ExportToExcel()
+        {
+            if (!isExcelInstalled())
+                return;
+            MessageBox.Show("Excel will be saved in your desktop");
+
             //Start excel
             NsExcel.Application excel;
             excel = new NsExcel.Application();
@@ -493,31 +674,28 @@ namespace TournamentCalculator
             string excelName = "Tournament_"
                 + DateTime.Now.Second + DateTime.Now.Minute + DateTime.Now.Hour
                 + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year;
-            excelWorkBook.SaveAs(excelName);
+            excelWorkBook.SaveAs(excelName,
+                NsExcel.XlFileFormat.xlWorkbookNormal);
             excelWorkBook.SaveCopyAs(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-                + "\\" + excelName + ".xlsx");
+                + "\\" + excelName + ".xls");
+        }
+
+        private bool isExcelInstalled()
+        {
+            Type officeType = Type.GetTypeFromProgID("Excel.Application");
+            if (officeType == null)
+            {
+                MessageBox.Show("Excel is not present on your computer.");
+                return false;
+            }
+            else
+                return true;
         }
 
         #endregion
 
         #region Private methods
-
-        private static bool RequestFile(ref string path)
-        {
-            OpenFileDialog fDialog = new OpenFileDialog();
-            fDialog.Title = "Select Excel file";
-            fDialog.Filter = "Excel Files|*.xlsx;*.xls;";
-            fDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            if (fDialog.ShowDialog() == DialogResult.OK)
-            {
-                path = fDialog.FileName.ToString();
-                return true;
-            }
-
-            path = "";
-            return false;
-        }
 
         private Player GetPlayerById(int id)
         {
@@ -718,6 +896,7 @@ namespace TournamentCalculator
 
         private void EnableAll()
         {
+            btnGetExcelTemplate.Enabled = true;
             btnImportExcel.Enabled = true;
             btnCalculate.Enabled = true;
             btnExport.Enabled = true;
@@ -736,6 +915,7 @@ namespace TournamentCalculator
 
         private void DisableAll()
         {
+            btnGetExcelTemplate.Enabled = false;
             btnImportExcel.Enabled = false;
             btnCalculate.Enabled = false;
             btnExport.Enabled = false;

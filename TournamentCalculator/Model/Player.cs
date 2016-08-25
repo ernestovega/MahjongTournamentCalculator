@@ -9,7 +9,7 @@
 
         public Player(string id, string name, string country, string team)
         {
-            this.id = int.Parse(id);
+            this.id = int.Parse(string.IsNullOrEmpty(id) ? "0" : id);
             this.name = name;
             this.country = country;
             this.team = team;
