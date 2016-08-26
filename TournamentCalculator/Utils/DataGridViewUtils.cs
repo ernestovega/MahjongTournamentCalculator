@@ -13,7 +13,7 @@ namespace TournamentCalculator.Utils
             datagrid.DataSource = dataTable;
         }
 
-        public static void updateDataGridView(DataGridView dataGridView, List<Player> players)
+        public static void updateDataGridView(DataGridView dataGrid, List<Player> players)
         {
             DataTable dataTable = new DataTable();
             using (var reader = ObjectReader.Create(players))
@@ -27,11 +27,11 @@ namespace TournamentCalculator.Utils
                     MessageBox.Show(ex.Message);
                 }
             }
-            dataGridView.DataSource = dataTable;
-            dataGridView.Columns["Id"].DisplayIndex = 0;
-            dataGridView.Columns["Name"].DisplayIndex = 1;
-            dataGridView.Columns["Team"].DisplayIndex = 2;
-            dataGridView.Columns["Country"].DisplayIndex = 3;
+            dataGrid.DataSource = dataTable;
+            dataGrid.Columns["Id"].DisplayIndex = 0;
+            dataGrid.Columns["Name"].DisplayIndex = 1;
+            dataGrid.Columns["Team"].DisplayIndex = 2;
+            dataGrid.Columns["Country"].DisplayIndex = 3;
         }
 
         public static void updateDataGridView(DataGridView datagrid, List<Table> list)

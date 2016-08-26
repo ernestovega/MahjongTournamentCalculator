@@ -55,6 +55,8 @@
             this.chckBxIds = new System.Windows.Forms.CheckBox();
             this.lblInclude = new System.Windows.Forms.Label();
             this.btnGetExcelTemplate = new System.Windows.Forms.Button();
+            this.btnShowByPlayers = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
@@ -62,6 +64,7 @@
             // 
             // btnImportExcel
             // 
+            this.btnImportExcel.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnImportExcel, "btnImportExcel");
             this.btnImportExcel.Name = "btnImportExcel";
             this.btnImportExcel.UseVisualStyleBackColor = true;
@@ -70,30 +73,36 @@
             // lblPlayers
             // 
             resources.ApplyResources(this.lblPlayers, "lblPlayers");
+            this.lblPlayers.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblPlayers.Name = "lblPlayers";
             // 
             // lblTables
             // 
             resources.ApplyResources(this.lblTables, "lblTables");
+            this.lblTables.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTables.Name = "lblTables";
             // 
             // lblRounds
             // 
             resources.ApplyResources(this.lblRounds, "lblRounds");
+            this.lblRounds.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblRounds.Name = "lblRounds";
             // 
             // lblStep1
             // 
             resources.ApplyResources(this.lblStep1, "lblStep1");
+            this.lblStep1.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblStep1.Name = "lblStep1";
             // 
             // lblStep2
             // 
             resources.ApplyResources(this.lblStep2, "lblStep2");
+            this.lblStep2.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblStep2.Name = "lblStep2";
             // 
             // btnCalculate
             // 
+            this.btnCalculate.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnCalculate, "btnCalculate");
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.UseVisualStyleBackColor = true;
@@ -102,6 +111,7 @@
             // lblStep3
             // 
             resources.ApplyResources(this.lblStep3, "lblStep3");
+            this.lblStep3.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblStep3.Name = "lblStep3";
             // 
             // dataGridView
@@ -112,12 +122,14 @@
             resources.ApplyResources(this.dataGridView, "dataGridView");
             this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Cursor = System.Windows.Forms.Cursors.Default;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             // 
             // numUpDownRounds
             // 
+            this.numUpDownRounds.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.numUpDownRounds, "numUpDownRounds");
             this.numUpDownRounds.Maximum = new decimal(new int[] {
             20,
@@ -139,10 +151,12 @@
             // lblStep4
             // 
             resources.ApplyResources(this.lblStep4, "lblStep4");
+            this.lblStep4.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblStep4.Name = "lblStep4";
             // 
             // btnExport
             // 
+            this.btnExport.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnExport, "btnExport");
             this.btnExport.Name = "btnExport";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -150,6 +164,7 @@
             // 
             // btnShowNames
             // 
+            this.btnShowNames.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnShowNames, "btnShowNames");
             this.btnShowNames.Name = "btnShowNames";
             this.btnShowNames.UseVisualStyleBackColor = true;
@@ -157,6 +172,7 @@
             // 
             // btnShowTeams
             // 
+            this.btnShowTeams.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnShowTeams, "btnShowTeams");
             this.btnShowTeams.Name = "btnShowTeams";
             this.btnShowTeams.UseVisualStyleBackColor = true;
@@ -164,6 +180,7 @@
             // 
             // btnShowCountries
             // 
+            this.btnShowCountries.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnShowCountries, "btnShowCountries");
             this.btnShowCountries.Name = "btnShowCountries";
             this.btnShowCountries.UseVisualStyleBackColor = true;
@@ -171,6 +188,7 @@
             // 
             // btnShowAll
             // 
+            this.btnShowAll.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnShowAll, "btnShowAll");
             this.btnShowAll.Name = "btnShowAll";
             this.btnShowAll.UseVisualStyleBackColor = true;
@@ -179,15 +197,18 @@
             // lblTriesMax
             // 
             resources.ApplyResources(this.lblTriesMax, "lblTriesMax");
+            this.lblTriesMax.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTriesMax.Name = "lblTriesMax";
             // 
             // lblTriesNeeded
             // 
             resources.ApplyResources(this.lblTriesNeeded, "lblTriesNeeded");
+            this.lblTriesNeeded.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTriesNeeded.Name = "lblTriesNeeded";
             // 
             // numUpDownTriesMax
             // 
+            this.numUpDownTriesMax.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.numUpDownTriesMax, "numUpDownTriesMax");
             this.numUpDownTriesMax.Maximum = new decimal(new int[] {
             1000000000,
@@ -208,6 +229,7 @@
             // 
             // btnShowPlayers
             // 
+            this.btnShowPlayers.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnShowPlayers, "btnShowPlayers");
             this.btnShowPlayers.Name = "btnShowPlayers";
             this.btnShowPlayers.UseVisualStyleBackColor = true;
@@ -218,6 +240,7 @@
             resources.ApplyResources(this.chckBxNames, "chckBxNames");
             this.chckBxNames.Checked = true;
             this.chckBxNames.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckBxNames.Cursor = System.Windows.Forms.Cursors.Default;
             this.chckBxNames.Name = "chckBxNames";
             this.chckBxNames.UseVisualStyleBackColor = true;
             this.chckBxNames.CheckedChanged += new System.EventHandler(this.chckBxNames_CheckedChanged);
@@ -227,6 +250,7 @@
             resources.ApplyResources(this.chckBxTeams, "chckBxTeams");
             this.chckBxTeams.Checked = true;
             this.chckBxTeams.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckBxTeams.Cursor = System.Windows.Forms.Cursors.Default;
             this.chckBxTeams.Name = "chckBxTeams";
             this.chckBxTeams.UseVisualStyleBackColor = true;
             this.chckBxTeams.CheckedChanged += new System.EventHandler(this.chckBxTeams_CheckedChanged);
@@ -236,6 +260,7 @@
             resources.ApplyResources(this.chckBxCountries, "chckBxCountries");
             this.chckBxCountries.Checked = true;
             this.chckBxCountries.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckBxCountries.Cursor = System.Windows.Forms.Cursors.Default;
             this.chckBxCountries.Name = "chckBxCountries";
             this.chckBxCountries.UseVisualStyleBackColor = true;
             this.chckBxCountries.CheckedChanged += new System.EventHandler(this.chckBxCountries_CheckedChanged);
@@ -245,6 +270,7 @@
             resources.ApplyResources(this.chckBxIds, "chckBxIds");
             this.chckBxIds.Checked = true;
             this.chckBxIds.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckBxIds.Cursor = System.Windows.Forms.Cursors.Default;
             this.chckBxIds.Name = "chckBxIds";
             this.chckBxIds.UseVisualStyleBackColor = true;
             this.chckBxIds.CheckedChanged += new System.EventHandler(this.chckBxIds_CheckedChanged);
@@ -252,19 +278,37 @@
             // lblInclude
             // 
             resources.ApplyResources(this.lblInclude, "lblInclude");
+            this.lblInclude.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblInclude.Name = "lblInclude";
             // 
             // btnGetExcelTemplate
             // 
+            this.btnGetExcelTemplate.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnGetExcelTemplate, "btnGetExcelTemplate");
             this.btnGetExcelTemplate.Name = "btnGetExcelTemplate";
             this.btnGetExcelTemplate.UseVisualStyleBackColor = true;
             this.btnGetExcelTemplate.Click += new System.EventHandler(this.btnGetExcelTemplate_Click);
             // 
+            // btnShowByPlayers
+            // 
+            this.btnShowByPlayers.Cursor = System.Windows.Forms.Cursors.Default;
+            resources.ApplyResources(this.btnShowByPlayers, "btnShowByPlayers");
+            this.btnShowByPlayers.Name = "btnShowByPlayers";
+            this.btnShowByPlayers.UseVisualStyleBackColor = true;
+            this.btnShowByPlayers.Click += new System.EventHandler(this.btnShowByPlayers_Click);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label1.Name = "label1";
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnShowByPlayers);
             this.Controls.Add(this.btnGetExcelTemplate);
             this.Controls.Add(this.lblInclude);
             this.Controls.Add(this.chckBxIds);
@@ -291,6 +335,7 @@
             this.Controls.Add(this.lblTables);
             this.Controls.Add(this.lblPlayers);
             this.Controls.Add(this.btnImportExcel);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
             this.Name = "MainForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -330,6 +375,8 @@
         private System.Windows.Forms.CheckBox chckBxIds;
         private System.Windows.Forms.Label lblInclude;
         private System.Windows.Forms.Button btnGetExcelTemplate;
+        private System.Windows.Forms.Button btnShowByPlayers;
+        private System.Windows.Forms.Label label1;
     }
 }
 

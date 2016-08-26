@@ -28,15 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashForm));
-            this.timerSplash = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // timerSplash
-            // 
-            this.timerSplash.Enabled = true;
-            this.timerSplash.Interval = 3000;
             // 
             // SplashForm
             // 
@@ -46,6 +39,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(400, 400);
             this.ControlBox = false;
+            this.Cursor = System.Windows.Forms.Cursors.AppStarting;
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(400, 400);
@@ -60,7 +55,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer timerSplash;
     }
 }

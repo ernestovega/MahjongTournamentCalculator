@@ -21,6 +21,7 @@ namespace TournamentCalculator
         private List<TableWithNames> tablesWithNames = new List<TableWithNames>();
         private List<TableWithTeams> tablesWithTeams = new List<TableWithTeams>();
         private List<TableWithCountries> tablesWithCountries = new List<TableWithCountries>();
+        private List<TableWithAll> tablesByPlayer = new List<TableWithAll>();
         private int currentRound, currentTable, currentTablePlayer;
         private Random random = new Random();
         private int countTries = 0;
@@ -34,9 +35,9 @@ namespace TournamentCalculator
         {
             Thread t = new Thread(new ThreadStart(openSplash));
             t.Start();
-            Thread.Sleep(3000);
-                InitializeComponent();
-                t.Abort();
+            Thread.Sleep(2000);
+            InitializeComponent();
+            t.Abort();
 
             DataGridViewUtils.updateDataGridView(dataGridView, new List<Player>() {
                 new Player("1", "Example name", "Example Country", "Example Team")});
@@ -54,11 +55,9 @@ namespace TournamentCalculator
         private void btnGetExcelTemplate_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            DisableAll();
 
             GenerateExcelTemplate();
-
-            EnableAll();
+            
             Cursor.Current = Cursors.Default;
         }
 
@@ -76,6 +75,12 @@ namespace TournamentCalculator
             DisableAll();
 
             players.Clear();
+            tablePlayers.Clear();
+            tablesWithAll.Clear();
+            tablesWithNames.Clear();
+            tablesWithTeams.Clear();
+            tablesWithCountries.Clear();
+            tablesByPlayer.Clear();
             lblPlayers.Text = string.Empty;
             lblTables.Text = string.Empty;
             errorMessage = "Something is wrong in the excel:\n";
@@ -101,9 +106,15 @@ namespace TournamentCalculator
                     else
                     {
                         lblTables.Text = "Tables: " + numPlayers / 4;
+                        btnGetExcelTemplate.Enabled = true;
+                        btnImportExcel.Enabled = true;
                         btnCalculate.Enabled = true;
                         numUpDownRounds.Enabled = true;
                         numUpDownTriesMax.Enabled = true;
+                        btnShowPlayers.Enabled = true;
+
+                        btnShowPlayers.PerformClick();
+                        Cursor.Current = Cursors.Default;
                         return;
                     }
                 }
@@ -165,6 +176,7 @@ namespace TournamentCalculator
             GenerateTablesWhitNames(numRounds);
             GenerateTablesWhitTeams(numRounds);
             GenerateTablesWhitCountries(numRounds);
+            GenerateTablesByPlayer();
 
             btnShowNames.Enabled = true;
             btnShowNames.PerformClick();
@@ -211,6 +223,21 @@ namespace TournamentCalculator
 
             DataGridViewUtils.updateDataGridView(dataGridView, players);
 
+            btnShowNames.Enabled = true;
+            btnShowTeams.Enabled = true;
+            btnShowCountries.Enabled = true;
+            btnShowAll.Enabled = true;
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void btnShowByPlayers_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            dataGridView.Enabled = false;
+
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesByPlayer);
+
+            btnShowPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
@@ -396,12 +423,22 @@ namespace TournamentCalculator
 
         #region Excel methods
 
+        private bool isExcelInstalled()
+        {
+            Type officeType = Type.GetTypeFromProgID("Excel.Application");
+            if (officeType == null)
+            {
+                MessageBox.Show("Excel is not present on your computer.");
+                return false;
+            }
+            else
+                return true;
+        }
+
         private void GenerateExcelTemplate()
         {
             if (!isExcelInstalled())
                 return;
-
-            MessageBox.Show("Excel will be saved in your desktop");
 
             //Start excel
             NsExcel.Application excel;
@@ -429,8 +466,8 @@ namespace TournamentCalculator
             //Write headers
             newSheet.Cells[1, 1] = "Id";
             newSheet.Cells[1, 2] = "Name";
-            newSheet.Cells[1, 3] = "Country";
-            newSheet.Cells[1, 4] = "Team";
+            newSheet.Cells[1, 3] = "Team";
+            newSheet.Cells[1, 4] = "Country";
 
             //Paint headers
             newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
@@ -441,8 +478,15 @@ namespace TournamentCalculator
             string excelName = "Players_Template";
             excelWorkBook.SaveAs(excelName,
                 NsExcel.XlFileFormat.xlWorkbookNormal);
-            excelWorkBook.SaveCopyAs(
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + excelName + ".xls");
+            try
+            {
+                excelWorkBook.SaveCopyAs(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + excelName + ".xls");
+            }
+            catch
+            {
+                MessageBox.Show("Excel template coldn't be saved.");
+            }
         }
 
         private int ImportExcel(string ruta)
@@ -450,9 +494,9 @@ namespace TournamentCalculator
             DataTable dataTable = new DataTable();
             bool flagWrongExcel = false;
             string strConnXlsx = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ruta
-                + ";Extended Properties=" + '"' + "Excel 12.0 Xml;HDR=YES;IMEX=1" + '"';
+                + ";Extended Properties=" + '"' + "Excel 12.0 Xml;IMEX=1" + '"';
             string strConnXls = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + ruta
-                + ";Extended Properties=" + '"' + "Excel 8.0;HDR=YES;IMEX=1" + '"';
+                + ";Extended Properties=" + '"' + "Excel 8.0;IMEX=1" + '"';
             string sqlExcel;
             string strConn = ruta.Substring(ruta.Length - 4).ToLower().Equals("xlsx")
                 ? strConnXlsx : strConnXls;
@@ -483,10 +527,18 @@ namespace TournamentCalculator
                     flagWrongExcel = true;
                     errorMessage += "\n\tThere aren´t enough columns.";
                 }
-                else if (dataTable.Columns.Count > 4)
+                //else if (dataTable.Columns.Count > 4)
+                //{
+                //    flagWrongExcel = true;
+                //    errorMessage += "\n\tThere are too much columns.";
+                //}
+                else if (!((DataColumn)dataTable.Columns[0]).ColumnName.ToString().ToLower().Equals("id") ||
+                    !((DataColumn)dataTable.Columns[1]).ColumnName.ToString().ToLower().Equals("name") ||
+                    !((DataColumn)dataTable.Columns[2]).ColumnName.ToString().ToLower().Equals("team") ||
+                    !((DataColumn)dataTable.Columns[3]).ColumnName.ToString().ToLower().Equals("country"))
                 {
                     flagWrongExcel = true;
-                    errorMessage += "\n\tThere are too much columns.";
+                    errorMessage += "\n\tColumn headers doesn´t match.";
                 }
 
                 if (!flagWrongExcel)
@@ -562,7 +614,6 @@ namespace TournamentCalculator
         {
             if (!isExcelInstalled())
                 return;
-            MessageBox.Show("Excel will be saved in your desktop");
 
             //Start excel
             NsExcel.Application excel;
@@ -577,9 +628,9 @@ namespace TournamentCalculator
             excelWorkBook = excel.Workbooks.Add();
 
             //Using default Worksheet
-            var excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
+            NsExcel.Sheets excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
 
-            //Write data            
+            //Write Tournament data by rounds         
             for (currentRound = 1; currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count(); currentRound++)
             {
                 //Adding new Worksheet
@@ -670,27 +721,84 @@ namespace TournamentCalculator
                 newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
             }
 
+            //Write Tournament data by players
+            WriteToExcelByPlayers(excelSheets);
+
             //Now save the excel
             string excelName = "Tournament_"
                 + DateTime.Now.Second + DateTime.Now.Minute + DateTime.Now.Hour
                 + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year;
             excelWorkBook.SaveAs(excelName,
                 NsExcel.XlFileFormat.xlWorkbookNormal);
-            excelWorkBook.SaveCopyAs(
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-                + "\\" + excelName + ".xls");
+            try
+            {
+                excelWorkBook.SaveCopyAs(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                    + "\\" + excelName + ".xls");
+            }
+            catch
+            {
+                MessageBox.Show("Excel template coldn't be saved.");
+            }
         }
 
-        private bool isExcelInstalled()
+        private void WriteToExcelByPlayers(NsExcel.Sheets excelSheets)
         {
-            Type officeType = Type.GetTypeFromProgID("Excel.Application");
-            if (officeType == null)
+            //Adding new Worksheet
+            var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+            newSheet.Name = "Player's tables ";
+           
+            //Write headers
+            newSheet.Cells[1, 1] = "Round";
+            newSheet.Cells[1, 2] = "Table";
+            newSheet.Cells[1, 3] = "Player 1 Name";
+            newSheet.Cells[1, 4] = "Player 2 Name";
+            newSheet.Cells[1, 5] = "Player 3 Name";
+            newSheet.Cells[1, 6] = "Player 4 Name";
+            newSheet.Cells[1, 7] = "Player 1 Team";
+            newSheet.Cells[1, 8] = "Player 2 Team";
+            newSheet.Cells[1, 9] = "Player 3 Team";
+            newSheet.Cells[1, 10] = "Player 4 Team";
+            newSheet.Cells[1, 11] = "Player 1 Country";
+            newSheet.Cells[1, 12] = "Player 2 Country";
+            newSheet.Cells[1, 13] = "Player 3 Country";
+            newSheet.Cells[1, 14] = "Player 4 Country";
+            newSheet.Cells[1, 15] = "Player 1 Id";
+            newSheet.Cells[1, 16] = "Player 2 Id";
+            newSheet.Cells[1, 17] = "Player 3 Id";
+            newSheet.Cells[1, 18] = "Player 4 Id";
+
+            //Write data
+            for (int i = 0; i < tablesByPlayer.Count; i++)
             {
-                MessageBox.Show("Excel is not present on your computer.");
-                return false;
+                TableWithAll twa = tablesByPlayer[i];
+                newSheet.Cells[i + 1, 1] = twa.roundId;
+                newSheet.Cells[i + 1, 2] = twa.tableId;
+                newSheet.Cells[i + 1, 3] = twa.player1Name;
+                newSheet.Cells[i + 1, 4] = twa.player2Name;
+                newSheet.Cells[i + 1, 5] = twa.player3Name;
+                newSheet.Cells[i + 1, 6] = twa.player4Name;
+                newSheet.Cells[i + 1, 7] = twa.player1Team;
+                newSheet.Cells[i + 1, 8] = twa.player2Team;
+                newSheet.Cells[i + 1, 9] = twa.player3Team;
+                newSheet.Cells[i + 1, 10] = twa.player4Team;
+                newSheet.Cells[i + 1, 11] = twa.player1Country;
+                newSheet.Cells[i + 1, 12] = twa.player2Country;
+                newSheet.Cells[i + 1, 13] = twa.player3Country;
+                newSheet.Cells[i + 1, 14] = twa.player4Country;
+                newSheet.Cells[i + 1, 15] = twa.player1Id;
+                newSheet.Cells[i + 1, 16] = twa.player2Id;
+                newSheet.Cells[i + 1, 17] = twa.player3Id;
+                newSheet.Cells[i + 1, 18] = twa.player4Id;
             }
-            else
-                return true;
+
+            //Resize columns
+            newSheet.UsedRange.EntireColumn.AutoFit();
+
+            //Paint headers
+            newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+            newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+            newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
         }
 
         #endregion
@@ -767,121 +875,38 @@ namespace TournamentCalculator
 
         private void GenerateTablesWhitNames(int numRounds)
         {
-            for (currentRound = 1; currentRound <= numRounds; currentRound++)
-            {
-                for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
-                {
-                    TableWithNames tableWithNames = new TableWithNames();
-                    tableWithNames.roundId = currentRound;
-                    tableWithNames.tableId = currentTable;
-                    for (currentTablePlayer = 1; currentTablePlayer <= 4; currentTablePlayer++)
-                    {
-                        switch(currentTablePlayer)
-                        {
-                            case 1:
-                                int player1Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithNames.player1Name = players.Find(x => x.id == player1Id).name;
-                                break;
-                            case 2:
-                                int player2Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithNames.player2Name = players.Find(x => x.id == player2Id).name;
-                                break;
-                            case 3:
-                                int player3Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithNames.player3Name = players.Find(x => x.id == player3Id).name;
-                                break;
-                            case 4:
-                                int player4Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithNames.player4Name = players.Find(x => x.id == player4Id).name;
-                                break;
-                        }
-                    }
-                    tablesWithNames.Add(tableWithNames);
-                }
-            }
+            tablesWithNames.AddRange(
+                tablesWithAll.Select(x => new TableWithNames(
+                    x.roundId, x.tableId, x.player1Name, x.player2Name, x.player3Name, x.player4Name))
+                    .ToList());            
         }
 
         private void GenerateTablesWhitTeams(int numRounds)
         {
-            for (currentRound = 1; currentRound <= numRounds; currentRound++)
-            {
-                for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
-                {
-                    TableWithTeams tableWithTeams = new TableWithTeams();
-                    tableWithTeams.roundId = currentRound;
-                    tableWithTeams.tableId = currentTable;
-                    for (currentTablePlayer = 1; currentTablePlayer <= 4; currentTablePlayer++)
-                    {
-                        switch (currentTablePlayer)
-                        {
-                            case 1:
-                                int player1Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithTeams.player1Team = players.Find(x => x.id == player1Id).team;
-                                break;
-                            case 2:
-                                int player2Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithTeams.player2Team = players.Find(x => x.id == player2Id).team;
-                                break;
-                            case 3:
-                                int player3Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithTeams.player3Team = players.Find(x => x.id == player3Id).team;
-                                break;
-                            case 4:
-                                int player4Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithTeams.player4Team = players.Find(x => x.id == player4Id).team;
-                                break;
-                        }
-                    }
-                    tablesWithTeams.Add(tableWithTeams);
-                }
-            }
+            tablesWithNames.AddRange(
+                tablesWithAll.Select(x => new TableWithNames(
+                    x.roundId, x.tableId, x.player1Team, x.player2Team, x.player3Team, x.player4Team))
+                    .ToList());
         }
 
         private void GenerateTablesWhitCountries(int numRounds)
         {
-            for (currentRound = 1; currentRound <= numRounds; currentRound++)
+            tablesWithNames.AddRange(
+                tablesWithAll.Select(x => new TableWithNames(
+                    x.roundId, x.tableId, x.player1Country, x.player2Country, x.player3Country, x.player4Country))
+                    .ToList());
+        }
+
+        private void GenerateTablesByPlayer()
+        {
+            foreach(Player p in players)
             {
-                for (currentTable = 1; currentTable <= players.Count / 4; currentTable++)
-                {
-                    TableWithCountries tableWithCountrys = new TableWithCountries();
-                    tableWithCountrys.roundId = currentRound;
-                    tableWithCountrys.tableId = currentTable;
-                    for (currentTablePlayer = 1; currentTablePlayer <= 4; currentTablePlayer++)
-                    {
-                        switch (currentTablePlayer)
-                        {
-                            case 1:
-                                int player1Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithCountrys.player1Country = players.Find(x => x.id == player1Id).country;
-                                break;
-                            case 2:
-                                int player2Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithCountrys.player2Country = players.Find(x => x.id == player2Id).country;
-                                break;
-                            case 3:
-                                int player3Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithCountrys.player3Country = players.Find(x => x.id == player3Id).country;
-                                break;
-                            case 4:
-                                int player4Id = tablePlayers.Find(x => x.round == currentRound &&
-                                x.table == currentTable && x.player == currentTablePlayer).playerId;
-                                tableWithCountrys.player4Country = players.Find(x => x.id == player4Id).country;
-                                break;
-                        }
-                    }
-                    tablesWithCountries.Add(tableWithCountrys);
-                }
+                tablesByPlayer.AddRange(
+                    tablesWithAll.FindAll(x => 
+                        x.player1Name.Equals(p.name) ||
+                        x.player2Name.Equals(p.name) ||
+                        x.player3Name.Equals(p.name) ||
+                        x.player4Name.Equals(p.name)));
             }
         }
 
@@ -907,6 +932,7 @@ namespace TournamentCalculator
             chckBxCountries.Enabled = true;
             chckBxIds.Enabled = true;
             btnShowPlayers.Enabled = true;
+            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
@@ -926,6 +952,7 @@ namespace TournamentCalculator
             chckBxCountries.Enabled = false;
             chckBxIds.Enabled = false;
             btnShowPlayers.Enabled = false;
+            btnShowByPlayers.Enabled = false;
             btnShowNames.Enabled = false;
             btnShowTeams.Enabled = false;
             btnShowCountries.Enabled = false;

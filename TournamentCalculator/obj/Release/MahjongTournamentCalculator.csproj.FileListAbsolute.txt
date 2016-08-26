@@ -1,0 +1,16 @@
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Release\TournamentCalculator.exe.config
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Release\TournamentCalculator.exe
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Release\TournamentCalculator.pdb
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Release\aa-DJ\TournamentCalculator.resources.dll
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Release\FastMember.dll
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Release\FastMember.pdb
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Release\FastMember.xml
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\MahjongTournamentCalculator.csprojResolveAssemblyReference.cache
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.MainForm.resources
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.Properties.Resources.resources
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.SplashForm.resources
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.MainForm.aa-DJ.resources
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\MahjongTournamentCalculator.csproj.GenerateResource.Cache
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\aa-DJ\TournamentCalculator.resources.dll
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.exe
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.pdb
