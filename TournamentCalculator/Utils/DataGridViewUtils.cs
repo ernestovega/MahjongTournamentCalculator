@@ -121,22 +121,22 @@ namespace TournamentCalculator.Utils
                     datagrid.DataSource = dataTable;
                     datagrid.Columns["RoundId"].DisplayIndex = 0;
                     datagrid.Columns["TableId"].DisplayIndex = 1;
-                    datagrid.Columns["Player1Id"].DisplayIndex = 2;
-                    datagrid.Columns["Player2Id"].DisplayIndex = 3;
-                    datagrid.Columns["Player3Id"].DisplayIndex = 4;
-                    datagrid.Columns["Player4Id"].DisplayIndex = 5;
-                    datagrid.Columns["Player1Name"].DisplayIndex = 6;
-                    datagrid.Columns["Player2Name"].DisplayIndex = 7;
-                    datagrid.Columns["Player3Name"].DisplayIndex = 8;
-                    datagrid.Columns["Player4Name"].DisplayIndex = 9;
-                    datagrid.Columns["Player1Team"].DisplayIndex = 10;
-                    datagrid.Columns["Player2Team"].DisplayIndex = 11;
-                    datagrid.Columns["Player3Team"].DisplayIndex = 12;
-                    datagrid.Columns["Player4Team"].DisplayIndex = 13;
-                    datagrid.Columns["Player1Country"].DisplayIndex = 14;
-                    datagrid.Columns["Player2Country"].DisplayIndex = 15;
-                    datagrid.Columns["Player3Country"].DisplayIndex = 16;
-                    datagrid.Columns["Player4Country"].DisplayIndex = 17;
+                    datagrid.Columns["Player1Name"].DisplayIndex = 2;
+                    datagrid.Columns["Player2Name"].DisplayIndex = 3;
+                    datagrid.Columns["Player3Name"].DisplayIndex = 4;
+                    datagrid.Columns["Player4Name"].DisplayIndex = 5;
+                    datagrid.Columns["Player1Team"].DisplayIndex = 6;
+                    datagrid.Columns["Player2Team"].DisplayIndex = 7;
+                    datagrid.Columns["Player3Team"].DisplayIndex = 8;
+                    datagrid.Columns["Player4Team"].DisplayIndex = 9;
+                    datagrid.Columns["Player1Contry"].DisplayIndex = 10;
+                    datagrid.Columns["Player2Contry"].DisplayIndex = 11;
+                    datagrid.Columns["Player3Contry"].DisplayIndex = 12;
+                    datagrid.Columns["Player4Contry"].DisplayIndex = 13;
+                    datagrid.Columns["Player1Id"].DisplayIndex = 14;
+                    datagrid.Columns["Player2Id"].DisplayIndex = 15;
+                    datagrid.Columns["Player3Id"].DisplayIndex = 16;
+                    datagrid.Columns["Player4Id"].DisplayIndex = 17;
                 }
             }
             catch (Exception ex)

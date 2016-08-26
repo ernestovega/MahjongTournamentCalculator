@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using TournamentCalculator.Model;
 using TournamentCalculator.Utils;
 using NsExcel = Microsoft.Office.Interop.Excel;
 
@@ -22,6 +23,7 @@ namespace TournamentCalculator
         private List<TableWithTeams> tablesWithTeams = new List<TableWithTeams>();
         private List<TableWithCountries> tablesWithCountries = new List<TableWithCountries>();
         private List<TableWithAll> tablesByPlayer = new List<TableWithAll>();
+        private List<Rivals> rivalsByPlayer = new List<Rivals>();
         private int currentRound, currentTable, currentTablePlayer;
         private Random random = new Random();
         private int countTries = 0;
@@ -81,6 +83,7 @@ namespace TournamentCalculator
             tablesWithTeams.Clear();
             tablesWithCountries.Clear();
             tablesByPlayer.Clear();
+            rivalsByPlayer.Clear();
             lblPlayers.Text = string.Empty;
             lblTables.Text = string.Empty;
             errorMessage = "Something is wrong in the excel:\n";
@@ -112,8 +115,15 @@ namespace TournamentCalculator
                         numUpDownRounds.Enabled = true;
                         numUpDownTriesMax.Enabled = true;
                         btnShowPlayers.Enabled = true;
+                        
+                        DataGridViewUtils.updateDataGridView(dataGridView, players);
 
-                        btnShowPlayers.PerformClick();
+                        btnShowPlayers.Enabled = false;
+                        btnShowByPlayers.Enabled = true;
+                        btnShowNames.Enabled = true;
+                        btnShowTeams.Enabled = true;
+                        btnShowCountries.Enabled = true;
+                        btnShowAll.Enabled = true;
                         Cursor.Current = Cursors.Default;
                         return;
                     }
@@ -125,11 +135,16 @@ namespace TournamentCalculator
             if (!errorMessage.Equals("Something is wrong in the excel:\n"))
                 MessageBox.Show(errorMessage);
 
+            DataGridViewUtils.updateDataGridView(dataGridView, players);
+
             btnGetExcelTemplate.Enabled = true;
             btnImportExcel.Enabled = true;
-            btnShowPlayers.Enabled = true;
-
-            btnShowPlayers.PerformClick();
+            btnShowPlayers.Enabled = false;
+            btnShowByPlayers.Enabled = true;
+            btnShowNames.Enabled = true;
+            btnShowTeams.Enabled = true;
+            btnShowCountries.Enabled = true;
+            btnShowAll.Enabled = true;
 
             Cursor.Current = Cursors.Default;
         }
@@ -144,6 +159,7 @@ namespace TournamentCalculator
             int numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
             int result = -1;
             countTries = 0;
+
             //Cada vez que un cálculo es imposible, se reintenta desde cero tantas veces como se hayan indicado.
             while (result < 0 && countTries < numTriesMax)
             {
@@ -152,19 +168,17 @@ namespace TournamentCalculator
                 lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
                 Application.DoEvents();
             }
-
             
             /*Si no se ha podido calcular en los intentos indicados, se notifica,
               se muestra la lista de jugadores y se termina*/
             if (countTries >= numTriesMax)
             {
+                DataGridViewUtils.updateDataGridView(dataGridView, players);
+                
                 numUpDownRounds.Enabled = true;
-                numUpDownTriesMax.Enabled = true;
                 btnCalculate.Enabled = true;
-                btnShowPlayers.PerformClick();
-                btnImportExcel.Enabled = true;
-                numUpDownRounds.Enabled = true;
                 numUpDownTriesMax.Enabled = true;
+                btnImportExcel.Enabled = true;
                 btnCalculate.Enabled = true;
                 MessageBox.Show("Can't calculate tournament after " + numTriesMax + " tries.");
                 Cursor.Current = Cursors.Default;
@@ -177,11 +191,11 @@ namespace TournamentCalculator
             GenerateTablesWhitTeams(numRounds);
             GenerateTablesWhitCountries(numRounds);
             GenerateTablesByPlayer();
-
-            btnShowNames.Enabled = true;
-            btnShowNames.PerformClick();
+            GenerateRivalsByPlayer();
 
             EnableAll();
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
+            btnShowNames.Enabled = false;
             Cursor.Current = Cursors.Default;
         }
 
@@ -223,6 +237,7 @@ namespace TournamentCalculator
 
             DataGridViewUtils.updateDataGridView(dataGridView, players);
 
+            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
@@ -233,7 +248,7 @@ namespace TournamentCalculator
         private void btnShowByPlayers_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            dataGridView.Enabled = false;
+            btnShowByPlayers.Enabled = false;
 
             DataGridViewUtils.updateDataGridView(dataGridView, tablesByPlayer);
 
@@ -253,6 +268,7 @@ namespace TournamentCalculator
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
 
             btnShowPlayers.Enabled = true;
+            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
@@ -267,6 +283,7 @@ namespace TournamentCalculator
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
 
             btnShowPlayers.Enabled = true;
+            btnShowByPlayers.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
             btnShowAll.Enabled = true;
@@ -281,6 +298,7 @@ namespace TournamentCalculator
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithTeams);
 
             btnShowPlayers.Enabled = true;
+            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowCountries.Enabled = true;
             btnShowAll.Enabled = true;
@@ -295,6 +313,7 @@ namespace TournamentCalculator
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithCountries);
 
             btnShowPlayers.Enabled = true;
+            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowAll.Enabled = true;
@@ -313,6 +332,8 @@ namespace TournamentCalculator
             tablesWithNames.Clear();
             tablesWithTeams.Clear();
             tablesWithCountries.Clear();
+            tablesByPlayer.Clear();
+            rivalsByPlayer.Clear();
             for (currentRound = 1; currentRound <= numRounds; currentRound++)
             {//Iteramos por rondas
 
@@ -722,7 +743,8 @@ namespace TournamentCalculator
             }
 
             //Write Tournament data by players
-            WriteToExcelByPlayers(excelSheets);
+            WriteToExcelTablesByPlayers(excelSheets);
+            WriteToExcelRivals(excelSheets);
 
             //Now save the excel
             string excelName = "Tournament_"
@@ -742,11 +764,11 @@ namespace TournamentCalculator
             }
         }
 
-        private void WriteToExcelByPlayers(NsExcel.Sheets excelSheets)
+        private void WriteToExcelTablesByPlayers(NsExcel.Sheets excelSheets)
         {
             //Adding new Worksheet
             var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
-            newSheet.Name = "Player's tables ";
+            newSheet.Name = "Player's tables";
            
             //Write headers
             newSheet.Cells[1, 1] = "Round";
@@ -768,10 +790,17 @@ namespace TournamentCalculator
             newSheet.Cells[1, 17] = "Player 3 Id";
             newSheet.Cells[1, 18] = "Player 4 Id";
 
+            //Paint headers
+            newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+            newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+            newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
             //Write data
+
             for (int i = 0; i < tablesByPlayer.Count; i++)
             {
                 TableWithAll twa = tablesByPlayer[i];
+
                 newSheet.Cells[i + 1, 1] = twa.roundId;
                 newSheet.Cells[i + 1, 2] = twa.tableId;
                 newSheet.Cells[i + 1, 3] = twa.player1Name;
@@ -794,11 +823,49 @@ namespace TournamentCalculator
 
             //Resize columns
             newSheet.UsedRange.EntireColumn.AutoFit();
+        }
+
+        private void WriteToExcelRivals(NsExcel.Sheets excelSheets)
+        {
+            //Adding new Worksheet
+            var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+            newSheet.Name = "Player's rivals";
+
+            //Write headers
+            newSheet.Cells[1, 1] = "Player Name";
+            int maxRivals = 0;
+            foreach (Rivals r in rivalsByPlayer)
+            {
+                if (r.rivalsNames.Count() > maxRivals)
+                    maxRivals = r.rivalsNames.Count();
+            }
+            for (int i = 1; i <= maxRivals; i++)
+            {
+                newSheet.Cells[1, i + 1] = "Rival " + i + " Name";
+            }
 
             //Paint headers
             newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
             newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
             newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+            //Write data
+            for (int i = 0; i < rivalsByPlayer.Count; i++)
+            {
+                Rivals r = rivalsByPlayer[i];
+
+                newSheet.Cells[i + 2, 1] = r.playerName;
+                for (int j = 0; j < r.rivalsNames.Count(); j++)
+                {
+                    newSheet.Cells[i + 2, j + 2] = r.rivalsNames[j];
+                }
+            }
+
+            //Bold first column
+            newSheet.UsedRange.Columns[1].Cells.Font.Bold = true;
+
+            //Resize columns
+            newSheet.UsedRange.EntireColumn.AutoFit();
         }
 
         #endregion
@@ -883,16 +950,16 @@ namespace TournamentCalculator
 
         private void GenerateTablesWhitTeams(int numRounds)
         {
-            tablesWithNames.AddRange(
-                tablesWithAll.Select(x => new TableWithNames(
+            tablesWithTeams.AddRange(
+                tablesWithAll.Select(x => new TableWithTeams(
                     x.roundId, x.tableId, x.player1Team, x.player2Team, x.player3Team, x.player4Team))
                     .ToList());
         }
 
         private void GenerateTablesWhitCountries(int numRounds)
         {
-            tablesWithNames.AddRange(
-                tablesWithAll.Select(x => new TableWithNames(
+            tablesWithCountries.AddRange(
+                tablesWithAll.Select(x => new TableWithCountries(
                     x.roundId, x.tableId, x.player1Country, x.player2Country, x.player3Country, x.player4Country))
                     .ToList());
         }
@@ -907,6 +974,31 @@ namespace TournamentCalculator
                         x.player2Name.Equals(p.name) ||
                         x.player3Name.Equals(p.name) ||
                         x.player4Name.Equals(p.name)));
+            }
+        }
+
+        private void GenerateRivalsByPlayer()
+        {
+            foreach (Player p in players)
+            {
+                List<TableWithAll> thisPlayerTables = tablesWithAll.FindAll(x =>
+                        x.player1Name.Equals(p.name) ||
+                        x.player2Name.Equals(p.name) ||
+                        x.player3Name.Equals(p.name) ||
+                        x.player4Name.Equals(p.name));
+                List<string> thisPlayerRivals = new List<string>();
+                foreach (TableWithAll twa in thisPlayerTables)
+                {
+                    if (!twa.player1Name.Equals(p.name))
+                        thisPlayerRivals.Add(twa.player1Name);
+                    if (!twa.player2Name.Equals(p.name))
+                        thisPlayerRivals.Add(twa.player2Name);
+                    if (!twa.player3Name.Equals(p.name))
+                        thisPlayerRivals.Add(twa.player3Name);
+                    if (!twa.player4Name.Equals(p.name))
+                        thisPlayerRivals.Add(twa.player4Name);
+                }
+                rivalsByPlayer.Add(new Rivals(p.name, thisPlayerRivals.ToArray()));
             }
         }
 

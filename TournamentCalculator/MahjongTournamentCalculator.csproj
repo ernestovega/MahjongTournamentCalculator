@@ -59,6 +59,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Rivals.cs" />
     <Compile Include="Model\TableWithNames.cs" />
     <Compile Include="Model\TableWithTeams.cs" />
     <Compile Include="Model\TableWithCountries.cs" />
