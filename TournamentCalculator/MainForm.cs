@@ -205,8 +205,10 @@ namespace TournamentCalculator
             DisableAll();
 
             ExportToExcel();
-
+            
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
             EnableAll();
+            btnShowNames.Enabled = false;
             Cursor.Current = Cursors.Default;
         }
 
