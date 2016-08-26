@@ -29,22 +29,25 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.btnImportExcel = new System.Windows.Forms.Button();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblPlayers = new System.Windows.Forms.Label();
             this.lblTables = new System.Windows.Forms.Label();
             this.lblRounds = new System.Windows.Forms.Label();
             this.lblStep1 = new System.Windows.Forms.Label();
             this.lblStep2 = new System.Windows.Forms.Label();
             this.btnCalculate = new System.Windows.Forms.Button();
-            this.lblStep3 = new System.Windows.Forms.Label();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.numUpDownRounds = new System.Windows.Forms.NumericUpDown();
-            this.lblStep4 = new System.Windows.Forms.Label();
+            this.lblStep3 = new System.Windows.Forms.Label();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnShowNames = new System.Windows.Forms.Button();
             this.btnShowTeams = new System.Windows.Forms.Button();
             this.btnShowCountries = new System.Windows.Forms.Button();
-            this.btnShowAll = new System.Windows.Forms.Button();
+            this.btnShowIds = new System.Windows.Forms.Button();
             this.lblTriesMax = new System.Windows.Forms.Label();
             this.lblTriesNeeded = new System.Windows.Forms.Label();
             this.numUpDownTriesMax = new System.Windows.Forms.NumericUpDown();
@@ -53,22 +56,12 @@
             this.chckBxTeams = new System.Windows.Forms.CheckBox();
             this.chckBxCountries = new System.Windows.Forms.CheckBox();
             this.chckBxIds = new System.Windows.Forms.CheckBox();
-            this.lblInclude = new System.Windows.Forms.Label();
             this.btnGetExcelTemplate = new System.Windows.Forms.Button();
-            this.btnShowByPlayers = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnImportExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnImportExcel
-            // 
-            this.btnImportExcel.Cursor = System.Windows.Forms.Cursors.Default;
-            resources.ApplyResources(this.btnImportExcel, "btnImportExcel");
-            this.btnImportExcel.Name = "btnImportExcel";
-            this.btnImportExcel.UseVisualStyleBackColor = true;
-            this.btnImportExcel.Click += new System.EventHandler(this.btnImportExcel_Click);
             // 
             // lblPlayers
             // 
@@ -102,33 +95,90 @@
             // 
             // btnCalculate
             // 
-            this.btnCalculate.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnCalculate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnCalculate.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.btnCalculate, "btnCalculate");
+            this.btnCalculate.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCalculate.FlatAppearance.BorderSize = 0;
+            this.btnCalculate.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnCalculate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnCalculate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnCalculate.ForeColor = System.Drawing.SystemColors.GrayText;
             this.btnCalculate.Name = "btnCalculate";
-            this.btnCalculate.UseVisualStyleBackColor = true;
+            this.btnCalculate.UseVisualStyleBackColor = false;
             this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
-            // 
-            // lblStep3
-            // 
-            resources.ApplyResources(this.lblStep3, "lblStep3");
-            this.lblStep3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblStep3.Name = "lblStep3";
             // 
             // dataGridView
             // 
             this.dataGridView.AllowUserToAddRows = false;
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             resources.ApplyResources(this.dataGridView, "dataGridView");
             this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView.Cursor = System.Windows.Forms.Cursors.Default;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView.GridColor = System.Drawing.Color.White;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
-            this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.NullValue = null;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridView.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.dataGridView.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            this.dataGridView.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridView.RowTemplate.Height = 24;
+            this.dataGridView.RowTemplate.ReadOnly = true;
+            this.dataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.ShowCellErrors = false;
+            this.dataGridView.ShowCellToolTips = false;
+            this.dataGridView.ShowEditingIcon = false;
+            this.dataGridView.ShowRowErrors = false;
             // 
             // numUpDownRounds
             // 
+            this.numUpDownRounds.BackColor = System.Drawing.Color.White;
+            this.numUpDownRounds.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numUpDownRounds.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.numUpDownRounds, "numUpDownRounds");
             this.numUpDownRounds.Maximum = new decimal(new int[] {
@@ -148,51 +198,82 @@
             0,
             0});
             // 
-            // lblStep4
+            // lblStep3
             // 
-            resources.ApplyResources(this.lblStep4, "lblStep4");
-            this.lblStep4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblStep4.Name = "lblStep4";
+            resources.ApplyResources(this.lblStep3, "lblStep3");
+            this.lblStep3.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblStep3.Name = "lblStep3";
             // 
             // btnExport
             // 
-            this.btnExport.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnExport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnExport.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.btnExport, "btnExport");
+            this.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnExport.FlatAppearance.BorderSize = 0;
+            this.btnExport.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnExport.ForeColor = System.Drawing.SystemColors.GrayText;
             this.btnExport.Name = "btnExport";
-            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.UseVisualStyleBackColor = false;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // btnShowNames
             // 
-            this.btnShowNames.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnShowNames, "btnShowNames");
+            this.btnShowNames.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnShowNames.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnShowNames.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnShowNames.FlatAppearance.BorderSize = 0;
+            this.btnShowNames.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnShowNames.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnShowNames.ForeColor = System.Drawing.SystemColors.GrayText;
             this.btnShowNames.Name = "btnShowNames";
-            this.btnShowNames.UseVisualStyleBackColor = true;
+            this.btnShowNames.UseVisualStyleBackColor = false;
             this.btnShowNames.Click += new System.EventHandler(this.btnShowNames_Click);
             // 
             // btnShowTeams
             // 
-            this.btnShowTeams.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnShowTeams, "btnShowTeams");
+            this.btnShowTeams.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnShowTeams.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnShowTeams.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnShowTeams.FlatAppearance.BorderSize = 0;
+            this.btnShowTeams.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnShowTeams.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnShowTeams.ForeColor = System.Drawing.SystemColors.GrayText;
             this.btnShowTeams.Name = "btnShowTeams";
-            this.btnShowTeams.UseVisualStyleBackColor = true;
+            this.btnShowTeams.UseVisualStyleBackColor = false;
             this.btnShowTeams.Click += new System.EventHandler(this.btnShowTeams_Click);
             // 
             // btnShowCountries
             // 
-            this.btnShowCountries.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.btnShowCountries, "btnShowCountries");
+            this.btnShowCountries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnShowCountries.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnShowCountries.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnShowCountries.FlatAppearance.BorderSize = 0;
+            this.btnShowCountries.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnShowCountries.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnShowCountries.ForeColor = System.Drawing.SystemColors.GrayText;
             this.btnShowCountries.Name = "btnShowCountries";
-            this.btnShowCountries.UseVisualStyleBackColor = true;
+            this.btnShowCountries.UseVisualStyleBackColor = false;
             this.btnShowCountries.Click += new System.EventHandler(this.btnShowCountries_Click);
             // 
-            // btnShowAll
+            // btnShowIds
             // 
-            this.btnShowAll.Cursor = System.Windows.Forms.Cursors.Default;
-            resources.ApplyResources(this.btnShowAll, "btnShowAll");
-            this.btnShowAll.Name = "btnShowAll";
-            this.btnShowAll.UseVisualStyleBackColor = true;
-            this.btnShowAll.Click += new System.EventHandler(this.btnShowAll_Click);
+            resources.ApplyResources(this.btnShowIds, "btnShowIds");
+            this.btnShowIds.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnShowIds.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnShowIds.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnShowIds.FlatAppearance.BorderSize = 0;
+            this.btnShowIds.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnShowIds.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnShowIds.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.btnShowIds.Name = "btnShowIds";
+            this.btnShowIds.UseVisualStyleBackColor = false;
+            this.btnShowIds.Click += new System.EventHandler(this.btnShowIds_Click);
             // 
             // lblTriesMax
             // 
@@ -208,10 +289,12 @@
             // 
             // numUpDownTriesMax
             // 
-            this.numUpDownTriesMax.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.numUpDownTriesMax, "numUpDownTriesMax");
+            this.numUpDownTriesMax.BackColor = System.Drawing.Color.White;
+            this.numUpDownTriesMax.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numUpDownTriesMax.Cursor = System.Windows.Forms.Cursors.Default;
             this.numUpDownTriesMax.Maximum = new decimal(new int[] {
-            1000000000,
+            999999999,
             0,
             0,
             0});
@@ -229,10 +312,16 @@
             // 
             // btnShowPlayers
             // 
-            this.btnShowPlayers.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnShowPlayers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnShowPlayers.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.btnShowPlayers, "btnShowPlayers");
+            this.btnShowPlayers.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnShowPlayers.FlatAppearance.BorderSize = 0;
+            this.btnShowPlayers.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnShowPlayers.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnShowPlayers.ForeColor = System.Drawing.SystemColors.GrayText;
             this.btnShowPlayers.Name = "btnShowPlayers";
-            this.btnShowPlayers.UseVisualStyleBackColor = true;
+            this.btnShowPlayers.UseVisualStyleBackColor = false;
             this.btnShowPlayers.Click += new System.EventHandler(this.btnShowPlayers_Click);
             // 
             // chckBxNames
@@ -240,7 +329,11 @@
             resources.ApplyResources(this.chckBxNames, "chckBxNames");
             this.chckBxNames.Checked = true;
             this.chckBxNames.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckBxNames.Cursor = System.Windows.Forms.Cursors.Default;
+            this.chckBxNames.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.chckBxNames.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxNames.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxNames.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxNames.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.chckBxNames.Name = "chckBxNames";
             this.chckBxNames.UseVisualStyleBackColor = true;
             this.chckBxNames.CheckedChanged += new System.EventHandler(this.chckBxNames_CheckedChanged);
@@ -250,7 +343,11 @@
             resources.ApplyResources(this.chckBxTeams, "chckBxTeams");
             this.chckBxTeams.Checked = true;
             this.chckBxTeams.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckBxTeams.Cursor = System.Windows.Forms.Cursors.Default;
+            this.chckBxTeams.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.chckBxTeams.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxTeams.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxTeams.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxTeams.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.chckBxTeams.Name = "chckBxTeams";
             this.chckBxTeams.UseVisualStyleBackColor = true;
             this.chckBxTeams.CheckedChanged += new System.EventHandler(this.chckBxTeams_CheckedChanged);
@@ -260,7 +357,11 @@
             resources.ApplyResources(this.chckBxCountries, "chckBxCountries");
             this.chckBxCountries.Checked = true;
             this.chckBxCountries.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckBxCountries.Cursor = System.Windows.Forms.Cursors.Default;
+            this.chckBxCountries.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.chckBxCountries.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxCountries.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxCountries.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxCountries.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.chckBxCountries.Name = "chckBxCountries";
             this.chckBxCountries.UseVisualStyleBackColor = true;
             this.chckBxCountries.CheckedChanged += new System.EventHandler(this.chckBxCountries_CheckedChanged);
@@ -270,47 +371,51 @@
             resources.ApplyResources(this.chckBxIds, "chckBxIds");
             this.chckBxIds.Checked = true;
             this.chckBxIds.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckBxIds.Cursor = System.Windows.Forms.Cursors.Default;
+            this.chckBxIds.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.chckBxIds.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxIds.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxIds.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.chckBxIds.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.chckBxIds.Name = "chckBxIds";
             this.chckBxIds.UseVisualStyleBackColor = true;
             this.chckBxIds.CheckedChanged += new System.EventHandler(this.chckBxIds_CheckedChanged);
             // 
-            // lblInclude
-            // 
-            resources.ApplyResources(this.lblInclude, "lblInclude");
-            this.lblInclude.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblInclude.Name = "lblInclude";
-            // 
             // btnGetExcelTemplate
             // 
-            this.btnGetExcelTemplate.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnGetExcelTemplate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            this.btnGetExcelTemplate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGetExcelTemplate.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnGetExcelTemplate.FlatAppearance.BorderSize = 0;
+            this.btnGetExcelTemplate.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnGetExcelTemplate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnGetExcelTemplate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
             resources.ApplyResources(this.btnGetExcelTemplate, "btnGetExcelTemplate");
+            this.btnGetExcelTemplate.ForeColor = System.Drawing.Color.White;
             this.btnGetExcelTemplate.Name = "btnGetExcelTemplate";
-            this.btnGetExcelTemplate.UseVisualStyleBackColor = true;
+            this.btnGetExcelTemplate.UseVisualStyleBackColor = false;
             this.btnGetExcelTemplate.Click += new System.EventHandler(this.btnGetExcelTemplate_Click);
             // 
-            // btnShowByPlayers
+            // btnImportExcel
             // 
-            this.btnShowByPlayers.Cursor = System.Windows.Forms.Cursors.Default;
-            resources.ApplyResources(this.btnShowByPlayers, "btnShowByPlayers");
-            this.btnShowByPlayers.Name = "btnShowByPlayers";
-            this.btnShowByPlayers.UseVisualStyleBackColor = true;
-            this.btnShowByPlayers.Click += new System.EventHandler(this.btnShowByPlayers_Click);
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label1.Name = "label1";
+            this.btnImportExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            this.btnImportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnImportExcel.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnImportExcel.FlatAppearance.BorderSize = 0;
+            this.btnImportExcel.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnImportExcel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnImportExcel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            resources.ApplyResources(this.btnImportExcel, "btnImportExcel");
+            this.btnImportExcel.ForeColor = System.Drawing.Color.White;
+            this.btnImportExcel.Name = "btnImportExcel";
+            this.btnImportExcel.UseVisualStyleBackColor = false;
+            this.btnImportExcel.Click += new System.EventHandler(this.btnImportExcel_Click);
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnShowByPlayers);
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.btnGetExcelTemplate);
-            this.Controls.Add(this.lblInclude);
             this.Controls.Add(this.chckBxIds);
             this.Controls.Add(this.chckBxCountries);
             this.Controls.Add(this.chckBxTeams);
@@ -319,15 +424,14 @@
             this.Controls.Add(this.numUpDownTriesMax);
             this.Controls.Add(this.lblTriesNeeded);
             this.Controls.Add(this.lblTriesMax);
-            this.Controls.Add(this.btnShowAll);
+            this.Controls.Add(this.btnShowIds);
             this.Controls.Add(this.btnShowCountries);
             this.Controls.Add(this.btnShowTeams);
             this.Controls.Add(this.btnShowNames);
-            this.Controls.Add(this.lblStep4);
+            this.Controls.Add(this.lblStep3);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.numUpDownRounds);
             this.Controls.Add(this.dataGridView);
-            this.Controls.Add(this.lblStep3);
             this.Controls.Add(this.btnCalculate);
             this.Controls.Add(this.lblStep2);
             this.Controls.Add(this.lblStep1);
@@ -337,8 +441,8 @@
             this.Controls.Add(this.btnImportExcel);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainForm";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).EndInit();
@@ -348,23 +452,20 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnImportExcel;
         private System.Windows.Forms.Label lblPlayers;
         private System.Windows.Forms.Label lblTables;
         private System.Windows.Forms.Label lblRounds;
         private System.Windows.Forms.Label lblStep1;
         private System.Windows.Forms.Label lblStep2;
         private System.Windows.Forms.Button btnCalculate;
-        private System.Windows.Forms.Label lblStep3;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.NumericUpDown numUpDownRounds;
-        private System.Windows.Forms.Label lblStep4;
+        private System.Windows.Forms.Label lblStep3;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnShowNames;
         private System.Windows.Forms.Button btnShowTeams;
         private System.Windows.Forms.Button btnShowCountries;
-        private System.Windows.Forms.Button btnShowAll;
+        private System.Windows.Forms.Button btnShowIds;
         private System.Windows.Forms.Label lblTriesMax;
         private System.Windows.Forms.Label lblTriesNeeded;
         private System.Windows.Forms.NumericUpDown numUpDownTriesMax;
@@ -373,10 +474,8 @@
         private System.Windows.Forms.CheckBox chckBxTeams;
         private System.Windows.Forms.CheckBox chckBxCountries;
         private System.Windows.Forms.CheckBox chckBxIds;
-        private System.Windows.Forms.Label lblInclude;
         private System.Windows.Forms.Button btnGetExcelTemplate;
-        private System.Windows.Forms.Button btnShowByPlayers;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnImportExcel;
     }
 }
 

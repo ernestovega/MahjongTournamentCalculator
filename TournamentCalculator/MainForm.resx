@@ -117,43 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnImportExcel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 88</value>
-  </data>
-  <data name="btnImportExcel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 50</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblPlayers.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnImportExcel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnImportExcel.Text" xml:space="preserve">
-    <value>Import players from Excel </value>
-  </data>
-  <data name="&gt;&gt;btnImportExcel.Name" xml:space="preserve">
-    <value>btnImportExcel</value>
-  </data>
-  <data name="&gt;&gt;btnImportExcel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnImportExcel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnImportExcel.ZOrder" xml:space="preserve">
-    <value>27</value>
-  </data>
   <data name="lblPlayers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lblPlayers.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="lblPlayers.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 141</value>
+    <value>267, 513</value>
+  </data>
+  <data name="lblPlayers.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="lblPlayers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 13</value>
+    <value>59, 17</value>
   </data>
   <data name="lblPlayers.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
+  </data>
+  <data name="lblPlayers.Text" xml:space="preserve">
+    <value>Players: </value>
   </data>
   <data name="&gt;&gt;lblPlayers.Name" xml:space="preserve">
     <value>lblPlayers</value>
@@ -165,19 +154,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblPlayers.ZOrder" xml:space="preserve">
-    <value>26</value>
+    <value>22</value>
+  </data>
+  <data name="lblTables.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
   <data name="lblTables.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lblTables.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="lblTables.Location" type="System.Drawing.Point, System.Drawing">
-    <value>166, 141</value>
+    <value>378, 513</value>
+  </data>
+  <data name="lblTables.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="lblTables.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 13</value>
+    <value>55, 17</value>
   </data>
   <data name="lblTables.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="lblTables.Text" xml:space="preserve">
+    <value>Tables: </value>
   </data>
   <data name="&gt;&gt;lblTables.Name" xml:space="preserve">
     <value>lblTables</value>
@@ -189,16 +190,22 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTables.ZOrder" xml:space="preserve">
-    <value>25</value>
+    <value>21</value>
   </data>
   <data name="lblRounds.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lblRounds.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="lblRounds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 181</value>
+    <value>17, 233</value>
+  </data>
+  <data name="lblRounds.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="lblRounds.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 13</value>
+    <value>133, 17</value>
   </data>
   <data name="lblRounds.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -216,19 +223,22 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblRounds.ZOrder" xml:space="preserve">
-    <value>24</value>
+    <value>20</value>
   </data>
   <data name="lblStep1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblStep1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+    <value>Century Gothic, 9.75pt</value>
   </data>
   <data name="lblStep1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 88</value>
+    <value>17, 101</value>
+  </data>
+  <data name="lblStep1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="lblStep1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
+    <value>47, 17</value>
   </data>
   <data name="lblStep1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -246,19 +256,22 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep1.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>19</value>
   </data>
   <data name="lblStep2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lblStep2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+    <value>Century Gothic, 9.75pt</value>
   </data>
   <data name="lblStep2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 181</value>
+    <value>17, 200</value>
+  </data>
+  <data name="lblStep2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="lblStep2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
+    <value>47, 17</value>
   </data>
   <data name="lblStep2.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -276,16 +289,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblStep2.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>18</value>
   </data>
   <data name="btnCalculate.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="btnCalculate.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnCalculate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
   <data name="btnCalculate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 231</value>
+    <value>17, 266</value>
+  </data>
+  <data name="btnCalculate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="btnCalculate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 50</value>
+    <value>217, 50</value>
   </data>
   <data name="btnCalculate.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -303,47 +325,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnCalculate.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>17</value>
   </data>
-  <data name="lblStep3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblStep3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
-  </data>
-  <data name="lblStep3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 231</value>
-  </data>
-  <data name="lblStep3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="lblStep3.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="lblStep3.Text" xml:space="preserve">
-    <value>Step 3</value>
-  </data>
-  <data name="&gt;&gt;lblStep3.Name" xml:space="preserve">
-    <value>lblStep3</value>
-  </data>
-  <data name="&gt;&gt;lblStep3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblStep3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblStep3.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
+  <data name="dataGridView.ColumnHeadersHeight" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
   <data name="dataGridView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>279, 44</value>
+    <value>270, 61</value>
+  </data>
+  <data name="dataGridView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
+  </data>
+  <data name="dataGridView.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>16</value>
   </data>
   <data name="dataGridView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>624, 418</value>
+    <value>833, 436</value>
   </data>
   <data name="dataGridView.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -358,13 +358,22 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;dataGridView.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>16</value>
+  </data>
+  <data name="numUpDownRounds.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="numUpDownRounds.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
   </data>
   <data name="numUpDownRounds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 178</value>
+    <value>181, 231</value>
+  </data>
+  <data name="numUpDownRounds.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="numUpDownRounds.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 20</value>
+    <value>53, 19</value>
   </data>
   <data name="numUpDownRounds.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -379,46 +388,58 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numUpDownRounds.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>15</value>
   </data>
-  <data name="lblStep4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblStep3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lblStep4.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  <data name="lblStep3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
   </data>
-  <data name="lblStep4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 386</value>
+  <data name="lblStep3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 332</value>
   </data>
-  <data name="lblStep4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
+  <data name="lblStep3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
-  <data name="lblStep4.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblStep3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="lblStep3.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="lblStep4.Text" xml:space="preserve">
-    <value>Step 4</value>
+  <data name="lblStep3.Text" xml:space="preserve">
+    <value>Step 3</value>
   </data>
-  <data name="&gt;&gt;lblStep4.Name" xml:space="preserve">
-    <value>lblStep4</value>
+  <data name="&gt;&gt;lblStep3.Name" xml:space="preserve">
+    <value>lblStep3</value>
   </data>
-  <data name="&gt;&gt;lblStep4.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblStep3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblStep4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblStep3.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lblStep4.ZOrder" xml:space="preserve">
-    <value>16</value>
+  <data name="&gt;&gt;lblStep3.ZOrder" xml:space="preserve">
+    <value>13</value>
   </data>
   <data name="btnExport.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="btnExport.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnExport.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
   <data name="btnExport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 367</value>
+    <value>17, 365</value>
+  </data>
+  <data name="btnExport.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="btnExport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 50</value>
+    <value>126, 132</value>
   </data>
   <data name="btnExport.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -436,16 +457,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnExport.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>14</value>
+  </data>
+  <data name="btnShowNames.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="btnShowNames.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="btnShowNames.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnShowNames.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
   <data name="btnShowNames.Location" type="System.Drawing.Point, System.Drawing">
-    <value>489, 15</value>
+    <value>643, 17</value>
+  </data>
+  <data name="btnShowNames.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 8, 0, 8</value>
   </data>
   <data name="btnShowNames.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 23</value>
+    <value>117, 24</value>
   </data>
   <data name="btnShowNames.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -463,16 +496,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowNames.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>12</value>
+  </data>
+  <data name="btnShowTeams.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="btnShowTeams.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="btnShowTeams.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnShowTeams.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
   <data name="btnShowTeams.Location" type="System.Drawing.Point, System.Drawing">
-    <value>594, 15</value>
+    <value>759, 17</value>
+  </data>
+  <data name="btnShowTeams.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 8, 0, 8</value>
   </data>
   <data name="btnShowTeams.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 23</value>
+    <value>117, 24</value>
   </data>
   <data name="btnShowTeams.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -490,16 +535,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowTeams.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>11</value>
+  </data>
+  <data name="btnShowCountries.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="btnShowCountries.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="btnShowCountries.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnShowCountries.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
   <data name="btnShowCountries.Location" type="System.Drawing.Point, System.Drawing">
-    <value>699, 15</value>
+    <value>875, 17</value>
+  </data>
+  <data name="btnShowCountries.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 8, 0, 8</value>
   </data>
   <data name="btnShowCountries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 23</value>
+    <value>117, 24</value>
   </data>
   <data name="btnShowCountries.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -517,43 +574,64 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowCountries.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>10</value>
   </data>
-  <data name="btnShowAll.Enabled" type="System.Boolean, mscorlib">
+  <data name="btnShowIds.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnShowIds.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="btnShowAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>804, 15</value>
+  <data name="btnShowIds.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
-  <data name="btnShowAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 23</value>
+  <data name="btnShowIds.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
   </data>
-  <data name="btnShowAll.TabIndex" type="System.Int32, mscorlib">
+  <data name="btnShowIds.Location" type="System.Drawing.Point, System.Drawing">
+    <value>986, 17</value>
+  </data>
+  <data name="btnShowIds.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 8, 8, 8</value>
+  </data>
+  <data name="btnShowIds.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 24</value>
+  </data>
+  <data name="btnShowIds.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
   </data>
-  <data name="btnShowAll.Text" xml:space="preserve">
-    <value>Show all</value>
+  <data name="btnShowIds.Text" xml:space="preserve">
+    <value>Show Ids</value>
   </data>
-  <data name="&gt;&gt;btnShowAll.Name" xml:space="preserve">
-    <value>btnShowAll</value>
+  <data name="&gt;&gt;btnShowIds.Name" xml:space="preserve">
+    <value>btnShowIds</value>
   </data>
-  <data name="&gt;&gt;btnShowAll.Type" xml:space="preserve">
+  <data name="&gt;&gt;btnShowIds.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnShowAll.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnShowIds.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnShowAll.ZOrder" xml:space="preserve">
-    <value>12</value>
+  <data name="&gt;&gt;btnShowIds.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="lblTriesMax.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
   </data>
   <data name="lblTriesMax.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lblTriesMax.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="lblTriesMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 292</value>
+    <value>921, 513</value>
+  </data>
+  <data name="lblTriesMax.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="lblTriesMax.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 13</value>
+    <value>73, 17</value>
   </data>
   <data name="lblTriesMax.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -571,16 +649,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTriesMax.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>8</value>
+  </data>
+  <data name="lblTriesNeeded.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
   </data>
   <data name="lblTriesNeeded.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lblTriesNeeded.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="lblTriesNeeded.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 317</value>
+    <value>664, 513</value>
+  </data>
+  <data name="lblTriesNeeded.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="lblTriesNeeded.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 13</value>
+    <value>91, 17</value>
   </data>
   <data name="lblTriesNeeded.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -598,19 +685,34 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTriesNeeded.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>7</value>
+  </data>
+  <data name="numUpDownTriesMax.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
   </data>
   <data name="numUpDownTriesMax.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="numUpDownTriesMax.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="numUpDownTriesMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>153, 290</value>
+    <value>1010, 514</value>
+  </data>
+  <data name="numUpDownTriesMax.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
+  </data>
+  <data name="numUpDownTriesMax.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
   </data>
   <data name="numUpDownTriesMax.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 20</value>
+    <value>93, 19</value>
   </data>
   <data name="numUpDownTriesMax.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
+  </data>
+  <data name="numUpDownTriesMax.ThousandsSeparator" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;numUpDownTriesMax.Name" xml:space="preserve">
     <value>numUpDownTriesMax</value>
@@ -622,19 +724,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;numUpDownTriesMax.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>6</value>
   </data>
   <data name="btnShowPlayers.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="btnShowPlayers.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnShowPlayers.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
   </data>
   <data name="btnShowPlayers.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnShowPlayers.Location" type="System.Drawing.Point, System.Drawing">
-    <value>279, 15</value>
+    <value>270, 17</value>
+  </data>
+  <data name="btnShowPlayers.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 0, 8</value>
   </data>
   <data name="btnShowPlayers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 23</value>
+    <value>150, 24</value>
   </data>
   <data name="btnShowPlayers.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -652,7 +763,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShowPlayers.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>5</value>
   </data>
   <data name="chckBxNames.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -660,17 +771,26 @@
   <data name="chckBxNames.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="chckBxNames.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="chckBxNames.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="chckBxNames.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 423</value>
+    <value>159, 365</value>
+  </data>
+  <data name="chckBxNames.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="chckBxNames.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 17</value>
+    <value>64, 21</value>
   </data>
   <data name="chckBxNames.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>
   </data>
   <data name="chckBxNames.Text" xml:space="preserve">
-    <value>Names</value>
+    <value>Name</value>
   </data>
   <data name="&gt;&gt;chckBxNames.Name" xml:space="preserve">
     <value>chckBxNames</value>
@@ -682,7 +802,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chckBxNames.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>4</value>
   </data>
   <data name="chckBxTeams.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -690,17 +810,26 @@
   <data name="chckBxTeams.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="chckBxTeams.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="chckBxTeams.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="chckBxTeams.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 423</value>
+    <value>159, 402</value>
+  </data>
+  <data name="chckBxTeams.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="chckBxTeams.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 17</value>
+    <value>59, 21</value>
   </data>
   <data name="chckBxTeams.TabIndex" type="System.Int32, mscorlib">
     <value>26</value>
   </data>
   <data name="chckBxTeams.Text" xml:space="preserve">
-    <value>Teams</value>
+    <value>Team</value>
   </data>
   <data name="&gt;&gt;chckBxTeams.Name" xml:space="preserve">
     <value>chckBxTeams</value>
@@ -712,7 +841,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chckBxTeams.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>3</value>
   </data>
   <data name="chckBxCountries.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -720,20 +849,29 @@
   <data name="chckBxCountries.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="chckBxCountries.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="chckBxCountries.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="chckBxCountries.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="chckBxCountries.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 446</value>
+    <value>159, 439</value>
+  </data>
+  <data name="chckBxCountries.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="chckBxCountries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 17</value>
+    <value>75, 21</value>
   </data>
   <data name="chckBxCountries.TabIndex" type="System.Int32, mscorlib">
     <value>27</value>
   </data>
   <data name="chckBxCountries.Text" xml:space="preserve">
-    <value>Countries</value>
+    <value>Country</value>
   </data>
   <data name="&gt;&gt;chckBxCountries.Name" xml:space="preserve">
     <value>chckBxCountries</value>
@@ -745,7 +883,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chckBxCountries.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="chckBxIds.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -753,20 +891,29 @@
   <data name="chckBxIds.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="chckBxIds.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="chckBxIds.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
   <data name="chckBxIds.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="chckBxIds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 446</value>
+    <value>159, 476</value>
+  </data>
+  <data name="chckBxIds.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="chckBxIds.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 17</value>
+    <value>36, 21</value>
   </data>
   <data name="chckBxIds.TabIndex" type="System.Int32, mscorlib">
     <value>28</value>
   </data>
   <data name="chckBxIds.Text" xml:space="preserve">
-    <value>Ids</value>
+    <value>Id</value>
   </data>
   <data name="&gt;&gt;chckBxIds.Name" xml:space="preserve">
     <value>chckBxIds</value>
@@ -778,46 +925,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chckBxIds.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>1</value>
   </data>
-  <data name="lblInclude.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="btnGetExcelTemplate.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
-  <data name="lblInclude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 423</value>
-  </data>
-  <data name="lblInclude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 13</value>
-  </data>
-  <data name="lblInclude.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
-  </data>
-  <data name="lblInclude.Text" xml:space="preserve">
-    <value>Include:</value>
-  </data>
-  <data name="&gt;&gt;lblInclude.Name" xml:space="preserve">
-    <value>lblInclude</value>
-  </data>
-  <data name="&gt;&gt;lblInclude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblInclude.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblInclude.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="btnGetExcelTemplate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
   </data>
   <data name="btnGetExcelTemplate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnGetExcelTemplate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 44</value>
+    <value>17, 61</value>
+  </data>
+  <data name="btnGetExcelTemplate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
   <data name="btnGetExcelTemplate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 21</value>
+    <value>217, 24</value>
   </data>
   <data name="btnGetExcelTemplate.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
+    <value>40</value>
   </data>
   <data name="btnGetExcelTemplate.Text" xml:space="preserve">
     <value>Get Excel template</value>
@@ -832,70 +961,43 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnGetExcelTemplate.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>0</value>
   </data>
-  <data name="btnShowByPlayers.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="btnImportExcel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
-  <data name="btnShowByPlayers.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="btnImportExcel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
+  <data name="btnImportExcel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="btnShowByPlayers.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 15</value>
+  <data name="btnImportExcel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 134</value>
   </data>
-  <data name="btnShowByPlayers.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 23</value>
+  <data name="btnImportExcel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
   </data>
-  <data name="btnShowByPlayers.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
+  <data name="btnImportExcel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 50</value>
   </data>
-  <data name="btnShowByPlayers.Text" xml:space="preserve">
-    <value>Show by players</value>
+  <data name="btnImportExcel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;btnShowByPlayers.Name" xml:space="preserve">
-    <value>btnShowByPlayers</value>
+  <data name="btnImportExcel.Text" xml:space="preserve">
+    <value>Import players from Excel </value>
   </data>
-  <data name="&gt;&gt;btnShowByPlayers.Type" xml:space="preserve">
+  <data name="&gt;&gt;btnImportExcel.Name" xml:space="preserve">
+    <value>btnImportExcel</value>
+  </data>
+  <data name="&gt;&gt;btnImportExcel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnShowByPlayers.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnImportExcel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnShowByPlayers.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 44</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 13</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Example</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;btnImportExcel.ZOrder" xml:space="preserve">
+    <value>23</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -907,7 +1009,7 @@
     <value>Center</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>939, 490</value>
+    <value>1120, 547</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1046,13 +1148,13 @@
 </value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>851, 529</value>
+    <value>1120, 543</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>MM Tournament Calculator</value>
+    <value>Mahjong Tournament Calculator</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

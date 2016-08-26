@@ -32,27 +32,9 @@ namespace TournamentCalculator.Utils
             dataGrid.Columns["Name"].DisplayIndex = 1;
             dataGrid.Columns["Team"].DisplayIndex = 2;
             dataGrid.Columns["Country"].DisplayIndex = 3;
+            dataGrid.Columns["Id"].Width = 72;
         }
-
-        public static void updateDataGridView(DataGridView datagrid, List<Table> list)
-        {
-            DataTable dataTable = new DataTable();
-            try
-            {
-                using (var reader = ObjectReader.Create(list))
-                {
-                    dataTable.Load(reader);
-                    datagrid.DataSource = dataTable;
-                    datagrid.Columns["RoundId"].DisplayIndex = 0;
-                    datagrid.Columns["TableId"].DisplayIndex = 1;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
+        
         public static void updateDataGridView(DataGridView datagrid, List<TableWithNames> list)
         {
             DataTable dataTable = new DataTable();
@@ -64,6 +46,8 @@ namespace TournamentCalculator.Utils
                     datagrid.DataSource = dataTable;
                     datagrid.Columns["RoundId"].DisplayIndex = 0;
                     datagrid.Columns["TableId"].DisplayIndex = 1;
+                    datagrid.Columns["RoundId"].Width = 72;
+                    datagrid.Columns["TableId"].Width = 72;
                 }
             }
             catch (Exception ex)
@@ -83,6 +67,8 @@ namespace TournamentCalculator.Utils
                     datagrid.DataSource = dataTable;
                     datagrid.Columns["RoundId"].DisplayIndex = 0;
                     datagrid.Columns["TableId"].DisplayIndex = 1;
+                    datagrid.Columns["RoundId"].Width = 72;
+                    datagrid.Columns["TableId"].Width = 72;
                 }
             }
             catch (Exception ex)
@@ -102,6 +88,8 @@ namespace TournamentCalculator.Utils
                     datagrid.DataSource = dataTable;
                     datagrid.Columns["RoundId"].DisplayIndex = 0;
                     datagrid.Columns["TableId"].DisplayIndex = 1;
+                    datagrid.Columns["RoundId"].Width = 72;
+                    datagrid.Columns["TableId"].Width = 72;
                 }
             }
             catch (Exception ex)
@@ -110,7 +98,7 @@ namespace TournamentCalculator.Utils
             }
         }
 
-        public static void updateDataGridView(DataGridView datagrid, List<TableWithAll> list)
+        public static void updateDataGridView(DataGridView datagrid, List<TableWithIds> list)
         {
             DataTable dataTable = new DataTable();
             try
@@ -121,22 +109,6 @@ namespace TournamentCalculator.Utils
                     datagrid.DataSource = dataTable;
                     datagrid.Columns["RoundId"].DisplayIndex = 0;
                     datagrid.Columns["TableId"].DisplayIndex = 1;
-                    datagrid.Columns["Player1Name"].DisplayIndex = 2;
-                    datagrid.Columns["Player2Name"].DisplayIndex = 3;
-                    datagrid.Columns["Player3Name"].DisplayIndex = 4;
-                    datagrid.Columns["Player4Name"].DisplayIndex = 5;
-                    datagrid.Columns["Player1Team"].DisplayIndex = 6;
-                    datagrid.Columns["Player2Team"].DisplayIndex = 7;
-                    datagrid.Columns["Player3Team"].DisplayIndex = 8;
-                    datagrid.Columns["Player4Team"].DisplayIndex = 9;
-                    datagrid.Columns["Player1Contry"].DisplayIndex = 10;
-                    datagrid.Columns["Player2Contry"].DisplayIndex = 11;
-                    datagrid.Columns["Player3Contry"].DisplayIndex = 12;
-                    datagrid.Columns["Player4Contry"].DisplayIndex = 13;
-                    datagrid.Columns["Player1Id"].DisplayIndex = 14;
-                    datagrid.Columns["Player2Id"].DisplayIndex = 15;
-                    datagrid.Columns["Player3Id"].DisplayIndex = 16;
-                    datagrid.Columns["Player4Id"].DisplayIndex = 17;
                 }
             }
             catch (Exception ex)

@@ -22,6 +22,7 @@ namespace TournamentCalculator
         private List<TableWithNames> tablesWithNames = new List<TableWithNames>();
         private List<TableWithTeams> tablesWithTeams = new List<TableWithTeams>();
         private List<TableWithCountries> tablesWithCountries = new List<TableWithCountries>();
+        private List<TableWithIds> tablesWithIds = new List<TableWithIds>();
         private List<TableWithAll> tablesByPlayer = new List<TableWithAll>();
         private List<Rivals> rivalsByPlayer = new List<Rivals>();
         private int currentRound, currentTable, currentTablePlayer;
@@ -40,9 +41,6 @@ namespace TournamentCalculator
             Thread.Sleep(2000);
             InitializeComponent();
             t.Abort();
-
-            DataGridViewUtils.updateDataGridView(dataGridView, new List<Player>() {
-                new Player("1", "Example name", "Example Country", "Example Team")});
         }
         
         public void openSplash()
@@ -52,7 +50,7 @@ namespace TournamentCalculator
 
         #endregion
 
-        #region Events
+        #region Steps buttons
 
         private void btnGetExcelTemplate_Click(object sender, EventArgs e)
         {
@@ -115,15 +113,33 @@ namespace TournamentCalculator
                         numUpDownRounds.Enabled = true;
                         numUpDownTriesMax.Enabled = true;
                         btnShowPlayers.Enabled = true;
-                        
+                        btnGetExcelTemplate.BackColor = Color.FromArgb(0, 177, 106);
+                        btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
+                        btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
+                        btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
+                        btnGetExcelTemplate.ForeColor = Color.White;
+                        btnImportExcel.ForeColor = Color.White;
+                        btnCalculate.ForeColor = Color.White;
+                        btnShowPlayers.ForeColor = Color.White;
+
                         DataGridViewUtils.updateDataGridView(dataGridView, players);
 
                         btnShowPlayers.Enabled = false;
-                        btnShowByPlayers.Enabled = true;
                         btnShowNames.Enabled = true;
                         btnShowTeams.Enabled = true;
                         btnShowCountries.Enabled = true;
-                        btnShowAll.Enabled = true;
+                        btnShowIds.Enabled = true;
+                        btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
+                        btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
+                        btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
+                        btnShowCountries.BackColor = Color.FromArgb(0, 177, 106);
+                        btnShowIds.BackColor = Color.FromArgb(0, 177, 106);
+
+                        btnShowPlayers.ForeColor = Color.FromArgb(224, 224, 224);
+                        btnShowNames.ForeColor = Color.White;
+                        btnShowTeams.ForeColor = Color.White;
+                        btnShowCountries.ForeColor = Color.White;
+                        btnShowIds.ForeColor = Color.White;
                         Cursor.Current = Cursors.Default;
                         return;
                     }
@@ -136,15 +152,29 @@ namespace TournamentCalculator
                 MessageBox.Show(errorMessage);
 
             DataGridViewUtils.updateDataGridView(dataGridView, players);
-
             btnGetExcelTemplate.Enabled = true;
             btnImportExcel.Enabled = true;
             btnShowPlayers.Enabled = false;
-            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
-            btnShowAll.Enabled = true;
+            btnShowIds.Enabled = true;
+
+            btnGetExcelTemplate.BackColor = Color.FromArgb(0, 177, 106);
+            btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowCountries.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowIds.BackColor = Color.FromArgb(0, 177, 106);
+
+            btnGetExcelTemplate.ForeColor = Color.White;
+            btnImportExcel.ForeColor = Color.White;
+            btnShowPlayers.ForeColor = Color.FromArgb(224, 224, 224);
+            btnShowNames.ForeColor = Color.White;
+            btnShowTeams.ForeColor = Color.White;
+            btnShowCountries.ForeColor = Color.White;
+            btnShowIds.ForeColor = Color.White;
 
             Cursor.Current = Cursors.Default;
         }
@@ -180,6 +210,12 @@ namespace TournamentCalculator
                 numUpDownTriesMax.Enabled = true;
                 btnImportExcel.Enabled = true;
                 btnCalculate.Enabled = true;
+                btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
+                btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
+                btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
+                btnCalculate.ForeColor = Color.White;
+                btnImportExcel.ForeColor = Color.White;
+                btnCalculate.ForeColor = Color.White;
                 MessageBox.Show("Can't calculate tournament after " + numTriesMax + " tries.");
                 Cursor.Current = Cursors.Default;
                 return;
@@ -190,12 +226,15 @@ namespace TournamentCalculator
             GenerateTablesWhitNames(numRounds);
             GenerateTablesWhitTeams(numRounds);
             GenerateTablesWhitCountries(numRounds);
+            GenerateTablesWhitIds(numRounds);
             GenerateTablesByPlayer();
             GenerateRivalsByPlayer();
 
             EnableAll();
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
             btnShowNames.Enabled = false;
+            btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
             Cursor.Current = Cursors.Default;
         }
 
@@ -209,6 +248,8 @@ namespace TournamentCalculator
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
             EnableAll();
             btnShowNames.Enabled = false;
+            btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
             Cursor.Current = Cursors.Default;
         }
 
@@ -232,63 +273,56 @@ namespace TournamentCalculator
             CheckNamesIfAllUnchecked();
         }
 
+        #endregion
+
+        #region Filters buttons
+
         private void btnShowPlayers_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             btnShowPlayers.Enabled = false;
+            btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowPlayers.ForeColor = Color.FromArgb(224, 224, 224);
 
             DataGridViewUtils.updateDataGridView(dataGridView, players);
-
-            btnShowByPlayers.Enabled = true;
+            
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
-            btnShowAll.Enabled = true;
+            btnShowIds.Enabled = true;
+            btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowCountries.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowIds.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowNames.ForeColor = Color.White;
+            btnShowTeams.ForeColor = Color.White;
+            btnShowCountries.ForeColor = Color.White;
+            btnShowIds.ForeColor = Color.White;
             Cursor.Current = Cursors.Default;
-        }
-
-        private void btnShowByPlayers_Click(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            btnShowByPlayers.Enabled = false;
-
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesByPlayer);
-
-            btnShowPlayers.Enabled = true;
-            btnShowNames.Enabled = true;
-            btnShowTeams.Enabled = true;
-            btnShowCountries.Enabled = true;
-            btnShowAll.Enabled = true;
-            Cursor.Current = Cursors.Default;
-        }
-
-        private void btnShowAll_Click(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            btnShowAll.Enabled = false;
-
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithAll);
-
-            btnShowPlayers.Enabled = true;
-            btnShowByPlayers.Enabled = true;
-            btnShowNames.Enabled = true;
-            btnShowTeams.Enabled = true;
-            btnShowCountries.Enabled = true;
         }
 
         private void btnShowNames_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             btnShowNames.Enabled = false;
+            btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
 
 
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
 
             btnShowPlayers.Enabled = true;
-            btnShowByPlayers.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
-            btnShowAll.Enabled = true;
+            btnShowIds.Enabled = true;
+            btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowCountries.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowIds.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowPlayers.ForeColor = Color.White;
+            btnShowTeams.ForeColor = Color.White;
+            btnShowCountries.ForeColor = Color.White;
+            btnShowIds.ForeColor = Color.White;
             Cursor.Current = Cursors.Default;
         }
 
@@ -296,14 +330,23 @@ namespace TournamentCalculator
         {
             Cursor.Current = Cursors.WaitCursor;
             btnShowTeams.Enabled = false;
+            btnShowTeams.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowTeams.ForeColor = Color.FromArgb(224, 224, 224);
 
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithTeams);
 
             btnShowPlayers.Enabled = true;
-            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowCountries.Enabled = true;
-            btnShowAll.Enabled = true;
+            btnShowIds.Enabled = true;
+            btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowCountries.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowIds.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowPlayers.ForeColor = Color.White;
+            btnShowNames.ForeColor = Color.White;
+            btnShowCountries.ForeColor = Color.White;
+            btnShowIds.ForeColor = Color.White;
             Cursor.Current = Cursors.Default;
         }
 
@@ -311,14 +354,47 @@ namespace TournamentCalculator
         {
             Cursor.Current = Cursors.WaitCursor;
             btnShowCountries.Enabled = false;
+            btnShowCountries.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowCountries.ForeColor = Color.FromArgb(224, 224, 224);
 
             DataGridViewUtils.updateDataGridView(dataGridView, tablesWithCountries);
 
             btnShowPlayers.Enabled = true;
-            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
-            btnShowAll.Enabled = true;
+            btnShowIds.Enabled = true;
+            btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowIds.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowPlayers.ForeColor = Color.White;
+            btnShowNames.ForeColor = Color.White;
+            btnShowTeams.ForeColor = Color.White;
+            btnShowIds.ForeColor = Color.White;
+            Cursor.Current = Cursors.Default;
+        }
+        
+        private void btnShowIds_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            btnShowIds.Enabled = false;
+            btnShowIds.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowIds.ForeColor = Color.FromArgb(224, 224, 224);
+
+            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithIds);
+
+            btnShowPlayers.Enabled = true;
+            btnShowNames.Enabled = true;
+            btnShowTeams.Enabled = true;
+            btnShowCountries.Enabled = true;
+            btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowCountries.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowPlayers.ForeColor = Color.White;
+            btnShowNames.ForeColor = Color.White;
+            btnShowTeams.ForeColor = Color.White;
+            btnShowCountries.ForeColor = Color.White;
             Cursor.Current = Cursors.Default;
         }
 
@@ -742,6 +818,13 @@ namespace TournamentCalculator
                 newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
                 newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
                 newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+                //Paint odd lines
+                for (int i = 1; i <= newSheet.UsedRange.Rows.Count; i++)
+                {
+                    if (i > 1 && i % 2 != 0)
+                        newSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
+                }
             }
 
             //Write Tournament data by players
@@ -792,35 +875,42 @@ namespace TournamentCalculator
             newSheet.Cells[1, 17] = "Player 3 Id";
             newSheet.Cells[1, 18] = "Player 4 Id";
 
-            //Paint headers
-            newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
-            newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
-            newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
-
             //Write data
 
             for (int i = 0; i < tablesByPlayer.Count; i++)
             {
                 TableWithAll twa = tablesByPlayer[i];
 
-                newSheet.Cells[i + 1, 1] = twa.roundId;
-                newSheet.Cells[i + 1, 2] = twa.tableId;
-                newSheet.Cells[i + 1, 3] = twa.player1Name;
-                newSheet.Cells[i + 1, 4] = twa.player2Name;
-                newSheet.Cells[i + 1, 5] = twa.player3Name;
-                newSheet.Cells[i + 1, 6] = twa.player4Name;
-                newSheet.Cells[i + 1, 7] = twa.player1Team;
-                newSheet.Cells[i + 1, 8] = twa.player2Team;
-                newSheet.Cells[i + 1, 9] = twa.player3Team;
-                newSheet.Cells[i + 1, 10] = twa.player4Team;
-                newSheet.Cells[i + 1, 11] = twa.player1Country;
-                newSheet.Cells[i + 1, 12] = twa.player2Country;
-                newSheet.Cells[i + 1, 13] = twa.player3Country;
-                newSheet.Cells[i + 1, 14] = twa.player4Country;
-                newSheet.Cells[i + 1, 15] = twa.player1Id;
-                newSheet.Cells[i + 1, 16] = twa.player2Id;
-                newSheet.Cells[i + 1, 17] = twa.player3Id;
-                newSheet.Cells[i + 1, 18] = twa.player4Id;
+                newSheet.Cells[i + 2, 1] = twa.roundId;
+                newSheet.Cells[i + 2, 2] = twa.tableId;
+                newSheet.Cells[i + 2, 3] = twa.player1Name;
+                newSheet.Cells[i + 2, 4] = twa.player2Name;
+                newSheet.Cells[i + 2, 5] = twa.player3Name;
+                newSheet.Cells[i + 2, 6] = twa.player4Name;
+                newSheet.Cells[i + 2, 7] = twa.player1Team;
+                newSheet.Cells[i + 2, 8] = twa.player2Team;
+                newSheet.Cells[i + 2, 9] = twa.player3Team;
+                newSheet.Cells[i + 2, 10] = twa.player4Team;
+                newSheet.Cells[i + 2, 11] = twa.player1Country;
+                newSheet.Cells[i + 2, 12] = twa.player2Country;
+                newSheet.Cells[i + 2, 13] = twa.player3Country;
+                newSheet.Cells[i + 2, 14] = twa.player4Country;
+                newSheet.Cells[i + 2, 15] = twa.player1Id;
+                newSheet.Cells[i + 2, 16] = twa.player2Id;
+                newSheet.Cells[i + 2, 17] = twa.player3Id;
+                newSheet.Cells[i + 2, 18] = twa.player4Id;
+            }
+
+            //Paint headers
+            newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+            newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+            newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+            //Paint odd lines
+            for (int i = 1; i <= newSheet.UsedRange.Rows.Count; i++)
+            {
+                if (i > 1 && i % 2 != 0)
+                    newSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
             }
 
             //Resize columns
@@ -846,11 +936,6 @@ namespace TournamentCalculator
                 newSheet.Cells[1, i + 1] = "Rival " + i + " Name";
             }
 
-            //Paint headers
-            newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
-            newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
-            newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
-
             //Write data
             for (int i = 0; i < rivalsByPlayer.Count; i++)
             {
@@ -861,6 +946,18 @@ namespace TournamentCalculator
                 {
                     newSheet.Cells[i + 2, j + 2] = r.rivalsNames[j];
                 }
+            }
+
+            //Paint headers
+            newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+            newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+            newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+            //Paint odd lines
+            for (int i = 1; i <= newSheet.UsedRange.Rows.Count; i++)
+            {
+                if (i > 1 && i % 2 != 0)
+                    newSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
             }
 
             //Bold first column
@@ -966,6 +1063,14 @@ namespace TournamentCalculator
                     .ToList());
         }
 
+        private void GenerateTablesWhitIds(int numRounds)
+        {
+            tablesWithIds.AddRange(
+                tablesWithAll.Select(x => new TableWithIds(
+                    x.roundId, x.tableId, x.player1Id, x.player2Id, x.player3Id, x.player4Id))
+                    .ToList());
+        }
+
         private void GenerateTablesByPlayer()
         {
             foreach(Player p in players)
@@ -1026,11 +1131,29 @@ namespace TournamentCalculator
             chckBxCountries.Enabled = true;
             chckBxIds.Enabled = true;
             btnShowPlayers.Enabled = true;
-            btnShowByPlayers.Enabled = true;
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
             btnShowCountries.Enabled = true;
-            btnShowAll.Enabled = true;
+            btnShowIds.Enabled = true;
+
+            btnGetExcelTemplate.BackColor = Color.FromArgb(0, 177, 106);
+            btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
+            btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
+            btnExport.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowCountries.BackColor = Color.FromArgb(0, 177, 106);
+            btnShowIds.BackColor = Color.FromArgb(0, 177, 106);
+            btnGetExcelTemplate.ForeColor = Color.White;
+            btnImportExcel.ForeColor = Color.White;
+            btnCalculate.ForeColor = Color.White;
+            btnExport.ForeColor = Color.White;
+            btnShowPlayers.ForeColor = Color.White;
+            btnShowNames.ForeColor = Color.White;
+            btnShowTeams.ForeColor = Color.White;
+            btnShowCountries.ForeColor = Color.White;
+            btnShowIds.ForeColor = Color.White;
         }
 
         private void DisableAll()
@@ -1039,18 +1162,35 @@ namespace TournamentCalculator
             btnImportExcel.Enabled = false;
             btnCalculate.Enabled = false;
             btnExport.Enabled = false;
-            numUpDownRounds.Enabled = false;
-            numUpDownTriesMax.Enabled = false;
             chckBxNames.Enabled = false;
             chckBxTeams.Enabled = false;
             chckBxCountries.Enabled = false;
             chckBxIds.Enabled = false;
             btnShowPlayers.Enabled = false;
-            btnShowByPlayers.Enabled = false;
             btnShowNames.Enabled = false;
             btnShowTeams.Enabled = false;
             btnShowCountries.Enabled = false;
-            btnShowAll.Enabled = false;
+            btnShowIds.Enabled = false;
+
+            btnGetExcelTemplate.BackColor = Color.FromArgb(224, 224, 224);
+            btnImportExcel.BackColor = Color.FromArgb(224, 224, 224);
+            btnCalculate.BackColor = Color.FromArgb(224, 224, 224);
+            btnExport.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowTeams.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowCountries.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowIds.BackColor = Color.FromArgb(224, 224, 224);
+
+            btnGetExcelTemplate.ForeColor = Color.FromArgb(224, 224, 224);
+            btnImportExcel.ForeColor = Color.FromArgb(224, 224, 224);
+            btnCalculate.ForeColor = Color.FromArgb(224, 224, 224);
+            btnExport.ForeColor = Color.FromArgb(224, 224, 224);
+            btnShowPlayers.ForeColor = Color.FromArgb(224, 224, 224);
+            btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
+            btnShowTeams.ForeColor = Color.FromArgb(224, 224, 224);
+            btnShowCountries.ForeColor = Color.FromArgb(224, 224, 224);
+            btnShowIds.ForeColor = Color.FromArgb(224, 224, 224);
         }
 
         #endregion

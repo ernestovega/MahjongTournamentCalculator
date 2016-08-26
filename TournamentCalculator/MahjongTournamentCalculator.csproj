@@ -77,6 +77,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Rivals.cs" />
+    <Compile Include="Model\TableWithIds.cs" />
     <Compile Include="Model\TableWithNames.cs" />
     <Compile Include="Model\TableWithTeams.cs" />
     <Compile Include="Model\TableWithCountries.cs" />
