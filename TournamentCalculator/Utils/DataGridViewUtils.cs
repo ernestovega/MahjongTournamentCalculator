@@ -1,6 +1,6 @@
-﻿using FastMember;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 
@@ -8,113 +8,65 @@ namespace TournamentCalculator.Utils
 {
     public static class DataGridViewUtils
     {
-        public static void updateDataGridView(DataGridView datagrid, DataTable dataTable)
-        {
-            datagrid.DataSource = dataTable;
-        }
 
-        public static void updateDataGridView(DataGridView dataGrid, List<Player> players)
+        public static void updateDataGridViewPlayer(DataGridView dataGrid, List<string[]> sPlayers)
         {
-            DataTable dataTable = new DataTable();
-            using (var reader = ObjectReader.Create(players))
-            {
-                try
-                {
-                    dataTable.Load(reader);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            dataGrid.DataSource = dataTable;
-            dataGrid.Columns["Id"].DisplayIndex = 0;
-            dataGrid.Columns["Name"].DisplayIndex = 1;
-            dataGrid.Columns["Team"].DisplayIndex = 2;
-            dataGrid.Columns["Country"].DisplayIndex = 3;
-            dataGrid.Columns["Id"].Width = 72;
+            dataGrid.DataSource = ConvertListToDataTable(sPlayers);
+            dataGrid.Columns[0].HeaderText = "Id";
+            dataGrid.Columns[1].HeaderText = "Name";
+            dataGrid.Columns[2].HeaderText = "Team";
+            dataGrid.Columns[3].HeaderText = "Country";
+            dataGrid.Columns[0].Width = 80;
+            dataGrid.Columns[1].Width = 240;
+            dataGrid.Columns[2].Width = 240;
+            dataGrid.Columns[3].Width = 240;
         }
         
-        public static void updateDataGridView(DataGridView datagrid, List<TableWithNames> list)
+        public static void updateDataGridViewTable(DataGridView dataGrid, List<string[]> sTables, string header)
         {
-            DataTable dataTable = new DataTable();
-            try
-            {
-                using (var reader = ObjectReader.Create(list))
-                {
-                    dataTable.Load(reader);
-                    datagrid.DataSource = dataTable;
-                    datagrid.Columns["RoundId"].DisplayIndex = 0;
-                    datagrid.Columns["TableId"].DisplayIndex = 1;
-                    datagrid.Columns["RoundId"].Width = 72;
-                    datagrid.Columns["TableId"].Width = 72;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            dataGrid.DataSource = ConvertListToDataTable(sTables);
+            dataGrid.Columns[0].HeaderText = "Round";
+            dataGrid.Columns[1].HeaderText = "Table";
+            dataGrid.Columns[2].HeaderText = "Player 1 " + header;
+            dataGrid.Columns[3].HeaderText = "Player 2 " + header;
+            dataGrid.Columns[4].HeaderText = "Player 3 " + header;
+            dataGrid.Columns[5].HeaderText = "Player 4 " + header;
+            dataGrid.Columns[0].Width = 80;
+            dataGrid.Columns[1].Width = 80;
+            dataGrid.Columns[2].Width = 160;
+            dataGrid.Columns[3].Width = 160;
+            dataGrid.Columns[4].Width = 160;
+            dataGrid.Columns[5].Width = 160;
         }
 
-        public static void updateDataGridView(DataGridView datagrid, List<TableWithTeams> list)
+        private static DataTable ConvertListToDataTable(List<string[]> list)
         {
-            DataTable dataTable = new DataTable();
-            try
-            {
-                using (var reader = ObjectReader.Create(list))
-                {
-                    dataTable.Load(reader);
-                    datagrid.DataSource = dataTable;
-                    datagrid.Columns["RoundId"].DisplayIndex = 0;
-                    datagrid.Columns["TableId"].DisplayIndex = 1;
-                    datagrid.Columns["RoundId"].Width = 72;
-                    datagrid.Columns["TableId"].Width = 72;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+            // New table.
+            DataTable table = new DataTable();
 
-        public static void updateDataGridView(DataGridView datagrid, List<TableWithCountries> list)
-        {
-            DataTable dataTable = new DataTable();
-            try
+            // Get max columns.
+            int columns = 0;
+            foreach (var array in list)
             {
-                using (var reader = ObjectReader.Create(list))
+                if (array.Length > columns)
                 {
-                    dataTable.Load(reader);
-                    datagrid.DataSource = dataTable;
-                    datagrid.Columns["RoundId"].DisplayIndex = 0;
-                    datagrid.Columns["TableId"].DisplayIndex = 1;
-                    datagrid.Columns["RoundId"].Width = 72;
-                    datagrid.Columns["TableId"].Width = 72;
+                    columns = array.Length;
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
 
-        public static void updateDataGridView(DataGridView datagrid, List<TableWithIds> list)
-        {
-            DataTable dataTable = new DataTable();
-            try
+            // Add columns.
+            for (int i = 0; i < columns; i++)
             {
-                using (var reader = ObjectReader.Create(list))
-                {
-                    dataTable.Load(reader);
-                    datagrid.DataSource = dataTable;
-                    datagrid.Columns["RoundId"].DisplayIndex = 0;
-                    datagrid.Columns["TableId"].DisplayIndex = 1;
-                }
+                table.Columns.Add();
             }
-            catch (Exception ex)
+
+            // Add rows.
+            foreach (var array in list)
             {
-                MessageBox.Show(ex.Message);
+                table.Rows.Add(array);
             }
+
+            return table;
         }
     }
 }

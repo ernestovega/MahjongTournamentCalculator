@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Threading;
 using System.Windows.Forms;
 using TournamentCalculator.Model;
@@ -19,16 +20,18 @@ namespace TournamentCalculator
         private List<Player> players = new List<Player>();
         private List<TablePlayer> tablePlayers = new List<TablePlayer>();
         private List<TableWithAll> tablesWithAll = new List<TableWithAll>();
-        private List<TableWithNames> tablesWithNames = new List<TableWithNames>();
-        private List<TableWithTeams> tablesWithTeams = new List<TableWithTeams>();
-        private List<TableWithCountries> tablesWithCountries = new List<TableWithCountries>();
-        private List<TableWithIds> tablesWithIds = new List<TableWithIds>();
+        private List<string[]> sPlayers = new List<string[]>();
+        private List<string[]> sTablesNames = new List<string[]>();
+        private List<string[]> sTablesTeams = new List<string[]>();
+        private List<string[]> sTablesCountries = new List<string[]>();
+        private List<string[]> sTablesIds = new List<string[]>();
         private List<TableWithAll> tablesByPlayer = new List<TableWithAll>();
         private List<Rivals> rivalsByPlayer = new List<Rivals>();
         private int currentRound, currentTable, currentTablePlayer;
         private Random random = new Random();
         private int countTries = 0;
         private string errorMessage;
+        private int numRounds;
 
         #endregion
 
@@ -38,14 +41,27 @@ namespace TournamentCalculator
         {
             Thread t = new Thread(new ThreadStart(openSplash));
             t.Start();
-            Thread.Sleep(2000);
+            
             InitializeComponent();
-            t.Abort();
+            Thread.Sleep(1000);
+
+            if(isExcelInstalled())
+                t.Abort();
+            else
+            {
+                MessageBox.Show("Excel not present on your computer.\nPlease get it.");
+                Application.Exit();
+            }
         }
-        
+
         public void openSplash()
         {
             Application.Run(new SplashForm());
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            Activate();
         }
 
         #endregion
@@ -75,11 +91,13 @@ namespace TournamentCalculator
             DisableAll();
 
             players.Clear();
+            sPlayers.Clear();
             tablePlayers.Clear();
             tablesWithAll.Clear();
-            tablesWithNames.Clear();
-            tablesWithTeams.Clear();
-            tablesWithCountries.Clear();
+            sTablesNames.Clear();
+            sTablesTeams.Clear();
+            sTablesCountries.Clear();
+            sTablesIds.Clear();
             tablesByPlayer.Clear();
             rivalsByPlayer.Clear();
             lblPlayers.Text = string.Empty;
@@ -105,41 +123,27 @@ namespace TournamentCalculator
                     else if (ThereAre4PlayersByTeam())
                         errorMessage += "\n\tEach team must have 4 players.";
                     else
-                    {
+                    {//TODO OK
+                        GenerateSPlayers();
                         lblTables.Text = "Tables: " + numPlayers / 4;
+                        DataGridViewUtils.updateDataGridViewPlayer(dataGridView, sPlayers);
+
                         btnGetExcelTemplate.Enabled = true;
                         btnImportExcel.Enabled = true;
                         btnCalculate.Enabled = true;
                         numUpDownRounds.Enabled = true;
                         numUpDownTriesMax.Enabled = true;
-                        btnShowPlayers.Enabled = true;
+
                         btnGetExcelTemplate.BackColor = Color.FromArgb(0, 177, 106);
                         btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
                         btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
-                        btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
+                        btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
+
                         btnGetExcelTemplate.ForeColor = Color.White;
                         btnImportExcel.ForeColor = Color.White;
                         btnCalculate.ForeColor = Color.White;
                         btnShowPlayers.ForeColor = Color.White;
 
-                        DataGridViewUtils.updateDataGridView(dataGridView, players);
-
-                        btnShowPlayers.Enabled = false;
-                        btnShowNames.Enabled = true;
-                        btnShowTeams.Enabled = true;
-                        btnShowCountries.Enabled = true;
-                        btnShowIds.Enabled = true;
-                        btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
-                        btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
-                        btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
-                        btnShowCountries.BackColor = Color.FromArgb(0, 177, 106);
-                        btnShowIds.BackColor = Color.FromArgb(0, 177, 106);
-
-                        btnShowPlayers.ForeColor = Color.FromArgb(224, 224, 224);
-                        btnShowNames.ForeColor = Color.White;
-                        btnShowTeams.ForeColor = Color.White;
-                        btnShowCountries.ForeColor = Color.White;
-                        btnShowIds.ForeColor = Color.White;
                         Cursor.Current = Cursors.Default;
                         return;
                     }
@@ -150,8 +154,7 @@ namespace TournamentCalculator
 
             if (!errorMessage.Equals("Something is wrong in the excel:\n"))
                 MessageBox.Show(errorMessage);
-
-            DataGridViewUtils.updateDataGridView(dataGridView, players);
+            
             btnGetExcelTemplate.Enabled = true;
             btnImportExcel.Enabled = true;
             btnShowPlayers.Enabled = false;
@@ -185,31 +188,38 @@ namespace TournamentCalculator
             DisableAll();
             lblTriesNeeded.Text = "Tries needed:";
 
-            int numRounds = decimal.ToInt32(numUpDownRounds.Value);
+            numRounds = decimal.ToInt32(numUpDownRounds.Value);
             int numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
+            customProgressBar.Maximum = numTriesMax;
             int result = -1;
             countTries = 0;
+
+            customProgressBar.Visible = true;
+            customProgressBar.Show();
 
             //Cada vez que un cálculo es imposible, se reintenta desde cero tantas veces como se hayan indicado.
             while (result < 0 && countTries < numTriesMax)
             {
-                countTries++;
+                customProgressBar.Value = countTries++;
+                lblTriesNeeded.Text = countTries.ToString();
                 result = GenerateTournament(numRounds);
                 lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
                 Application.DoEvents();
             }
+
+            customProgressBar.Hide();
+            customProgressBar.Visible = false;
             
             /*Si no se ha podido calcular en los intentos indicados, se notifica,
               se muestra la lista de jugadores y se termina*/
             if (countTries >= numTriesMax)
             {
-                DataGridViewUtils.updateDataGridView(dataGridView, players);
+                DataGridViewUtils.updateDataGridViewPlayer(dataGridView, sPlayers);
                 
                 numUpDownRounds.Enabled = true;
                 btnCalculate.Enabled = true;
                 numUpDownTriesMax.Enabled = true;
                 btnImportExcel.Enabled = true;
-                btnCalculate.Enabled = true;
                 btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
                 btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
                 btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
@@ -223,19 +233,34 @@ namespace TournamentCalculator
 
             //Si llegamos aqui es que todo ha ido bien, generamos todas las vistas y se muestramos las mesas
             GenerateTablesWhitAll(numRounds);
-            GenerateTablesWhitNames(numRounds);
-            GenerateTablesWhitTeams(numRounds);
-            GenerateTablesWhitCountries(numRounds);
-            GenerateTablesWhitIds(numRounds);
+            GenerateSTablesWithNames();
+            GenerateSTablesWithTeams();
+            GenerateSTablesWithCountries();
+            GenerateSTablesWithIds();
             GenerateTablesByPlayer();
             GenerateRivalsByPlayer();
 
             EnableAll();
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
+            DataGridViewUtils.updateDataGridViewTable(dataGridView, sTablesNames, "Name");
             btnShowNames.Enabled = false;
             btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
             btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
             Cursor.Current = Cursors.Default;
+        }
+
+        private void btnCheckDuplicateRivals_Click(object sender, EventArgs e)
+        {
+            foreach (Player p in players)
+            {
+                string[] pRivals = rivalsByPlayer.Find(x => x.playerName.Equals(p.name)).rivalsNames;
+                var dict = new Dictionary<string, int>();
+                if (pRivals.Distinct().Count() != numRounds * 3)
+                {
+                    MessageBox.Show(p.name + " have duplicated rivals.");
+                    return;
+                }
+            }
+            MessageBox.Show("No duplicated rivals found.");
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -243,9 +268,11 @@ namespace TournamentCalculator
             Cursor.Current = Cursors.WaitCursor;
             DisableAll();
 
+            MessageBox.Show("Please wait until Excel creation finishes.\nA sound will indicate.");
             ExportToExcel();
-            
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
+            SystemSounds.Exclamation.Play();
+
+            DataGridViewUtils.updateDataGridViewTable(dataGridView, sTablesNames, "Name");
             EnableAll();
             btnShowNames.Enabled = false;
             btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
@@ -284,7 +311,7 @@ namespace TournamentCalculator
             btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
             btnShowPlayers.ForeColor = Color.FromArgb(224, 224, 224);
 
-            DataGridViewUtils.updateDataGridView(dataGridView, players);
+            DataGridViewUtils.updateDataGridViewPlayer(dataGridView, sPlayers);
             
             btnShowNames.Enabled = true;
             btnShowTeams.Enabled = true;
@@ -309,7 +336,7 @@ namespace TournamentCalculator
             btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
 
 
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithNames);
+            DataGridViewUtils.updateDataGridViewTable(dataGridView, sTablesNames, "Name");
 
             btnShowPlayers.Enabled = true;
             btnShowTeams.Enabled = true;
@@ -333,7 +360,7 @@ namespace TournamentCalculator
             btnShowTeams.BackColor = Color.FromArgb(224, 224, 224);
             btnShowTeams.ForeColor = Color.FromArgb(224, 224, 224);
 
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithTeams);
+            DataGridViewUtils.updateDataGridViewTable(dataGridView, sTablesTeams, "Team");
 
             btnShowPlayers.Enabled = true;
             btnShowNames.Enabled = true;
@@ -357,7 +384,7 @@ namespace TournamentCalculator
             btnShowCountries.BackColor = Color.FromArgb(224, 224, 224);
             btnShowCountries.ForeColor = Color.FromArgb(224, 224, 224);
 
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithCountries);
+            DataGridViewUtils.updateDataGridViewTable(dataGridView, sTablesCountries, "Country");
 
             btnShowPlayers.Enabled = true;
             btnShowNames.Enabled = true;
@@ -381,7 +408,7 @@ namespace TournamentCalculator
             btnShowIds.BackColor = Color.FromArgb(224, 224, 224);
             btnShowIds.ForeColor = Color.FromArgb(224, 224, 224);
 
-            DataGridViewUtils.updateDataGridView(dataGridView, tablesWithIds);
+            DataGridViewUtils.updateDataGridViewTable(dataGridView, sTablesIds, "Id");
 
             btnShowPlayers.Enabled = true;
             btnShowNames.Enabled = true;
@@ -407,9 +434,10 @@ namespace TournamentCalculator
             //Limpiamos las tablas
             tablePlayers.Clear();
             tablesWithAll.Clear();
-            tablesWithNames.Clear();
-            tablesWithTeams.Clear();
-            tablesWithCountries.Clear();
+            sTablesNames.Clear();
+            sTablesTeams.Clear();
+            sTablesCountries.Clear();
+            sTablesIds.Clear();
             tablesByPlayer.Clear();
             rivalsByPlayer.Clear();
             for (currentRound = 1; currentRound <= numRounds; currentRound++)
@@ -711,141 +739,147 @@ namespace TournamentCalculator
 
         private void ExportToExcel()
         {
-            if (!isExcelInstalled())
-                return;
+            try
+            { 
+                //Start excel
+                NsExcel.Application excel;
+                excel = new NsExcel.Application();
 
-            //Start excel
-            NsExcel.Application excel;
-            excel = new NsExcel.Application();
+                //Make excel visible
+                excel.Visible = true;
+                excel.DisplayAlerts = false;
 
-            //Make excel visible
-            excel.Visible = true;
-            excel.DisplayAlerts = false;
+                //Create a new Workbook
+                NsExcel.Workbook excelWorkBook;
+                excelWorkBook = excel.Workbooks.Add();
 
-            //Create a new Workbook
-            NsExcel.Workbook excelWorkBook;
-            excelWorkBook = excel.Workbooks.Add();
+                //Using default Worksheet
+                NsExcel.Sheets excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
 
-            //Using default Worksheet
-            NsExcel.Sheets excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
-
-            //Write Tournament data by rounds         
-            for (currentRound = 1; currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count(); currentRound++)
-            {
-                //Adding new Worksheet
-                var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
-                newSheet.Name = "Round " + (currentRound);
-                if (currentRound == 1)
+                //Write Tournament data by rounds         
+                for (currentRound = 1; currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count(); currentRound++)
                 {
-                    while (excelSheets.Count > 1)
+                    //Adding new Worksheet
+                    var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+                    newSheet.Name = "Round " + (currentRound);
+                    if (currentRound == 1)
                     {
-                        excelSheets[excelSheets.Count - 1].Delete();
+                        while (excelSheets.Count > 1)
+                        {
+                            excelSheets[excelSheets.Count - 1].Delete();
+                        }
                     }
-                }
 
-                //Write headers
-                newSheet.Cells[1, 1] = "Round";
-                newSheet.Cells[1, 2] = "Table";
-                if (chckBxNames.Checked)
-                {
-                    newSheet.Cells[1, 3] = "Player 1 Name";
-                    newSheet.Cells[1, 4] = "Player 2 Name";
-                    newSheet.Cells[1, 5] = "Player 3 Name";
-                    newSheet.Cells[1, 6] = "Player 4 Name";
-                }
-                if (chckBxTeams.Checked)
-                {
-                    newSheet.Cells[1, 7] = "Player 1 Team";
-                    newSheet.Cells[1, 8] = "Player 2 Team";
-                    newSheet.Cells[1, 9] = "Player 3 Team";
-                    newSheet.Cells[1, 10] = "Player 4 Team";
-                }
-                if (chckBxCountries.Checked)
-                {
-                    newSheet.Cells[1, 11] = "Player 1 Country";
-                    newSheet.Cells[1, 12] = "Player 2 Country";
-                    newSheet.Cells[1, 13] = "Player 3 Country";
-                    newSheet.Cells[1, 14] = "Player 4 Country";
-                }
-                if (chckBxIds.Checked)
-                {
-                    newSheet.Cells[1, 15] = "Player 1 Id";
-                    newSheet.Cells[1, 16] = "Player 2 Id";
-                    newSheet.Cells[1, 17] = "Player 3 Id";
-                    newSheet.Cells[1, 18] = "Player 4 Id";
-                }
-
-                var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
-
-                for (currentTable = 1; currentTable <= tablesWithAll.Select(x => x.tableId).Distinct().Count(); currentTable++)
-                {
-                    newSheet.Cells[currentTable + 1, 1 ] = currentRoundTables[currentTable - 1].roundId;
-                    newSheet.Cells[currentTable + 1, 2 ] = currentRoundTables[currentTable - 1].tableId;
+                    //Write headers
+                    newSheet.Cells[1, 1] = "Round";
+                    newSheet.Cells[1, 2] = "Table";
                     if (chckBxNames.Checked)
                     {
-                        newSheet.Cells[currentTable + 1, 3 ] = currentRoundTables[currentTable - 1].player1Name;
-                        newSheet.Cells[currentTable + 1, 4 ] = currentRoundTables[currentTable - 1].player2Name;
-                        newSheet.Cells[currentTable + 1, 5 ] = currentRoundTables[currentTable - 1].player3Name;
-                        newSheet.Cells[currentTable + 1, 6 ] = currentRoundTables[currentTable - 1].player4Name;
+                        newSheet.Cells[1, 3] = "Player 1 Name";
+                        newSheet.Cells[1, 4] = "Player 2 Name";
+                        newSheet.Cells[1, 5] = "Player 3 Name";
+                        newSheet.Cells[1, 6] = "Player 4 Name";
                     }
                     if (chckBxTeams.Checked)
                     {
-                        newSheet.Cells[currentTable + 1, 7 ] = currentRoundTables[currentTable - 1].player1Team;
-                        newSheet.Cells[currentTable + 1, 8 ] = currentRoundTables[currentTable - 1].player2Team;
-                        newSheet.Cells[currentTable + 1, 9 ] = currentRoundTables[currentTable - 1].player3Team;
-                        newSheet.Cells[currentTable + 1, 10] = currentRoundTables[currentTable - 1].player4Team;
+                        newSheet.Cells[1, 7] = "Player 1 Team";
+                        newSheet.Cells[1, 8] = "Player 2 Team";
+                        newSheet.Cells[1, 9] = "Player 3 Team";
+                        newSheet.Cells[1, 10] = "Player 4 Team";
                     }
                     if (chckBxCountries.Checked)
                     {
-                        newSheet.Cells[currentTable + 1, 11] = currentRoundTables[currentTable - 1].player1Country;
-                        newSheet.Cells[currentTable + 1, 12] = currentRoundTables[currentTable - 1].player2Country;
-                        newSheet.Cells[currentTable + 1, 13] = currentRoundTables[currentTable - 1].player3Country;
-                        newSheet.Cells[currentTable + 1, 14] = currentRoundTables[currentTable - 1].player4Country;
+                        newSheet.Cells[1, 11] = "Player 1 Country";
+                        newSheet.Cells[1, 12] = "Player 2 Country";
+                        newSheet.Cells[1, 13] = "Player 3 Country";
+                        newSheet.Cells[1, 14] = "Player 4 Country";
                     }
                     if (chckBxIds.Checked)
                     {
-                        newSheet.Cells[currentTable + 1, 15] = currentRoundTables[currentTable - 1].player1Id;
-                        newSheet.Cells[currentTable + 1, 16] = currentRoundTables[currentTable - 1].player2Id;
-                        newSheet.Cells[currentTable + 1, 17] = currentRoundTables[currentTable - 1].player3Id;
-                        newSheet.Cells[currentTable + 1, 18] = currentRoundTables[currentTable - 1].player4Id;
+                        newSheet.Cells[1, 15] = "Player 1 Id";
+                        newSheet.Cells[1, 16] = "Player 2 Id";
+                        newSheet.Cells[1, 17] = "Player 3 Id";
+                        newSheet.Cells[1, 18] = "Player 4 Id";
                     }
-                }
 
-                //Resize columns
-                newSheet.UsedRange.EntireColumn.AutoFit();
+                    var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
 
-                //Paint headers
-                newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
-                newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
-                newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+                    for (currentTable = 1; currentTable <= tablesWithAll.Select(x => x.tableId).Distinct().Count(); currentTable++)
+                    {
+                        newSheet.Cells[currentTable + 1, 1] = currentRoundTables[currentTable - 1].roundId;
+                        newSheet.Cells[currentTable + 1, 2] = currentRoundTables[currentTable - 1].tableId;
+                        if (chckBxNames.Checked)
+                        {
+                            newSheet.Cells[currentTable + 1, 3] = currentRoundTables[currentTable - 1].player1Name;
+                            newSheet.Cells[currentTable + 1, 4] = currentRoundTables[currentTable - 1].player2Name;
+                            newSheet.Cells[currentTable + 1, 5] = currentRoundTables[currentTable - 1].player3Name;
+                            newSheet.Cells[currentTable + 1, 6] = currentRoundTables[currentTable - 1].player4Name;
+                        }
+                        if (chckBxTeams.Checked)
+                        {
+                            newSheet.Cells[currentTable + 1, 7] = currentRoundTables[currentTable - 1].player1Team;
+                            newSheet.Cells[currentTable + 1, 8] = currentRoundTables[currentTable - 1].player2Team;
+                            newSheet.Cells[currentTable + 1, 9] = currentRoundTables[currentTable - 1].player3Team;
+                            newSheet.Cells[currentTable + 1, 10] = currentRoundTables[currentTable - 1].player4Team;
+                        }
+                        if (chckBxCountries.Checked)
+                        {
+                            newSheet.Cells[currentTable + 1, 11] = currentRoundTables[currentTable - 1].player1Country;
+                            newSheet.Cells[currentTable + 1, 12] = currentRoundTables[currentTable - 1].player2Country;
+                            newSheet.Cells[currentTable + 1, 13] = currentRoundTables[currentTable - 1].player3Country;
+                            newSheet.Cells[currentTable + 1, 14] = currentRoundTables[currentTable - 1].player4Country;
+                        }
+                        if (chckBxIds.Checked)
+                        {
+                            newSheet.Cells[currentTable + 1, 15] = currentRoundTables[currentTable - 1].player1Id;
+                            newSheet.Cells[currentTable + 1, 16] = currentRoundTables[currentTable - 1].player2Id;
+                            newSheet.Cells[currentTable + 1, 17] = currentRoundTables[currentTable - 1].player3Id;
+                            newSheet.Cells[currentTable + 1, 18] = currentRoundTables[currentTable - 1].player4Id;
+                        }
+                    }
 
-                //Paint odd lines
-                for (int i = 1; i <= newSheet.UsedRange.Rows.Count; i++)
+                    //Resize columns
+                    newSheet.UsedRange.EntireColumn.AutoFit();
+
+                    //Paint headers
+                    newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+                    newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+                    newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+                    //Paint odd lines
+                    for (int i = 1; i <= newSheet.UsedRange.Rows.Count; i++)
+                    {
+                        if (i > 1 && i % 2 != 0)
+                            newSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
+                    }
+                }                
+            
+                //Write Tournament data by players
+                WriteToExcelTablesByPlayers(excelSheets);
+                WriteToExcelRivals(excelSheets);
+
+                //Now save the excel
+                string excelName = "Tournament_"
+                    + DateTime.Now.Second + DateTime.Now.Minute + DateTime.Now.Hour
+                    + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year;
+                excelWorkBook.SaveAs(excelName,
+                    NsExcel.XlFileFormat.xlWorkbookNormal);
+                try
                 {
-                    if (i > 1 && i % 2 != 0)
-                        newSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
+                    excelWorkBook.SaveCopyAs(
+                        Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                        + "\\" + excelName + ".xls");
+                }
+                catch
+                {
+                    MessageBox.Show("Excel file couldn't be saved.");
+                    return;
                 }
             }
-
-            //Write Tournament data by players
-            WriteToExcelTablesByPlayers(excelSheets);
-            WriteToExcelRivals(excelSheets);
-
-            //Now save the excel
-            string excelName = "Tournament_"
-                + DateTime.Now.Second + DateTime.Now.Minute + DateTime.Now.Hour
-                + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year;
-            excelWorkBook.SaveAs(excelName,
-                NsExcel.XlFileFormat.xlWorkbookNormal);
-            try
+            catch (Exception e)
             {
-                excelWorkBook.SaveCopyAs(
-                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-                    + "\\" + excelName + ".xls");
-            }
-            catch
-            {
-                MessageBox.Show("Excel template coldn't be saved.");
+                MessageBox.Show("Something was wrong, please try again.");
+                return;
             }
         }
 
@@ -1039,38 +1073,6 @@ namespace TournamentCalculator
             }
         }
 
-        private void GenerateTablesWhitNames(int numRounds)
-        {
-            tablesWithNames.AddRange(
-                tablesWithAll.Select(x => new TableWithNames(
-                    x.roundId, x.tableId, x.player1Name, x.player2Name, x.player3Name, x.player4Name))
-                    .ToList());            
-        }
-
-        private void GenerateTablesWhitTeams(int numRounds)
-        {
-            tablesWithTeams.AddRange(
-                tablesWithAll.Select(x => new TableWithTeams(
-                    x.roundId, x.tableId, x.player1Team, x.player2Team, x.player3Team, x.player4Team))
-                    .ToList());
-        }
-
-        private void GenerateTablesWhitCountries(int numRounds)
-        {
-            tablesWithCountries.AddRange(
-                tablesWithAll.Select(x => new TableWithCountries(
-                    x.roundId, x.tableId, x.player1Country, x.player2Country, x.player3Country, x.player4Country))
-                    .ToList());
-        }
-
-        private void GenerateTablesWhitIds(int numRounds)
-        {
-            tablesWithIds.AddRange(
-                tablesWithAll.Select(x => new TableWithIds(
-                    x.roundId, x.tableId, x.player1Id, x.player2Id, x.player3Id, x.player4Id))
-                    .ToList());
-        }
-
         private void GenerateTablesByPlayer()
         {
             foreach(Player p in players)
@@ -1123,6 +1125,7 @@ namespace TournamentCalculator
             btnGetExcelTemplate.Enabled = true;
             btnImportExcel.Enabled = true;
             btnCalculate.Enabled = true;
+            btnCheckDuplicateRivals.Enabled = true;
             btnExport.Enabled = true;
             numUpDownRounds.Enabled = true;
             numUpDownTriesMax.Enabled = true;
@@ -1139,6 +1142,8 @@ namespace TournamentCalculator
             btnGetExcelTemplate.BackColor = Color.FromArgb(0, 177, 106);
             btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
             btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
+            btnCheckDuplicateRivals.BackColor = Color.FromArgb(0, 177, 106);
+            btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
             btnExport.BackColor = Color.FromArgb(0, 177, 106);
             btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
             btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
@@ -1148,6 +1153,7 @@ namespace TournamentCalculator
             btnGetExcelTemplate.ForeColor = Color.White;
             btnImportExcel.ForeColor = Color.White;
             btnCalculate.ForeColor = Color.White;
+            btnCheckDuplicateRivals.ForeColor = Color.White;
             btnExport.ForeColor = Color.White;
             btnShowPlayers.ForeColor = Color.White;
             btnShowNames.ForeColor = Color.White;
@@ -1161,6 +1167,7 @@ namespace TournamentCalculator
             btnGetExcelTemplate.Enabled = false;
             btnImportExcel.Enabled = false;
             btnCalculate.Enabled = false;
+            btnCheckDuplicateRivals.Enabled = false;
             btnExport.Enabled = false;
             chckBxNames.Enabled = false;
             chckBxTeams.Enabled = false;
@@ -1175,6 +1182,7 @@ namespace TournamentCalculator
             btnGetExcelTemplate.BackColor = Color.FromArgb(224, 224, 224);
             btnImportExcel.BackColor = Color.FromArgb(224, 224, 224);
             btnCalculate.BackColor = Color.FromArgb(224, 224, 224);
+            btnCheckDuplicateRivals.BackColor = Color.FromArgb(224, 224, 224);
             btnExport.BackColor = Color.FromArgb(224, 224, 224);
             btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
             btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
@@ -1185,12 +1193,77 @@ namespace TournamentCalculator
             btnGetExcelTemplate.ForeColor = Color.FromArgb(224, 224, 224);
             btnImportExcel.ForeColor = Color.FromArgb(224, 224, 224);
             btnCalculate.ForeColor = Color.FromArgb(224, 224, 224);
+            btnCheckDuplicateRivals.ForeColor = Color.FromArgb(224, 224, 224);
             btnExport.ForeColor = Color.FromArgb(224, 224, 224);
             btnShowPlayers.ForeColor = Color.FromArgb(224, 224, 224);
             btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
             btnShowTeams.ForeColor = Color.FromArgb(224, 224, 224);
             btnShowCountries.ForeColor = Color.FromArgb(224, 224, 224);
             btnShowIds.ForeColor = Color.FromArgb(224, 224, 224);
+        }
+
+        private void GenerateSPlayers()
+        {
+            foreach (Player p in players)
+            {
+                sPlayers.Add(new string[] { p.id.ToString(), p.name, p.team, p.country });
+            }
+        }
+
+        private void GenerateSTablesWithNames()
+        {
+            foreach (TableWithAll t in tablesWithAll)
+            {
+                sTablesNames.Add(new string[] {
+                    t.roundId.ToString(),
+                    t.tableId.ToString(),
+                    t.player1Name.ToString(),
+                    t.player2Name.ToString(),
+                    t.player3Name.ToString(),
+                    t.player4Name.ToString(), });
+            }
+        }
+
+        private void GenerateSTablesWithTeams()
+        {
+            foreach (TableWithAll t in tablesWithAll)
+            {
+                sTablesTeams.Add(new string[] {
+                    t.roundId.ToString(),
+                    t.tableId.ToString(),
+                    t.player1Team.ToString(),
+                    t.player2Team.ToString(),
+                    t.player3Team.ToString(),
+                    t.player4Team.ToString(), });
+            }
+        }
+
+        private void GenerateSTablesWithCountries()
+        {
+            foreach (TableWithAll t in tablesWithAll)
+            {
+                sTablesCountries.Add(new string[] {
+                    t.roundId.ToString(),
+                    t.tableId.ToString(),
+                    t.player1Country.ToString(),
+                    t.player2Country.ToString(),
+                    t.player3Country.ToString(),
+                    t.player4Country.ToString(), });
+            }
+        }
+
+        private void GenerateSTablesWithIds()
+        {
+            foreach (TableWithAll t in tablesWithAll)
+            {
+                sTablesIds.Add(new string[] {
+                    t.roundId.ToString(),
+                    t.tableId.ToString(),
+                    t.player1Id.ToString(),
+                    t.player2Id.ToString(),
+                    t.player3Id.ToString(),
+                    t.player4Id.ToString(), });
+            }
         }
 
         #endregion
