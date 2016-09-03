@@ -1103,8 +1103,8 @@ namespace TournamentCalculator
             teamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
 
             //Align content to center
-            teamsTotalScoreSheet.get_Range("B1", "B" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
-            teamsTotalScoreSheet.get_Range("C1", "C" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+            teamsTotalScoreSheet.get_Range("B1", "B" + (teams.Length + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+            teamsTotalScoreSheet.get_Range("C1", "C" + (teams.Length + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
             
             //Paint odd lines
             for (int i = 1; i <= teamsTotalScoreSheet.UsedRange.Rows.Count; i++)
