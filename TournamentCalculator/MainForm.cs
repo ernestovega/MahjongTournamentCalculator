@@ -1044,16 +1044,27 @@ namespace TournamentCalculator
             playersTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
             playersTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
 
+            //Align content to center
+            playersTotalScoreSheet.get_Range("C1","C" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+            playersTotalScoreSheet.get_Range("D1", "D" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+
+            //Order rows by points and score
+            playersTotalScoreSheet.UsedRange.Sort(
+                playersTotalScoreSheet.UsedRange.Columns[3, Type.Missing], NsExcel.XlSortOrder.xlDescending,
+                playersTotalScoreSheet.UsedRange.Columns[4, Type.Missing], Type.Missing, NsExcel.XlSortOrder.xlDescending,
+                Type.Missing, NsExcel.XlSortOrder.xlAscending,
+                NsExcel.XlYesNoGuess.xlGuess, Type.Missing, Type.Missing,
+                NsExcel.XlSortOrientation.xlSortColumns, NsExcel.XlSortMethod.xlPinYin,
+                NsExcel.XlSortDataOption.xlSortNormal,
+                NsExcel.XlSortDataOption.xlSortNormal,
+                NsExcel.XlSortDataOption.xlSortNormal);
+            
             //Paint odd lines
             for (int i = 1; i <= playersTotalScoreSheet.UsedRange.Rows.Count; i++)
             {
                 if (i > 1 && i % 2 != 0)
                     playersTotalScoreSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
             }
-
-            //Align content to center
-            playersTotalScoreSheet.get_Range("C1","C" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
-            playersTotalScoreSheet.get_Range("D1", "D" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
         }
 
         private void GenerateTeamTotalsSheet(NsExcel.Sheets excelSheets)
@@ -1105,6 +1116,17 @@ namespace TournamentCalculator
             //Align content to center
             teamsTotalScoreSheet.get_Range("B1", "B" + (teams.Length + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
             teamsTotalScoreSheet.get_Range("C1", "C" + (teams.Length + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+
+            //Order rows by points and score
+            teamsTotalScoreSheet.UsedRange.Sort(
+                teamsTotalScoreSheet.UsedRange.Columns[2, Type.Missing], NsExcel.XlSortOrder.xlDescending,
+                teamsTotalScoreSheet.UsedRange.Columns[3, Type.Missing], Type.Missing, NsExcel.XlSortOrder.xlDescending,
+                Type.Missing, NsExcel.XlSortOrder.xlAscending,
+                NsExcel.XlYesNoGuess.xlGuess, Type.Missing, Type.Missing,
+                NsExcel.XlSortOrientation.xlSortColumns, NsExcel.XlSortMethod.xlPinYin,
+                NsExcel.XlSortDataOption.xlSortNormal,
+                NsExcel.XlSortDataOption.xlSortNormal,
+                NsExcel.XlSortDataOption.xlSortNormal);
             
             //Paint odd lines
             for (int i = 1; i <= teamsTotalScoreSheet.UsedRange.Rows.Count; i++)
