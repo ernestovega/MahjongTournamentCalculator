@@ -32,6 +32,7 @@ namespace TournamentCalculator
         private int countTries = 0;
         private string errorMessage;
         private int numRounds;
+        private string makingDate;
 
         #endregion
 
@@ -104,7 +105,7 @@ namespace TournamentCalculator
             lblTables.Text = string.Empty;
             errorMessage = "Something is wrong in the excel:\n";
 
-            int excelState = ImportExcel(path);
+            int excelState = ImportPlayer(path);
             if (excelState > 0)
             {
                 int numPlayers = players.Count;
@@ -124,6 +125,7 @@ namespace TournamentCalculator
                         errorMessage += "\n\tEach team must have 4 players.";
                     else
                     {//TODO OK
+                        players = players.OrderBy(x => x.id).ToList();
                         GenerateSPlayers();
                         lblTables.Text = "Tables: " + numPlayers / 4;
                         DataGridViewUtils.updateDataGridViewPlayer(dataGridView, sPlayers);
@@ -187,6 +189,8 @@ namespace TournamentCalculator
             Cursor.Current = Cursors.WaitCursor;
             DisableAll();
             lblTriesNeeded.Text = "Tries needed:";
+            makingDate = string.Format("{0}{1}{2}_{3}{4}{5}", DateTime.Now.Year, DateTime.Now.Month, 
+                DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
             numRounds = decimal.ToInt32(numUpDownRounds.Value);
             int numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
@@ -263,13 +267,30 @@ namespace TournamentCalculator
             MessageBox.Show("No duplicated rivals found.");
         }
 
-        private void btnExport_Click(object sender, EventArgs e)
+        private void btnExportTournament_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             DisableAll();
 
             MessageBox.Show("Please wait until Excel creation finishes.\nA sound will indicate.");
-            ExportToExcel();
+            ExportTournament();
+            SystemSounds.Exclamation.Play();
+
+            DataGridViewUtils.updateDataGridViewTable(dataGridView, sTablesNames, "Name");
+            EnableAll();
+            btnShowNames.Enabled = false;
+            btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
+            btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void btnExportScoringTables_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            DisableAll();
+
+            MessageBox.Show("Please wait until Excel creation finishes.\nA sound will indicate.");
+            ExportScoringTables();
             SystemSounds.Exclamation.Play();
 
             DataGridViewUtils.updateDataGridViewTable(dataGridView, sTablesNames, "Name");
@@ -564,9 +585,6 @@ namespace TournamentCalculator
 
         private void GenerateExcelTemplate()
         {
-            if (!isExcelInstalled())
-                return;
-
             //Start excel
             NsExcel.Application excel;
             excel = new NsExcel.Application();
@@ -616,7 +634,23 @@ namespace TournamentCalculator
             }
         }
 
-        private int ImportExcel(string ruta)
+        private static bool RequestFile(ref string path)
+        {
+            OpenFileDialog fDialog = new OpenFileDialog();
+            fDialog.Title = "Select Excel file";
+            fDialog.Filter = "Excel Files|*.xlsx;*.xls;";
+            fDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (fDialog.ShowDialog() == DialogResult.OK)
+            {
+                path = fDialog.FileName.ToString();
+                return true;
+            }
+
+            path = "";
+            return false;
+        }
+
+        private int ImportPlayer(string ruta)
         {
             DataTable dataTable = new DataTable();
             bool flagWrongExcel = false;
@@ -699,22 +733,6 @@ namespace TournamentCalculator
                 return 1;
         }
 
-        private static bool RequestFile(ref string path)
-        {
-            OpenFileDialog fDialog = new OpenFileDialog();
-            fDialog.Title = "Select Excel file";
-            fDialog.Filter = "Excel Files|*.xlsx;*.xls;";
-            fDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            if (fDialog.ShowDialog() == DialogResult.OK)
-            {
-                path = fDialog.FileName.ToString();
-                return true;
-            }
-
-            path = "";
-            return false;
-        }
-
         private void AddNewPlayerFromExcel(DataRow row)
         {
             players.Add(new Player(
@@ -725,19 +743,7 @@ namespace TournamentCalculator
                 ));
         }
 
-        private bool ThereAre4PlayersByTeam()
-        {
-            List<string> teams = players.Select(x => x.team).Distinct().ToList();
-            bool flagWrongMembers = false;
-            foreach(string team in teams)
-            {
-                if (players.FindAll(x => x.team.Equals(team)).Count != 4)
-                    flagWrongMembers = true;
-            }
-            return flagWrongMembers;
-        }
-
-        private void ExportToExcel()
+        private void ExportTournament()
         {
             try
             { 
@@ -802,6 +808,7 @@ namespace TournamentCalculator
                         newSheet.Cells[1, 18] = "Player 4 Id";
                     }
 
+                    //Write data
                     var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
 
                     for (currentTable = 1; currentTable <= tablesWithAll.Select(x => x.tableId).Distinct().Count(); currentTable++)
@@ -859,9 +866,7 @@ namespace TournamentCalculator
                 WriteToExcelRivals(excelSheets);
 
                 //Now save the excel
-                string excelName = "Tournament_"
-                    + DateTime.Now.Second + DateTime.Now.Minute + DateTime.Now.Hour
-                    + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year;
+                string excelName = "Tournament_" + makingDate;
                 excelWorkBook.SaveAs(excelName,
                     NsExcel.XlFileFormat.xlWorkbookNormal);
                 try
@@ -882,6 +887,106 @@ namespace TournamentCalculator
                 return;
             }
         }
+
+        private void ExportScoringTables()
+        {
+            try
+            { 
+                //Start excel
+                NsExcel.Application excel;
+                excel = new NsExcel.Application();
+
+                //Make excel visible
+                excel.Visible = true;
+                excel.DisplayAlerts = false;
+
+                //Create a new Workbook
+                NsExcel.Workbook excelWorkBook;
+                excelWorkBook = excel.Workbooks.Add();
+
+                //Using default Worksheet
+                NsExcel.Sheets excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
+
+                //Write Tournament data by rounds         
+                for (currentRound = 1; 
+                    currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count(); 
+                    currentRound++)
+                {
+                    //Adding new Worksheet and deleting existing
+                    var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, 
+                        excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+                    newSheet.Name = "Round " + (currentRound);
+                    if (currentRound == 1)
+                    {
+                        while (excelSheets.Count > 1)
+                        {
+                            excelSheets[excelSheets.Count - 1].Delete();
+                        }
+                    }
+
+                    //Write headers
+                    newSheet.Cells[1, 1] = "Round";
+                    newSheet.Cells[1, 2] = "Id";
+                    newSheet.Cells[1, 3] = "Name";
+                    newSheet.Cells[1, 4] = "Points";
+                    newSheet.Cells[1, 5] = "Score";
+                                           
+                    //Write data
+                    var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
+
+                    foreach(Player p in players)
+                    {
+                        newSheet.Cells[p.id + 1, 1] = currentRound;
+                        newSheet.Cells[p.id + 1, 2] = p.id;
+                        newSheet.Cells[p.id + 1, 3] = p.name;
+                    }
+
+                    //Resize columns
+                    newSheet.Cells[1, 1].ColumnWidth = 6;
+                    newSheet.Cells[1, 2].ColumnWidth = 6;
+                    newSheet.Cells[1, 3].ColumnWidth = 32;
+                    newSheet.Cells[1, 4].ColumnWidth = 9;
+                    newSheet.Cells[1, 5].ColumnWidth = 9;
+
+                    //Paint headers
+                    newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+                    newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+                    newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+                    //Paint odd lines
+                    for (int i = 1; i <= newSheet.UsedRange.Rows.Count; i++)
+                    {
+                        if (i > 1 && i % 2 != 0)
+                            newSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
+                    }
+                }
+
+                //Create the magic sheet xD
+
+
+
+                //Saving
+                string excelName = "Score_Tables" + makingDate;
+                excelWorkBook.SaveAs(excelName,
+                    NsExcel.XlFileFormat.xlWorkbookNormal);
+                try
+                {
+                    excelWorkBook.SaveCopyAs(
+                        Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                        + "\\" + excelName + ".xls");
+                }
+                catch
+                {
+                    MessageBox.Show("Excel file couldn't be saved.");
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something was wrong, please try again.");
+                return;
+            }
+}
 
         private void WriteToExcelTablesByPlayers(NsExcel.Sheets excelSheets)
         {
@@ -999,6 +1104,18 @@ namespace TournamentCalculator
 
             //Resize columns
             newSheet.UsedRange.EntireColumn.AutoFit();
+        }
+
+        private bool ThereAre4PlayersByTeam()
+        {
+            List<string> teams = players.Select(x => x.team).Distinct().ToList();
+            bool flagWrongMembers = false;
+            foreach(string team in teams)
+            {
+                if (players.FindAll(x => x.team.Equals(team)).Count != 4)
+                    flagWrongMembers = true;
+            }
+            return flagWrongMembers;
         }
 
         #endregion
@@ -1126,7 +1243,8 @@ namespace TournamentCalculator
             btnImportExcel.Enabled = true;
             btnCalculate.Enabled = true;
             btnCheckDuplicateRivals.Enabled = true;
-            btnExport.Enabled = true;
+            btnExportTournament.Enabled = true;
+            btnExportScoringTables.Enabled = true;
             numUpDownRounds.Enabled = true;
             numUpDownTriesMax.Enabled = true;
             chckBxNames.Enabled = true;
@@ -1144,7 +1262,8 @@ namespace TournamentCalculator
             btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
             btnCheckDuplicateRivals.BackColor = Color.FromArgb(0, 177, 106);
             btnImportExcel.BackColor = Color.FromArgb(0, 177, 106);
-            btnExport.BackColor = Color.FromArgb(0, 177, 106);
+            btnExportTournament.BackColor = Color.FromArgb(0, 177, 106);
+            btnExportScoringTables.BackColor = Color.FromArgb(0, 177, 106);
             btnShowPlayers.BackColor = Color.FromArgb(0, 177, 106);
             btnShowNames.BackColor = Color.FromArgb(0, 177, 106);
             btnShowTeams.BackColor = Color.FromArgb(0, 177, 106);
@@ -1154,7 +1273,8 @@ namespace TournamentCalculator
             btnImportExcel.ForeColor = Color.White;
             btnCalculate.ForeColor = Color.White;
             btnCheckDuplicateRivals.ForeColor = Color.White;
-            btnExport.ForeColor = Color.White;
+            btnExportTournament.ForeColor = Color.White;
+            btnExportScoringTables.ForeColor = Color.White;
             btnShowPlayers.ForeColor = Color.White;
             btnShowNames.ForeColor = Color.White;
             btnShowTeams.ForeColor = Color.White;
@@ -1168,7 +1288,8 @@ namespace TournamentCalculator
             btnImportExcel.Enabled = false;
             btnCalculate.Enabled = false;
             btnCheckDuplicateRivals.Enabled = false;
-            btnExport.Enabled = false;
+            btnExportTournament.Enabled = false;
+            btnExportScoringTables.Enabled = false;
             chckBxNames.Enabled = false;
             chckBxTeams.Enabled = false;
             chckBxCountries.Enabled = false;
@@ -1183,7 +1304,8 @@ namespace TournamentCalculator
             btnImportExcel.BackColor = Color.FromArgb(224, 224, 224);
             btnCalculate.BackColor = Color.FromArgb(224, 224, 224);
             btnCheckDuplicateRivals.BackColor = Color.FromArgb(224, 224, 224);
-            btnExport.BackColor = Color.FromArgb(224, 224, 224);
+            btnExportTournament.BackColor = Color.FromArgb(224, 224, 224);
+            btnExportScoringTables.BackColor = Color.FromArgb(224, 224, 224);
             btnShowPlayers.BackColor = Color.FromArgb(224, 224, 224);
             btnShowNames.BackColor = Color.FromArgb(224, 224, 224);
             btnShowTeams.BackColor = Color.FromArgb(224, 224, 224);
@@ -1194,7 +1316,8 @@ namespace TournamentCalculator
             btnImportExcel.ForeColor = Color.FromArgb(224, 224, 224);
             btnCalculate.ForeColor = Color.FromArgb(224, 224, 224);
             btnCheckDuplicateRivals.ForeColor = Color.FromArgb(224, 224, 224);
-            btnExport.ForeColor = Color.FromArgb(224, 224, 224);
+            btnExportTournament.ForeColor = Color.FromArgb(224, 224, 224);
+            btnExportScoringTables.ForeColor = Color.FromArgb(224, 224, 224);
             btnShowPlayers.ForeColor = Color.FromArgb(224, 224, 224);
             btnShowNames.ForeColor = Color.FromArgb(224, 224, 224);
             btnShowTeams.ForeColor = Color.FromArgb(224, 224, 224);

@@ -43,7 +43,7 @@
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.numUpDownRounds = new System.Windows.Forms.NumericUpDown();
             this.lblStep3 = new System.Windows.Forms.Label();
-            this.btnExport = new System.Windows.Forms.Button();
+            this.btnExportTournament = new System.Windows.Forms.Button();
             this.btnShowNames = new System.Windows.Forms.Button();
             this.btnShowTeams = new System.Windows.Forms.Button();
             this.btnShowCountries = new System.Windows.Forms.Button();
@@ -60,6 +60,8 @@
             this.btnImportExcel = new System.Windows.Forms.Button();
             this.btnCheckDuplicateRivals = new System.Windows.Forms.Button();
             this.customProgressBar = new MahjongTournamentCalculator.CustomViews.CustomProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnExportScoringTables = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
@@ -206,20 +208,20 @@
             this.lblStep3.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblStep3.Name = "lblStep3";
             // 
-            // btnExport
+            // btnExportTournament
             // 
-            this.btnExport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnExport.Cursor = System.Windows.Forms.Cursors.Hand;
-            resources.ApplyResources(this.btnExport, "btnExport");
-            this.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnExport.FlatAppearance.BorderSize = 0;
-            this.btnExport.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
-            this.btnExport.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.UseVisualStyleBackColor = false;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            this.btnExportTournament.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnExportTournament.Cursor = System.Windows.Forms.Cursors.Hand;
+            resources.ApplyResources(this.btnExportTournament, "btnExportTournament");
+            this.btnExportTournament.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnExportTournament.FlatAppearance.BorderSize = 0;
+            this.btnExportTournament.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnExportTournament.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnExportTournament.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnExportTournament.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.btnExportTournament.Name = "btnExportTournament";
+            this.btnExportTournament.UseVisualStyleBackColor = false;
+            this.btnExportTournament.Click += new System.EventHandler(this.btnExportTournament_Click);
             // 
             // btnShowNames
             // 
@@ -438,11 +440,34 @@
             this.customProgressBar.Name = "customProgressBar";
             this.customProgressBar.Step = 1;
             // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label1.Name = "label1";
+            // 
+            // btnExportScoringTables
+            // 
+            this.btnExportScoringTables.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnExportScoringTables.Cursor = System.Windows.Forms.Cursors.Hand;
+            resources.ApplyResources(this.btnExportScoringTables, "btnExportScoringTables");
+            this.btnExportScoringTables.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnExportScoringTables.FlatAppearance.BorderSize = 0;
+            this.btnExportScoringTables.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnExportScoringTables.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.btnExportScoringTables.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
+            this.btnExportScoringTables.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.btnExportScoringTables.Name = "btnExportScoringTables";
+            this.btnExportScoringTables.UseVisualStyleBackColor = false;
+            this.btnExportScoringTables.Click += new System.EventHandler(this.btnExportScoringTables_Click);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.btnExportScoringTables);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCheckDuplicateRivals);
             this.Controls.Add(this.customProgressBar);
             this.Controls.Add(this.btnGetExcelTemplate);
@@ -459,7 +484,7 @@
             this.Controls.Add(this.btnShowTeams);
             this.Controls.Add(this.btnShowNames);
             this.Controls.Add(this.lblStep3);
-            this.Controls.Add(this.btnExport);
+            this.Controls.Add(this.btnExportTournament);
             this.Controls.Add(this.numUpDownRounds);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.btnCalculate);
@@ -492,7 +517,7 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.NumericUpDown numUpDownRounds;
         private System.Windows.Forms.Label lblStep3;
-        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnExportTournament;
         private System.Windows.Forms.Button btnShowNames;
         private System.Windows.Forms.Button btnShowTeams;
         private System.Windows.Forms.Button btnShowCountries;
@@ -509,6 +534,8 @@
         private System.Windows.Forms.Button btnImportExcel;
         private MahjongTournamentCalculator.CustomViews.CustomProgressBar customProgressBar;
         private System.Windows.Forms.Button btnCheckDuplicateRivals;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnExportScoringTables;
     }
 }
 
