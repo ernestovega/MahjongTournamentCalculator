@@ -892,7 +892,7 @@ namespace TournamentCalculator
         private void ExportScoringTables()
         {
             try
-            { 
+            {
                 //Start excel
                 NsExcel.Application excel;
                 excel = new NsExcel.Application();
@@ -909,12 +909,12 @@ namespace TournamentCalculator
                 NsExcel.Sheets excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
 
                 //Write Tournament data by rounds         
-                for (currentRound = 1; 
-                    currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count(); 
+                for (currentRound = 1;
+                    currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count();
                     currentRound++)
                 {
                     //Adding new Worksheet and deleting existing
-                    var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, 
+                    var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
                         excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
                     newSheet.Name = string.Format("Round{0}", currentRound);
                     if (currentRound == 1)
@@ -931,15 +931,17 @@ namespace TournamentCalculator
                     newSheet.Cells[1, 3] = "Name";
                     newSheet.Cells[1, 4] = "Points";
                     newSheet.Cells[1, 5] = "Score";
-                                           
+
                     //Write data
                     var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
 
-                    foreach(Player p in players)
+                    foreach (Player p in players)
                     {
                         newSheet.Cells[p.id + 1, 1] = currentRound;
                         newSheet.Cells[p.id + 1, 2] = p.id;
                         newSheet.Cells[p.id + 1, 3] = p.name;
+                        newSheet.Cells[p.id + 1, 4] = p.id;
+                        newSheet.Cells[p.id + 1, 5] = p.id * 5;
                     }
 
                     //Resize columns
@@ -962,65 +964,8 @@ namespace TournamentCalculator
                     }
                 }
 
-                //Create the magic sheet xD
-                var magicSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
-                        excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
-                magicSheet.Name = "Players Total";
-
-                //Write headers
-                magicSheet.Cells[1, 1] = "Id";
-                magicSheet.Cells[1, 2] = "Name";
-                magicSheet.Cells[1, 3] = "Points";
-                magicSheet.Cells[1, 4] = "Score";
-
-                //Write data
-                foreach (Player p in players)
-                {
-                    string cellId = (p.id + 1).ToString();
-                    magicSheet.Cells[cellId, 1] = p.id;
-                    magicSheet.Cells[cellId, 2] = p.name;
-
-                    string pointsFormula = sumPlayerPointsFormula(cellId);
-                    string scoreFormula = sumPlayerScoreFormula(cellId);
-                    NsExcel.Range selectedRange = null;
-                    try
-                    {
-                        selectedRange = (NsExcel.Range)magicSheet.Cells[cellId, 3];
-                        selectedRange.Formula = pointsFormula;
-                        selectedRange = (NsExcel.Range)magicSheet.Cells[cellId, 4];
-                        selectedRange.Formula = scoreFormula;
-                    }
-                    catch (Exception e)
-                    {
-                        string stacktrace = e.StackTrace;
-                    }
-                    finally
-                    {
-                        if (selectedRange != null) Marshal.ReleaseComObject(selectedRange);
-                    }                    
-                    magicSheet.Cells[cellId, 5] = p.team;
-                    magicSheet.Cells[cellId, 6] = p.country;
-                }
-
-                //Resize columns
-                magicSheet.Cells[1, 1].ColumnWidth = 6;
-                magicSheet.Cells[1, 2].ColumnWidth = 32;
-                magicSheet.Cells[1, 3].ColumnWidth = 9;
-                magicSheet.Cells[1, 4].ColumnWidth = 9;
-                magicSheet.Cells[1, 5].ColumnWidth = 24;
-                magicSheet.Cells[1, 6].ColumnWidth = 12;
-
-                //Paint headers
-                magicSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
-                magicSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
-                magicSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
-
-                //Paint odd lines
-                for (int i = 1; i <= magicSheet.UsedRange.Rows.Count; i++)
-                {
-                    if (i > 1 && i % 2 != 0)
-                        magicSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
-                }
+                GeneratePlayersTotalsSheet(excelSheets);
+                GenerateTeamTotalsSheet(excelSheets);
 
                 //Saving file
                 string excelName = "Score_Tables" + makingDate;
@@ -1032,37 +977,136 @@ namespace TournamentCalculator
                         Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                         + "\\" + excelName + ".xls");
                 }
-                catch
+                catch(Exception e)
                 {
                     MessageBox.Show("Excel file couldn't be saved.");
                     return;
                 }
             }
-            catch (Exception e)
+            catch
             {
                 MessageBox.Show("Something was wrong, please try again.");
                 return;
             }
         }
 
-        private string sumPlayerPointsFormula(string cellId)
+        private void GeneratePlayersTotalsSheet(NsExcel.Sheets excelSheets)
         {
-            string formula = string.Format("=Round{0}!D{1}", 1, cellId);
-            for (int i = 2; i <= numRounds; i++)
+            //Create the Players total points sheet
+            var playersTotalScoreSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
+                    excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+            playersTotalScoreSheet.Name = "PlayersTotal";
+
+            //Write headers
+            playersTotalScoreSheet.Cells[1, 1] = "Id";
+            playersTotalScoreSheet.Cells[1, 2] = "Name";
+            playersTotalScoreSheet.Cells[1, 3] = "Points";
+            playersTotalScoreSheet.Cells[1, 4] = "Score";
+            playersTotalScoreSheet.Cells[1, 5] = "Team";
+            playersTotalScoreSheet.Cells[1, 6] = "Country";
+
+            //Write data
+            foreach (Player p in players)
             {
-                formula += string.Format(" + Round{0}!E{1}", i, cellId);
+                string cellId = (p.id + 1).ToString();
+                playersTotalScoreSheet.Cells[cellId, 1] = p.id;
+                playersTotalScoreSheet.Cells[cellId, 2] = p.name;                
+                NsExcel.Range selectedRange = null;
+                try
+                {
+                    selectedRange = (NsExcel.Range)playersTotalScoreSheet.Cells[cellId, 3];
+                    selectedRange.Formula = string.Format("=Sum(Round1:Round{0}!D{1}", numRounds, cellId);
+                    selectedRange = (NsExcel.Range)playersTotalScoreSheet.Cells[cellId, 4];
+                    selectedRange.Formula = string.Format("=Sum(Round1:Round{0}!E{1}", numRounds, cellId);
+                }
+                catch (Exception e)
+                {
+                    string stacktrace = e.StackTrace;
+                }
+                finally
+                {
+                    if (selectedRange != null) Marshal.ReleaseComObject(selectedRange);
+                }
+                playersTotalScoreSheet.Cells[cellId, 5] = p.team;
+                playersTotalScoreSheet.Cells[cellId, 6] = p.country;
             }
-            return formula;
+
+            //Resize columns
+            playersTotalScoreSheet.Cells[1, 1].ColumnWidth = 6;
+            playersTotalScoreSheet.Cells[1, 2].ColumnWidth = 32;
+            playersTotalScoreSheet.Cells[1, 3].ColumnWidth = 9;
+            playersTotalScoreSheet.Cells[1, 4].ColumnWidth = 9;
+            playersTotalScoreSheet.Cells[1, 5].ColumnWidth = 24;
+            playersTotalScoreSheet.Cells[1, 6].ColumnWidth = 12;
+
+            //Paint headers
+            playersTotalScoreSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+            playersTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+            playersTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+            //Paint odd lines
+            for (int i = 1; i <= playersTotalScoreSheet.UsedRange.Rows.Count; i++)
+            {
+                if (i > 1 && i % 2 != 0)
+                    playersTotalScoreSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
+            }
         }
 
-        private string sumPlayerScoreFormula(string cellId)
+        private void GenerateTeamTotalsSheet(NsExcel.Sheets excelSheets)
         {
-            string formula = string.Format("=Round{0}!E{1}", 1, cellId);
-            for (int i = 2; i <= numRounds; i++)
+            //Create the Teams total score sheet
+            var TeamsTotalScoreSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
+                    excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+            TeamsTotalScoreSheet.Name = "TeamsTotal";
+
+            //Write headers
+            TeamsTotalScoreSheet.Cells[1, 1] = "Team";
+            TeamsTotalScoreSheet.Cells[1, 2] = "Points";
+            TeamsTotalScoreSheet.Cells[1, 3] = "Score";
+            
+
+            //Write data
+            string[] teams = players.Select(x => x.team).Distinct().ToArray();
+            for (int i = 1; i <= teams.Length; i++)
             {
-                formula += string.Format(" + Round{0}!E{1}", i, cellId);
+                TeamsTotalScoreSheet.Cells[i + 1, 1] = teams[i - 1];
+                NsExcel.Range selectedRange = null;
+                try
+                {
+                    selectedRange = (NsExcel.Range)TeamsTotalScoreSheet.Cells[i + 1, 2];
+                    selectedRange.Formula = string.Format("=SUMIF(PlayersTotal!E2:E61, A{0}, PlayersTotal!C2:C61)", i + 1);
+                    selectedRange = (NsExcel.Range)TeamsTotalScoreSheet.Cells[i + 1, 3];
+                    selectedRange.Formula = string.Format("=SUMIF(PlayersTotal!E2:E61, A{0}, PlayersTotal!D2:D61)", i + 1);
+                }
+                catch (Exception e)
+                {
+                    string stacktrace = e.StackTrace;
+                }
+                finally
+                {
+                    if (selectedRange != null) Marshal.ReleaseComObject(selectedRange);
+                }
             }
-            return formula;
+            //Align content
+            TeamsTotalScoreSheet.Cells[1, 2].Style.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+            TeamsTotalScoreSheet.Cells[1, 3].Style.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+
+            //Resize columns
+            TeamsTotalScoreSheet.Cells[1, 1].ColumnWidth = 32;
+            TeamsTotalScoreSheet.Cells[1, 2].ColumnWidth = 9;
+            TeamsTotalScoreSheet.Cells[1, 3].ColumnWidth = 9;
+
+            //Paint headers
+            TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+            TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+            TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+            //Paint odd lines
+            for (int i = 1; i <= TeamsTotalScoreSheet.UsedRange.Rows.Count; i++)
+            {
+                if (i > 1 && i % 2 != 0)
+                    TeamsTotalScoreSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
+            }
         }
 
         private void WriteToExcelTablesByPlayers(NsExcel.Sheets excelSheets)
