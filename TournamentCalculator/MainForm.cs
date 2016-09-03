@@ -882,7 +882,7 @@ namespace TournamentCalculator
                     return;
                 }
             }
-            catch (Exception e)
+            catch
             {
                 MessageBox.Show("Something was wrong, please try again.");
                 return;
@@ -1050,6 +1050,10 @@ namespace TournamentCalculator
                 if (i > 1 && i % 2 != 0)
                     playersTotalScoreSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
             }
+
+            //Align content to center
+            playersTotalScoreSheet.Cells[1, 3] = NsExcel.XlHAlign.xlHAlignCenter;
+            playersTotalScoreSheet.Cells[1, 4] = NsExcel.XlHAlign.xlHAlignCenter;
         }
 
         private void GenerateTeamTotalsSheet(NsExcel.Sheets excelSheets)
@@ -1087,9 +1091,6 @@ namespace TournamentCalculator
                     if (selectedRange != null) Marshal.ReleaseComObject(selectedRange);
                 }
             }
-            //Align content
-            TeamsTotalScoreSheet.Cells[1, 2].Style.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
-            TeamsTotalScoreSheet.Cells[1, 3].Style.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
 
             //Resize columns
             TeamsTotalScoreSheet.Cells[1, 1].ColumnWidth = 32;
@@ -1100,6 +1101,10 @@ namespace TournamentCalculator
             TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
             TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
             TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+            //Align content to center
+            TeamsTotalScoreSheet.Cells[1, 2] = NsExcel.XlHAlign.xlHAlignCenter;
+            TeamsTotalScoreSheet.Cells[1, 3] = NsExcel.XlHAlign.xlHAlignCenter;
 
             //Paint odd lines
             for (int i = 1; i <= TeamsTotalScoreSheet.UsedRange.Rows.Count; i++)
