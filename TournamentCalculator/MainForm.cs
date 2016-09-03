@@ -1052,34 +1052,34 @@ namespace TournamentCalculator
             }
 
             //Align content to center
-            playersTotalScoreSheet.Cells[1, 3] = NsExcel.XlHAlign.xlHAlignCenter;
-            playersTotalScoreSheet.Cells[1, 4] = NsExcel.XlHAlign.xlHAlignCenter;
+            playersTotalScoreSheet.get_Range("C1","C" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+            playersTotalScoreSheet.get_Range("D1", "D" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
         }
 
         private void GenerateTeamTotalsSheet(NsExcel.Sheets excelSheets)
         {
             //Create the Teams total score sheet
-            var TeamsTotalScoreSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
+            var teamsTotalScoreSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
                     excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
-            TeamsTotalScoreSheet.Name = "TeamsTotal";
+            teamsTotalScoreSheet.Name = "TeamsTotal";
 
             //Write headers
-            TeamsTotalScoreSheet.Cells[1, 1] = "Team";
-            TeamsTotalScoreSheet.Cells[1, 2] = "Points";
-            TeamsTotalScoreSheet.Cells[1, 3] = "Score";
+            teamsTotalScoreSheet.Cells[1, 1] = "Team";
+            teamsTotalScoreSheet.Cells[1, 2] = "Points";
+            teamsTotalScoreSheet.Cells[1, 3] = "Score";
             
 
             //Write data
             string[] teams = players.Select(x => x.team).Distinct().ToArray();
             for (int i = 1; i <= teams.Length; i++)
             {
-                TeamsTotalScoreSheet.Cells[i + 1, 1] = teams[i - 1];
+                teamsTotalScoreSheet.Cells[i + 1, 1] = teams[i - 1];
                 NsExcel.Range selectedRange = null;
                 try
                 {
-                    selectedRange = (NsExcel.Range)TeamsTotalScoreSheet.Cells[i + 1, 2];
+                    selectedRange = (NsExcel.Range)teamsTotalScoreSheet.Cells[i + 1, 2];
                     selectedRange.Formula = string.Format("=SUMIF(PlayersTotal!E2:E61, A{0}, PlayersTotal!C2:C61)", i + 1);
-                    selectedRange = (NsExcel.Range)TeamsTotalScoreSheet.Cells[i + 1, 3];
+                    selectedRange = (NsExcel.Range)teamsTotalScoreSheet.Cells[i + 1, 3];
                     selectedRange.Formula = string.Format("=SUMIF(PlayersTotal!E2:E61, A{0}, PlayersTotal!D2:D61)", i + 1);
                 }
                 catch (Exception e)
@@ -1093,24 +1093,24 @@ namespace TournamentCalculator
             }
 
             //Resize columns
-            TeamsTotalScoreSheet.Cells[1, 1].ColumnWidth = 32;
-            TeamsTotalScoreSheet.Cells[1, 2].ColumnWidth = 9;
-            TeamsTotalScoreSheet.Cells[1, 3].ColumnWidth = 9;
+            teamsTotalScoreSheet.Cells[1, 1].ColumnWidth = 32;
+            teamsTotalScoreSheet.Cells[1, 2].ColumnWidth = 9;
+            teamsTotalScoreSheet.Cells[1, 3].ColumnWidth = 9;
 
             //Paint headers
-            TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
-            TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
-            TeamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+            teamsTotalScoreSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+            teamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+            teamsTotalScoreSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
 
             //Align content to center
-            TeamsTotalScoreSheet.Cells[1, 2] = NsExcel.XlHAlign.xlHAlignCenter;
-            TeamsTotalScoreSheet.Cells[1, 3] = NsExcel.XlHAlign.xlHAlignCenter;
-
+            teamsTotalScoreSheet.get_Range("B1", "B" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+            teamsTotalScoreSheet.get_Range("C1", "C" + (players.Count + 1)).Cells.HorizontalAlignment = NsExcel.XlHAlign.xlHAlignCenter;
+            
             //Paint odd lines
-            for (int i = 1; i <= TeamsTotalScoreSheet.UsedRange.Rows.Count; i++)
+            for (int i = 1; i <= teamsTotalScoreSheet.UsedRange.Rows.Count; i++)
             {
                 if (i > 1 && i % 2 != 0)
-                    TeamsTotalScoreSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
+                    teamsTotalScoreSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
             }
         }
 
