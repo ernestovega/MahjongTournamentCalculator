@@ -331,7 +331,7 @@
     <value>7</value>
   </data>
   <data name="btnCalculate.Text" xml:space="preserve">
-    <value>Calculate</value>
+    <value>Calculate and export</value>
   </data>
   <data name="&gt;&gt;btnCalculate.Name" xml:space="preserve">
     <value>btnCalculate</value>
@@ -407,81 +407,6 @@
   </data>
   <data name="&gt;&gt;numUpDownRounds.ZOrder" xml:space="preserve">
     <value>19</value>
-  </data>
-  <data name="lblStep3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblStep3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Century Gothic, 9.75pt</value>
-  </data>
-  <data name="lblStep3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lblStep3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 362</value>
-  </data>
-  <data name="lblStep3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 8, 8, 8</value>
-  </data>
-  <data name="lblStep3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 17</value>
-  </data>
-  <data name="lblStep3.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="lblStep3.Text" xml:space="preserve">
-    <value>Step 3</value>
-  </data>
-  <data name="&gt;&gt;lblStep3.Name" xml:space="preserve">
-    <value>lblStep3</value>
-  </data>
-  <data name="&gt;&gt;lblStep3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblStep3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblStep3.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="btnExportTournament.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="btnExportTournament.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnExportTournament.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Century Gothic, 9.75pt, style=Bold</value>
-  </data>
-  <data name="btnExportTournament.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnExportTournament.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 395</value>
-  </data>
-  <data name="btnExportTournament.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 8, 8, 8</value>
-  </data>
-  <data name="btnExportTournament.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 50</value>
-  </data>
-  <data name="btnExportTournament.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="btnExportTournament.Text" xml:space="preserve">
-    <value>A. Export tournament</value>
-  </data>
-  <data name="&gt;&gt;btnExportTournament.Name" xml:space="preserve">
-    <value>btnExportTournament</value>
-  </data>
-  <data name="&gt;&gt;btnExportTournament.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnExportTournament.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnExportTournament.ZOrder" xml:space="preserve">
-    <value>18</value>
   </data>
   <data name="btnShowNames.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -810,6 +735,189 @@
   <data name="&gt;&gt;btnShowPlayers.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
+  <data name="btnGetExcelTemplate.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnGetExcelTemplate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
+  <data name="btnGetExcelTemplate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnGetExcelTemplate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 50</value>
+  </data>
+  <data name="btnGetExcelTemplate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
+  </data>
+  <data name="btnGetExcelTemplate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 24</value>
+  </data>
+  <data name="btnGetExcelTemplate.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="btnGetExcelTemplate.Text" xml:space="preserve">
+    <value>Players template</value>
+  </data>
+  <data name="&gt;&gt;btnGetExcelTemplate.Name" xml:space="preserve">
+    <value>btnGetExcelTemplate</value>
+  </data>
+  <data name="&gt;&gt;btnGetExcelTemplate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnGetExcelTemplate.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnGetExcelTemplate.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnImportPlayersExcel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnImportPlayersExcel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
+  <data name="btnImportPlayersExcel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnImportPlayersExcel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 123</value>
+  </data>
+  <data name="btnImportPlayersExcel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
+  </data>
+  <data name="btnImportPlayersExcel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 50</value>
+  </data>
+  <data name="btnImportPlayersExcel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnImportPlayersExcel.Text" xml:space="preserve">
+    <value>Import players</value>
+  </data>
+  <data name="&gt;&gt;btnImportPlayersExcel.Name" xml:space="preserve">
+    <value>btnImportPlayersExcel</value>
+  </data>
+  <data name="&gt;&gt;btnImportPlayersExcel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnImportPlayersExcel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnImportPlayersExcel.ZOrder" xml:space="preserve">
+    <value>27</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 17</value>
+  </data>
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Step 0</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnExportTournament.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnExportTournament.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnExportTournament.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt, style=Bold</value>
+  </data>
+  <data name="btnExportTournament.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnExportTournament.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 354</value>
+  </data>
+  <data name="btnExportTournament.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
+  </data>
+  <data name="btnExportTournament.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 72</value>
+  </data>
+  <data name="btnExportTournament.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="btnExportTournament.Text" xml:space="preserve">
+    <value>A. Export tournament</value>
+  </data>
+  <data name="&gt;&gt;btnExportTournament.Name" xml:space="preserve">
+    <value>btnExportTournament</value>
+  </data>
+  <data name="&gt;&gt;btnExportTournament.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnExportTournament.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnExportTournament.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="lblStep3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblStep3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Century Gothic, 9.75pt</value>
+  </data>
+  <data name="lblStep3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblStep3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 321</value>
+  </data>
+  <data name="lblStep3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
+  </data>
+  <data name="lblStep3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="lblStep3.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="lblStep3.Text" xml:space="preserve">
+    <value>Step 3</value>
+  </data>
+  <data name="&gt;&gt;lblStep3.Name" xml:space="preserve">
+    <value>lblStep3</value>
+  </data>
+  <data name="&gt;&gt;lblStep3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblStep3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblStep3.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
   <data name="chckBxNames.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -826,7 +934,7 @@
     <value>NoControl</value>
   </data>
   <data name="chckBxNames.Location" type="System.Drawing.Point, System.Drawing">
-    <value>159, 395</value>
+    <value>159, 351</value>
   </data>
   <data name="chckBxNames.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>8, 4, 8, 4</value>
@@ -868,7 +976,7 @@
     <value>NoControl</value>
   </data>
   <data name="chckBxTeams.Location" type="System.Drawing.Point, System.Drawing">
-    <value>159, 424</value>
+    <value>159, 370</value>
   </data>
   <data name="chckBxTeams.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>8, 4, 8, 4</value>
@@ -910,7 +1018,7 @@
     <value>NoControl</value>
   </data>
   <data name="chckBxCountries.Location" type="System.Drawing.Point, System.Drawing">
-    <value>159, 453</value>
+    <value>159, 389</value>
   </data>
   <data name="chckBxCountries.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>8, 4, 8, 4</value>
@@ -952,7 +1060,7 @@
     <value>NoControl</value>
   </data>
   <data name="chckBxIds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>159, 482</value>
+    <value>159, 408</value>
   </data>
   <data name="chckBxIds.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>8, 4, 8, 4</value>
@@ -978,116 +1086,44 @@
   <data name="&gt;&gt;chckBxIds.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="btnGetExcelTemplate.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnGetExcelTemplate.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Century Gothic, 9.75pt, style=Bold</value>
-  </data>
-  <data name="btnGetExcelTemplate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnGetExcelTemplate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 50</value>
-  </data>
-  <data name="btnGetExcelTemplate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 8, 8, 8</value>
-  </data>
-  <data name="btnGetExcelTemplate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 24</value>
-  </data>
-  <data name="btnGetExcelTemplate.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="btnGetExcelTemplate.Text" xml:space="preserve">
-    <value>Players template</value>
-  </data>
-  <data name="&gt;&gt;btnGetExcelTemplate.Name" xml:space="preserve">
-    <value>btnGetExcelTemplate</value>
-  </data>
-  <data name="&gt;&gt;btnGetExcelTemplate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnGetExcelTemplate.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnGetExcelTemplate.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="btnImportExcel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnImportExcel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Century Gothic, 9.75pt, style=Bold</value>
-  </data>
-  <data name="btnImportExcel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnImportExcel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 123</value>
-  </data>
-  <data name="btnImportExcel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 8, 8, 8</value>
-  </data>
-  <data name="btnImportExcel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 50</value>
-  </data>
-  <data name="btnImportExcel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnImportExcel.Text" xml:space="preserve">
-    <value>Import players from Excel </value>
-  </data>
-  <data name="&gt;&gt;btnImportExcel.Name" xml:space="preserve">
-    <value>btnImportExcel</value>
-  </data>
-  <data name="&gt;&gt;btnImportExcel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnImportExcel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnImportExcel.ZOrder" xml:space="preserve">
-    <value>27</value>
-  </data>
-  <data name="btnCheckDuplicateRivals.Enabled" type="System.Boolean, mscorlib">
+  <data name="btnExportScoringTables.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="btnCheckDuplicateRivals.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+  <data name="btnExportScoringTables.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="btnCheckDuplicateRivals.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="btnExportScoringTables.Font" type="System.Drawing.Font, System.Drawing">
     <value>Century Gothic, 9.75pt, style=Bold</value>
   </data>
-  <data name="btnCheckDuplicateRivals.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="btnExportScoringTables.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="btnCheckDuplicateRivals.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 321</value>
+  <data name="btnExportScoringTables.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 475</value>
   </data>
-  <data name="btnCheckDuplicateRivals.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="btnExportScoringTables.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>8, 8, 8, 8</value>
   </data>
-  <data name="btnCheckDuplicateRivals.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 25</value>
+  <data name="btnExportScoringTables.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 55</value>
   </data>
-  <data name="btnCheckDuplicateRivals.TabIndex" type="System.Int32, mscorlib">
-    <value>42</value>
+  <data name="btnExportScoringTables.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
   </data>
-  <data name="btnCheckDuplicateRivals.Text" xml:space="preserve">
-    <value>Check duplicate rivals</value>
+  <data name="btnExportScoringTables.Text" xml:space="preserve">
+    <value>B. Export scoring tables</value>
   </data>
-  <data name="&gt;&gt;btnCheckDuplicateRivals.Name" xml:space="preserve">
-    <value>btnCheckDuplicateRivals</value>
+  <data name="&gt;&gt;btnExportScoringTables.Name" xml:space="preserve">
+    <value>btnExportScoringTables</value>
   </data>
-  <data name="&gt;&gt;btnCheckDuplicateRivals.Type" xml:space="preserve">
+  <data name="&gt;&gt;btnExportScoringTables.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnCheckDuplicateRivals.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnExportScoringTables.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnCheckDuplicateRivals.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;btnExportScoringTables.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="customProgressBar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1116,79 +1152,40 @@
   <data name="&gt;&gt;customProgressBar.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="label2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Century Gothic, 9.75pt</value>
   </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 17</value>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 442</value>
   </data>
-  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>8, 8, 8, 8</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 17</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>43</value>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Step 0</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Step 4</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btnExportScoringTables.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="btnExportScoringTables.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="btnExportScoringTables.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Century Gothic, 9.75pt, style=Bold</value>
-  </data>
-  <data name="btnExportScoringTables.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnExportScoringTables.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 453</value>
-  </data>
-  <data name="btnExportScoringTables.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 8, 8, 8</value>
-  </data>
-  <data name="btnExportScoringTables.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 50</value>
-  </data>
-  <data name="btnExportScoringTables.TabIndex" type="System.Int32, mscorlib">
-    <value>44</value>
-  </data>
-  <data name="btnExportScoringTables.Text" xml:space="preserve">
-    <value>B. Export scoring tables</value>
-  </data>
-  <data name="&gt;&gt;btnExportScoringTables.Name" xml:space="preserve">
-    <value>btnExportScoringTables</value>
-  </data>
-  <data name="&gt;&gt;btnExportScoringTables.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnExportScoringTables.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnExportScoringTables.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

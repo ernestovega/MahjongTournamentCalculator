@@ -1,13 +1,13 @@
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.exe.config
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.exe
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.pdb
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\aa-DJ\Mahjong Tournament Calculator.resources.dll
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.MainForm.resources
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\MahjongTournamentCalculator.Properties.Resources.resources
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.SplashForm.resources
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.MainForm.aa-DJ.resources
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\MahjongTournamentCalculator.csproj.GenerateResource.Cache
-C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\MahjongTournamentCalculator.csprojResolveAssemblyReference.cache
-C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.exe.config
-C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.exe
-C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.pdb
-C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\aa-DJ\Mahjong Tournament Calculator.resources.dll
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\aa-DJ\Mahjong Tournament Calculator.resources.dll
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\Mahjong Tournament Calculator.exe
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\Mahjong Tournament Calculator.pdb
+C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\MahjongTournamentCalculator.csprojResolveAssemblyReference.cache
