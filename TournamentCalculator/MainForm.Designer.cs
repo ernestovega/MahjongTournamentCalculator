@@ -37,7 +37,7 @@
             this.numUpDownPlayers = new System.Windows.Forms.NumericUpDown();
             this.labelPlayers = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.customProgressBar = new System.Windows.Forms.ProgressBar();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownPlayers)).BeginInit();
@@ -52,15 +52,15 @@
             // 
             // btnCalculate
             // 
-            this.btnCalculate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnCalculate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
             this.btnCalculate.Cursor = System.Windows.Forms.Cursors.Hand;
-            resources.ApplyResources(this.btnCalculate, "btnCalculate");
             this.btnCalculate.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCalculate.FlatAppearance.BorderSize = 0;
             this.btnCalculate.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnCalculate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
             this.btnCalculate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
-            this.btnCalculate.ForeColor = System.Drawing.SystemColors.GrayText;
+            resources.ApplyResources(this.btnCalculate, "btnCalculate");
+            this.btnCalculate.ForeColor = System.Drawing.Color.White;
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.UseVisualStyleBackColor = false;
             this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
@@ -162,17 +162,19 @@
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 
-            // customProgressBar
+            // progressBar1
             // 
-            resources.ApplyResources(this.customProgressBar, "customProgressBar");
-            this.customProgressBar.Name = "customProgressBar";
+            resources.ApplyResources(this.progressBar1, "progressBar1");
+            this.progressBar1.MarqueeAnimationSpeed = 50;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.customProgressBar);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.numUpDownPlayers);
             this.Controls.Add(this.labelPlayers);
@@ -183,12 +185,10 @@
             this.Controls.Add(this.lblRounds);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownPlayers)).EndInit();
@@ -207,7 +207,7 @@
         private System.Windows.Forms.NumericUpDown numUpDownPlayers;
         private System.Windows.Forms.Label labelPlayers;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ProgressBar customProgressBar;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
