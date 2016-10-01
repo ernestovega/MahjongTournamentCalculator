@@ -276,7 +276,6 @@ namespace TournamentCalculator
             if (!playersPreload)
             {
                 DisableAll();
-                lblTriesNeeded.Text = "Tries needed:";
                 numRounds = decimal.ToInt32(numUpDownRounds.Value);
                 customProgressBar.Maximum = numTriesMax;
                 customProgressBar.Visible = true;
@@ -288,7 +287,6 @@ namespace TournamentCalculator
             {
                 customProgressBar.Value = countTries++;
                 result = GenerateTournament(numRounds);
-                lblTriesNeeded.Text = "Tries needed: " + countTries.ToString();
                 Application.DoEvents();
             }
 
