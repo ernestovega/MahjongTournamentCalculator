@@ -36,12 +36,14 @@
             this.numUpDownTriesMax = new System.Windows.Forms.NumericUpDown();
             this.numUpDownPlayers = new System.Windows.Forms.NumericUpDown();
             this.labelPlayers = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.imgLogoMM = new System.Windows.Forms.PictureBox();
+            this.progressBar = new MahjongTournamentCalculator.CustomViews.CustomProgressBar();
+            this.imgLogoEMA = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownPlayers)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogoMM)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogoEMA)).BeginInit();
             this.SuspendLayout();
             // 
             // lblRounds
@@ -156,26 +158,35 @@
             this.labelPlayers.Cursor = System.Windows.Forms.Cursors.Default;
             this.labelPlayers.Name = "labelPlayers";
             // 
-            // pictureBox1
+            // imgLogoMM
             // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
+            resources.ApplyResources(this.imgLogoMM, "imgLogoMM");
+            this.imgLogoMM.Name = "imgLogoMM";
+            this.imgLogoMM.TabStop = false;
             // 
-            // progressBar1
+            // progressBar
             // 
-            resources.ApplyResources(this.progressBar1, "progressBar1");
-            this.progressBar1.MarqueeAnimationSpeed = 50;
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            resources.ApplyResources(this.progressBar, "progressBar");
+            this.progressBar.MarqueeAnimationSpeed = 1;
+            this.progressBar.Maximum = 10;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Step = 1;
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            // 
+            // imgLogoEMA
+            // 
+            resources.ApplyResources(this.imgLogoEMA, "imgLogoEMA");
+            this.imgLogoEMA.Name = "imgLogoEMA";
+            this.imgLogoEMA.TabStop = false;
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.imgLogoEMA);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.imgLogoMM);
             this.Controls.Add(this.numUpDownPlayers);
             this.Controls.Add(this.labelPlayers);
             this.Controls.Add(this.numUpDownTriesMax);
@@ -192,7 +203,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownPlayers)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogoMM)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogoEMA)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,8 +218,9 @@
         private System.Windows.Forms.NumericUpDown numUpDownTriesMax;
         private System.Windows.Forms.NumericUpDown numUpDownPlayers;
         private System.Windows.Forms.Label labelPlayers;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.PictureBox imgLogoMM;
+        private MahjongTournamentCalculator.CustomViews.CustomProgressBar progressBar;
+        private System.Windows.Forms.PictureBox imgLogoEMA;
     }
 }
 
