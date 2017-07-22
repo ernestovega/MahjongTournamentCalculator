@@ -75,13 +75,12 @@ namespace TournamentCalculator
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            UpdateProgressBar(e.ProgressPercentage);
+            progressBar.Value = e.ProgressPercentage;
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             MakeViewsActive();
-            HideProgressBar();
             SystemSounds.Exclamation.Play();
         }
 
@@ -100,10 +99,7 @@ namespace TournamentCalculator
             while (result < 0 && countTries < numTriesMax)
             {
                 countTries++;
-                if (worker.WorkerReportsProgress)
-                {
-                    worker.ReportProgress((int)(100 / numTriesMax) * countTries, null);
-                }
+                worker.ReportProgress(countTries, null);
                 result = GenerateTournament(numRounds);
                 Application.DoEvents();
             }
@@ -117,6 +113,8 @@ namespace TournamentCalculator
                 worker.CancelAsync();
             }
 
+            worker.ReportProgress(countTries, null);
+
             //Generamos todas las vistas y se mostramos las mesas
             GenerateTablesWhitAll(numRounds);
             GenerateSTablesWithNames();
@@ -124,7 +122,7 @@ namespace TournamentCalculator
             GenerateTablesByPlayer();
             GenerateRivalsByPlayer();
 
-            //ExportTournament();
+            ExportTournament();
             ExportScoreTables();
         }
 
@@ -600,12 +598,14 @@ namespace TournamentCalculator
 
         private void InitializeCalculation()
         {
-            Cursor.Current = Cursors.WaitCursor;
             DisableAll();
-            ShowProgressBar();
+            Cursor.Current = Cursors.WaitCursor;
             numPlayers = decimal.ToInt32(numUpDownPlayers.Value);
             numRounds = decimal.ToInt32(numUpDownRounds.Value);
             numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
+            progressBar.Maximum = numTriesMax;
+            progressBar.Value = 0;
+            ShowProgressBar();
         }
 
         private void GeneratePlayers()
@@ -905,6 +905,7 @@ namespace TournamentCalculator
 
         private void MakeViewsActive()
         {
+            HideProgressBar();
             numUpDownPlayers.Enabled = true;
             numUpDownRounds.Enabled = true;
             numUpDownTriesMax.Enabled = true;
@@ -932,11 +933,6 @@ namespace TournamentCalculator
         {
             progressBar.Hide();//TODO: ¿Es necesario?
             progressBar.Visible = false;
-        }
-
-        private void UpdateProgressBar(int value)
-        {
-            progressBar.Value = value;
         }
 
         #endregion
