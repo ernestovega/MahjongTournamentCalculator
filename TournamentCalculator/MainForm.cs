@@ -281,6 +281,8 @@ namespace TournamentCalculator
         {
             try
             {
+                #region Create WorkBook
+
                 //Start excel
                 NsExcel.Application excel;
                 excel = new NsExcel.Application();
@@ -296,6 +298,10 @@ namespace TournamentCalculator
                 //Using default Worksheet
                 NsExcel.Sheets excelSheets = excelWorkBook.Sheets as NsExcel.Sheets;
 
+                #endregion
+
+                #region First Sheet
+                
                 //Adding new Worksheet and deleting existing
                 var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
                     excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
@@ -327,6 +333,10 @@ namespace TournamentCalculator
                 newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
                 newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
 
+                #endregion
+
+                #region Rounds Sheets
+
                 //Write Tournament data by rounds, with names and teams feeded from 1st sheet
                 for (currentRound = 1;
                     currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count();
@@ -356,7 +366,7 @@ namespace TournamentCalculator
                         newSheet.Cells[fila, 2] = i;
                         
                         newSheet.Cells[fila, 3].Formula = string.Format("=PlayersAndTeams!B{0}", fila);
-                        newSheet.Cells[fila, 6].FormulaLocal = string.Format("=PlayersAndTeams!C{0}", fila);
+                        newSheet.Cells[fila, 6].Formula = string.Format("=PlayersAndTeams!C{0}", fila);
                     }
 
                     //Resize columns
@@ -371,6 +381,63 @@ namespace TournamentCalculator
                     newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
                     newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
                 }
+
+                #endregion
+
+                #region Ranking Sheet
+
+                //Adding new Worksheet
+                newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
+                    excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+                newSheet.Name = "Ranking";
+
+                //Write Ids, blank names and blank teams sheet, for reference in the other sheets
+                //Write headers
+                newSheet.Cells[1, 1] = "Position";
+                newSheet.Cells[1, 2] = "Name";
+                newSheet.Cells[1, 3] = "Points";
+                newSheet.Cells[1, 4] = "Score";
+
+                //Write Ids
+                for (int i = 1; i < players.Count; i++)
+                {
+                    newSheet.Cells[i + 1, 1] = i;
+                }
+
+                //Resize columns
+                newSheet.Cells[1, 1].ColumnWidth = 9;
+                newSheet.Cells[1, 2].ColumnWidth = 32;
+                newSheet.Cells[1, 3].ColumnWidth = 9;
+                newSheet.Cells[1, 4].ColumnWidth = 9;
+
+                //Write data
+
+                for (int i = 1; i < players.Count; i++)
+                {
+                    int fila = i + 1;
+
+                    newSheet.Cells[fila, 1] = i;
+                    newSheet.Cells[fila, 2].Formula = string.Format("=PlayersAndTeams!B{0}", fila);
+                    string formulaPuntos = string.Format("=SUM(Round{0}!D{1}", 1, fila);
+                    string formulaScore = string.Format("=SUM(Round{0}!E{1}", 1, fila);
+                    for (int j = 2; j <= numRounds; j++) {
+                        formulaPuntos = string.Format("{0},Round{1}!D{2}", formulaPuntos, j, fila);
+                        formulaScore = string.Format("{0},Round{1}!E{2}", formulaScore, j, fila);
+                    }
+                    formulaPuntos = string.Format("{0})", formulaPuntos);
+                    formulaScore = string.Format("{0})", formulaScore);
+                    newSheet.Cells[fila, 3].Formula = formulaPuntos;
+                    newSheet.Cells[fila, 4].Formula = formulaScore;
+                }
+
+                //Paint headers
+                newSheet.UsedRange.Rows[1].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(0, 177, 106));
+                newSheet.UsedRange.Rows[1].Cells.Font.Color = ColorTranslator.ToOle(Color.White);
+                newSheet.UsedRange.Rows[1].Cells.Font.Bold = true;
+
+                #endregion
+
+                #region Save Workbook
 
                 //Saving file
                 string excelName = "Score_Tables_" + creationDate;
@@ -387,8 +454,10 @@ namespace TournamentCalculator
                     MessageBox.Show(this, "Excel file couldn't be saved.");
                     return;
                 }
+
+                #endregion
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 MessageBox.Show(this, exception.Message);
                 return;
