@@ -61,9 +61,7 @@ namespace TournamentCalculator
                 {
                     // Cancel the asynchronous operation.
                     backgroundWorker1.CancelAsync();
-                    MakeViewsActive();
-                    HideProgressBar();
-                    Cursor.Current = Cursors.Default;
+                    MakeViewsEnabled();
                 }
             }
             else
@@ -80,7 +78,7 @@ namespace TournamentCalculator
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MakeViewsActive();
+            MakeViewsEnabled();
             SystemSounds.Exclamation.Play();
         }
 
@@ -98,6 +96,11 @@ namespace TournamentCalculator
             countTries = 0;
             while (result < 0 && countTries < numTriesMax)
             {
+                if(worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
                 countTries++;
                 worker.ReportProgress(countTries, null);
                 result = GenerateTournament(numRounds);
@@ -122,8 +125,21 @@ namespace TournamentCalculator
             GenerateTablesByPlayer();
             GenerateRivalsByPlayer();
 
-            ExportTournament();
-            ExportScoreTables();
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            ExportTournament(worker, e);
+
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            ExportScoreTables(worker, e);
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -154,7 +170,7 @@ namespace TournamentCalculator
             return false;
         }
 
-        private void ExportTournament()
+        private void ExportTournament(BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e)
         {
             try
             { 
@@ -176,6 +192,11 @@ namespace TournamentCalculator
                 //Write Tournament data by rounds         
                 for (currentRound = 1; currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count(); currentRound++)
                 {
+                    if (worker.CancellationPending)
+                    {
+                        break;
+                    }
+
                     //Adding new Worksheet
                     var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
                     newSheet.Name = string.Format("Round{0}", currentRound);
@@ -190,22 +211,14 @@ namespace TournamentCalculator
                     //Write headers
                     newSheet.Cells[1, 1] = "Round";
                     newSheet.Cells[1, 2] = "Table";
-                    newSheet.Cells[1, 3] = "Player1Name";
-                    newSheet.Cells[1, 4] = "Player2Name";
-                    newSheet.Cells[1, 5] = "Player3Name";
-                    newSheet.Cells[1, 6] = "Player4Name";
+                    newSheet.Cells[1, 3] = "Player1Id";
+                    newSheet.Cells[1, 4] = "Player2Id";
+                    newSheet.Cells[1, 5] = "Player3Id";
+                    newSheet.Cells[1, 6] = "Player4Id"; ;
                     newSheet.Cells[1, 7] = "Player1Team";
                     newSheet.Cells[1, 8] = "Player2Team";
                     newSheet.Cells[1, 9] = "Player3Team";
                     newSheet.Cells[1, 10] = "Player4Team";
-                    newSheet.Cells[1, 11] = "Player1Country";
-                    newSheet.Cells[1, 12] = "Player2Country";
-                    newSheet.Cells[1, 13] = "Player3Country";
-                    newSheet.Cells[1, 14] = "Player4Country";
-                    newSheet.Cells[1, 15] = "Player1Id";
-                    newSheet.Cells[1, 16] = "Player2Id";
-                    newSheet.Cells[1, 17] = "Player3Id";
-                    newSheet.Cells[1, 18] = "Player4Id";
 
                     //Write data
                     var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
@@ -214,22 +227,14 @@ namespace TournamentCalculator
                     {
                         newSheet.Cells[currentTable + 1, 1] = currentRoundTables[currentTable - 1].roundId;
                         newSheet.Cells[currentTable + 1, 2] = currentRoundTables[currentTable - 1].tableId;
-                        newSheet.Cells[currentTable + 1, 3] = currentRoundTables[currentTable - 1].player1Name;
-                        newSheet.Cells[currentTable + 1, 4] = currentRoundTables[currentTable - 1].player2Name;
-                        newSheet.Cells[currentTable + 1, 5] = currentRoundTables[currentTable - 1].player3Name;
-                        newSheet.Cells[currentTable + 1, 6] = currentRoundTables[currentTable - 1].player4Name;
+                        newSheet.Cells[currentTable + 1, 3] = currentRoundTables[currentTable - 1].player1Id;
+                        newSheet.Cells[currentTable + 1, 4] = currentRoundTables[currentTable - 1].player2Id;
+                        newSheet.Cells[currentTable + 1, 5] = currentRoundTables[currentTable - 1].player3Id;
+                        newSheet.Cells[currentTable + 1, 6] = currentRoundTables[currentTable - 1].player4Id;
                         newSheet.Cells[currentTable + 1, 7] = currentRoundTables[currentTable - 1].player1Team;
                         newSheet.Cells[currentTable + 1, 8] = currentRoundTables[currentTable - 1].player2Team;
                         newSheet.Cells[currentTable + 1, 9] = currentRoundTables[currentTable - 1].player3Team;
                         newSheet.Cells[currentTable + 1, 10] = currentRoundTables[currentTable - 1].player4Team;
-                        newSheet.Cells[currentTable + 1, 11] = currentRoundTables[currentTable - 1].player1Country;
-                        newSheet.Cells[currentTable + 1, 12] = currentRoundTables[currentTable - 1].player2Country;
-                        newSheet.Cells[currentTable + 1, 13] = currentRoundTables[currentTable - 1].player3Country;
-                        newSheet.Cells[currentTable + 1, 14] = currentRoundTables[currentTable - 1].player4Country;
-                        newSheet.Cells[currentTable + 1, 15] = currentRoundTables[currentTable - 1].player1Id;
-                        newSheet.Cells[currentTable + 1, 16] = currentRoundTables[currentTable - 1].player2Id;
-                        newSheet.Cells[currentTable + 1, 17] = currentRoundTables[currentTable - 1].player3Id;
-                        newSheet.Cells[currentTable + 1, 18] = currentRoundTables[currentTable - 1].player4Id;
                     }
 
                     //Resize columns
@@ -246,11 +251,31 @@ namespace TournamentCalculator
                         if (i > 1 && i % 2 != 0)
                             newSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
                     }
-                }                
-            
+                }
+
+                if (worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
                 //Write Tournament data by players
-                WriteToExcelTablesByPlayers(excelSheets);
-                WriteToExcelRivals(excelSheets);
+                WriteToExcelTablesByPlayers(excelSheets, worker, e);
+
+                if (worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                //Write players rivals by player
+                WriteToExcelRivals(excelSheets, worker, e);
+
+                if (worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
 
                 //Now save the excel
                 string excelName = "Tournament_" + creationDate;
@@ -275,7 +300,7 @@ namespace TournamentCalculator
             }
         }
 
-        private void ExportScoreTables()
+        private void ExportScoreTables(BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e)
         {
             try
             {
@@ -340,6 +365,12 @@ namespace TournamentCalculator
                     currentRound <= tablesWithAll.Select(x => x.roundId).Distinct().Count();
                     currentRound++)
                 {
+                    if (worker.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+
                     //Adding new Worksheet and deleting existing
                     newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
                         excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
@@ -383,6 +414,12 @@ namespace TournamentCalculator
                 #endregion
 
                 #region Ranking Sheet
+
+                if (worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
 
                 //Adding new Worksheet
                 newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
@@ -462,31 +499,31 @@ namespace TournamentCalculator
             }
         }
 
-        private void WriteToExcelTablesByPlayers(NsExcel.Sheets excelSheets)
+        private void WriteToExcelTablesByPlayers(NsExcel.Sheets excelSheets, 
+            BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e)
         {
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
             //Adding new Worksheet
-            var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+            var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, 
+                excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
             newSheet.Name = "Player's tables";
            
             //Write headers
             newSheet.Cells[1, 1] = "Round";
             newSheet.Cells[1, 2] = "Table";
-            newSheet.Cells[1, 3] = "Player 1 Name";
-            newSheet.Cells[1, 4] = "Player 2 Name";
-            newSheet.Cells[1, 5] = "Player 3 Name";
-            newSheet.Cells[1, 6] = "Player 4 Name";
+            newSheet.Cells[1, 3] = "Player 1 Id";
+            newSheet.Cells[1, 4] = "Player 2 Id";
+            newSheet.Cells[1, 5] = "Player 3 Id";
+            newSheet.Cells[1, 6] = "Player 4 Id";
             newSheet.Cells[1, 7] = "Player 1 Team";
             newSheet.Cells[1, 8] = "Player 2 Team";
             newSheet.Cells[1, 9] = "Player 3 Team";
             newSheet.Cells[1, 10] = "Player 4 Team";
-            newSheet.Cells[1, 11] = "Player 1 Country";
-            newSheet.Cells[1, 12] = "Player 2 Country";
-            newSheet.Cells[1, 13] = "Player 3 Country";
-            newSheet.Cells[1, 14] = "Player 4 Country";
-            newSheet.Cells[1, 15] = "Player 1 Id";
-            newSheet.Cells[1, 16] = "Player 2 Id";
-            newSheet.Cells[1, 17] = "Player 3 Id";
-            newSheet.Cells[1, 18] = "Player 4 Id";
 
             //Write data
 
@@ -496,22 +533,14 @@ namespace TournamentCalculator
 
                 newSheet.Cells[i + 2, 1] = twa.roundId;
                 newSheet.Cells[i + 2, 2] = twa.tableId;
-                newSheet.Cells[i + 2, 3] = twa.player1Name;
-                newSheet.Cells[i + 2, 4] = twa.player2Name;
-                newSheet.Cells[i + 2, 5] = twa.player3Name;
-                newSheet.Cells[i + 2, 6] = twa.player4Name;
+                newSheet.Cells[i + 2, 3] = twa.player1Id;
+                newSheet.Cells[i + 2, 4] = twa.player2Id;
+                newSheet.Cells[i + 2, 5] = twa.player3Id;
+                newSheet.Cells[i + 2, 6] = twa.player4Id;
                 newSheet.Cells[i + 2, 7] = twa.player1Team;
                 newSheet.Cells[i + 2, 8] = twa.player2Team;
                 newSheet.Cells[i + 2, 9] = twa.player3Team;
                 newSheet.Cells[i + 2, 10] = twa.player4Team;
-                newSheet.Cells[i + 2, 11] = twa.player1Country;
-                newSheet.Cells[i + 2, 12] = twa.player2Country;
-                newSheet.Cells[i + 2, 13] = twa.player3Country;
-                newSheet.Cells[i + 2, 14] = twa.player4Country;
-                newSheet.Cells[i + 2, 15] = twa.player1Id;
-                newSheet.Cells[i + 2, 16] = twa.player2Id;
-                newSheet.Cells[i + 2, 17] = twa.player3Id;
-                newSheet.Cells[i + 2, 18] = twa.player4Id;
             }
 
             //Paint headers
@@ -523,21 +552,31 @@ namespace TournamentCalculator
             for (int i = 1; i <= newSheet.UsedRange.Rows.Count; i++)
             {
                 if (i > 1 && i % 2 != 0)
+                {
                     newSheet.UsedRange.Rows[i].Cells.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(224, 224, 224));
+                }
             }
 
             //Resize columns
             newSheet.UsedRange.EntireColumn.AutoFit();
         }
 
-        private void WriteToExcelRivals(NsExcel.Sheets excelSheets)
+        private void WriteToExcelRivals(NsExcel.Sheets excelSheets,
+            BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e)
         {
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
             //Adding new Worksheet
-            var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
+            var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing, 
+                excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
             newSheet.Name = "Player's rivals";
 
             //Write headers
-            newSheet.Cells[1, 1] = "Player Name";
+            newSheet.Cells[1, 1] = "Player Id";
             int maxRivals = 0;
             foreach (Rivals r in rivalsByPlayer)
             {
@@ -546,12 +585,24 @@ namespace TournamentCalculator
             }
             for (int i = 1; i <= maxRivals; i++)
             {
-                newSheet.Cells[1, i + 1] = "Rival " + i + " Name";
+                newSheet.Cells[1, i + 1] = "Rival " + i + " Id";
+            }
+
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
             }
 
             //Write data
             for (int i = 0; i < rivalsByPlayer.Count; i++)
             {
+                if (worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
                 Rivals r = rivalsByPlayer[i];
 
                 newSheet.Cells[i + 2, 1] = r.playerName;
@@ -598,14 +649,12 @@ namespace TournamentCalculator
 
         private void InitializeCalculation()
         {
-            DisableAll();
-            Cursor.Current = Cursors.WaitCursor;
             numPlayers = decimal.ToInt32(numUpDownPlayers.Value);
             numRounds = decimal.ToInt32(numUpDownRounds.Value);
             numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
             progressBar.Maximum = numTriesMax;
             progressBar.Value = 0;
-            ShowProgressBar();
+            MakeViewsDisabled();
         }
 
         private void GeneratePlayers()
@@ -618,9 +667,7 @@ namespace TournamentCalculator
                     //Generamos el id del jugador
                     int playerId = (4 * i) - (4 - j);
                     //Creamos el jugador
-                    Player player = new Player(playerId.ToString(),
-                        string.Format("Name {0}", playerId.ToString()),
-                        string.Format("Team {0}", tableId.ToString()));
+                    Player player = new Player(playerId.ToString(),  playerId.ToString(), tableId.ToString());
                     //Añadimos el jugador
                     players.Add(player);
                 }
@@ -903,24 +950,28 @@ namespace TournamentCalculator
 
         #region Views methods
 
-        private void MakeViewsActive()
+        private void MakeViewsEnabled()
         {
             HideProgressBar();
             numUpDownPlayers.Enabled = true;
             numUpDownRounds.Enabled = true;
             numUpDownTriesMax.Enabled = true;
             btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
+            btnCalculate.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 127, 56);
             btnCalculate.Text = "Go";
-            Cursor.Current = Cursors.WaitCursor;
+            Cursor.Current = Cursors.Default;
         }
 
-        private void DisableAll()
+        private void MakeViewsDisabled()
         {
             numUpDownPlayers.Enabled = false;
             numUpDownRounds.Enabled = false;
             numUpDownTriesMax.Enabled = false;
-            btnCalculate.BackColor = Color.FromArgb(224, 224, 224);
             btnCalculate.Text = "Stop";
+            btnCalculate.BackColor = Color.FromArgb(65, 65, 65);
+            btnCalculate.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 0, 0);
+            Cursor.Current = Cursors.WaitCursor;
+            ShowProgressBar();
         }
 
         private void ShowProgressBar()
