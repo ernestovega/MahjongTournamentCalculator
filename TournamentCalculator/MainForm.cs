@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MahjongTournamentCalculator;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
@@ -29,10 +31,11 @@ namespace TournamentCalculator
         private List<TableWithAll> tablesByPlayer = new List<TableWithAll>();
         private List<Rivals> rivalsByPlayer = new List<Rivals>();
         private int currentRound, currentTable, currentTablePlayer;
-        private int numPlayers, numRounds, countTries;
+        private int numTriesMax, result, numPlayers, numRounds, countTries;
         private Random random = new Random();        
         private string errorMessage = string.Empty;
-        private string makingDate = string.Empty;
+        private string creationDate = string.Empty;
+        private Thread calculateTournamentThread = null;
 
         #endregion
 
@@ -40,73 +43,81 @@ namespace TournamentCalculator
         {
             InitializeComponent();
 
-            if (!isExcelInstalled())
+            if (!ExcelUtils.isExcelInstalled())
             {
-                MessageBox.Show("Excel not present on your computer.\nPlease get it.");
+                MessageBox.Show(this, "Excel not present on your computer.\nPlease get it.");
                 Application.Exit();
             }
+
+            backgroundWorker1.WorkerReportsProgress = true;
+            backgroundWorker1.WorkerSupportsCancellation = true;
         }
         
         private void btnCalculate_Click(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.WaitCursor;
-            DisableAll();
-            numPlayers = decimal.ToInt32(numUpDownPlayers.Value);
-            numRounds = decimal.ToInt32(numUpDownRounds.Value);
-            int numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
-            Thread backgroundThread = new Thread(
-                new ThreadStart(() =>
-                {
-                    progressBar1.BeginInvoke(
-                            new Action(() =>
-                            {
-                                progressBar1.Visible = true;
-                            }
-                    ));
-                }
-            ));
-            backgroundThread.Start();
-            for (int i = 1; i <= numPlayers/4; i++)
+            if (backgroundWorker1.IsBusy == true)
             {
-                for (int j = 1; j <= 4; j++)
+                if (backgroundWorker1.WorkerSupportsCancellation == true)
                 {
-                    int pid = (4 * i) - (4 - j);
-                    int tid = (4 * i) / 4;
-                    players.Add(new Player(pid.ToString(), "Name " + pid.ToString(), "Team " + tid.ToString()));
+                    // Cancel the asynchronous operation.
+                    backgroundWorker1.CancelAsync();
+                    MakeViewsActive();
+                    HideProgressBar();
+                    Cursor.Current = Cursors.Default;
                 }
             }
-            makingDate = string.Format("{0}{1}{2}_{3}{4}{5}", DateTime.Now.Year, DateTime.Now.Month,
+            else
+            {
+                InitializeCalculation();
+                backgroundWorker1.RunWorkerAsync();
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            UpdateProgressBar(e.ProgressPercentage);
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MakeViewsActive();
+            HideProgressBar();
+            SystemSounds.Exclamation.Play();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            GeneratePlayers();
+
+            creationDate = string.Format("{0}{1}{2}_{3}{4}{5}", DateTime.Now.Year, DateTime.Now.Month,
                 DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
-
-            int result = -1;
+            //Cada vez que un cálculo es imposible se reintenta desde cero, tantas veces como se hayan indicado.
+            result = -1;
             countTries = 0;
-            //Cada vez que un cálculo es imposible, se reintenta desde cero tantas veces como se hayan indicado.
             while (result < 0 && countTries < numTriesMax)
             {
+                countTries++;
+                if (worker.WorkerReportsProgress)
+                {
+                    worker.ReportProgress((int)(100 / numTriesMax) * countTries, null);
+                }
                 result = GenerateTournament(numRounds);
                 Application.DoEvents();
             }
-            
-            
+
             /*Si no se ha podido calcular en los intentos indicados, se notifica,
               se muestra la lista de jugadores y se termina*/
             if (countTries >= numTriesMax)
             {
-                
-                numUpDownRounds.Enabled = true;
-                btnCalculate.Enabled = true;
-                numUpDownTriesMax.Enabled = true;
-                btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
-                btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
-                btnCalculate.ForeColor = Color.White;
-                btnCalculate.ForeColor = Color.White;
-                MessageBox.Show("Can't calculate tournament after " + numTriesMax + " tries.\nIf you want to try again, select more tries and calculate again.");
+                MessageBox.Show(this, "Can't calculate tournament after " + numTriesMax + " tries.\nIf you want to try again, select more tries and calculate again.");
                 Cursor.Current = Cursors.Default;
-                return;
+                worker.CancelAsync();
             }
 
-            //Generamos todas las vistas y se muestramos las mesas
+            //Generamos todas las vistas y se mostramos las mesas
             GenerateTablesWhitAll(numRounds);
             GenerateSTablesWithNames();
             GenerateSTablesWithIds();
@@ -114,28 +125,20 @@ namespace TournamentCalculator
             GenerateRivalsByPlayer();
 
             //ExportTournament();
-            //SystemSounds.Exclamation.Play();
-            //ExportScoreTables();
-            //SystemSounds.Exclamation.Play();
-
-            EnableAll();
-            progressBar1.Visible = false;
-            Cursor.Current = Cursors.Default;
+            ExportScoreTables();
         }
-        
-        #region Excel methods
 
-        private bool isExcelInstalled()
+        private void btnExit_Click(object sender, EventArgs e)
         {
-            Type officeType = Type.GetTypeFromProgID("Excel.Application");
-            if (officeType == null)
-            {
-                MessageBox.Show("Excel is not present on your computer.");
-                return false;
-            }
-            else
-                return true;
+            Close();
         }
+
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        #region Excel methods
 
         private static bool RequestPlayersFile(ref string path)
         {
@@ -252,7 +255,7 @@ namespace TournamentCalculator
                 WriteToExcelRivals(excelSheets);
 
                 //Now save the excel
-                string excelName = "Tournament_" + makingDate;
+                string excelName = "Tournament_" + creationDate;
                 excelWorkBook.SaveAs(excelName,
                     NsExcel.XlFileFormat.xlWorkbookNormal);
                 try
@@ -263,13 +266,13 @@ namespace TournamentCalculator
                 }
                 catch
                 {
-                    MessageBox.Show("Excel file couldn't be saved.");
+                    MessageBox.Show(this, "Tournament Excel file couldn't be saved.");
                     return;
                 }
             }
-            catch
+            catch(Exception exception)
             {
-                MessageBox.Show("Something was wrong, please try again.");
+                MessageBox.Show(exception.Message);
                 return;
             }
         }
@@ -296,13 +299,10 @@ namespace TournamentCalculator
                 //Adding new Worksheet and deleting existing
                 var newSheet = (NsExcel.Worksheet)excelSheets.Add(Type.Missing,
                     excelSheets[excelSheets.Count], Type.Missing, Type.Missing);
-                newSheet.Name = string.Format("Players&Teams", currentRound);
-                if (currentRound == 1)
+                newSheet.Name = "PlayersAndTeams";
+                while (excelSheets.Count > 1)
                 {
-                    while (excelSheets.Count > 1)
-                    {
-                        excelSheets[excelSheets.Count - 1].Delete();
-                    }
+                    excelSheets[excelSheets.Count - 1].Delete();
                 }
 
                 //Write Ids, blank names and blank teams sheet, for reference in the other sheets
@@ -312,10 +312,9 @@ namespace TournamentCalculator
                 newSheet.Cells[1, 3] = "Team";
 
                 //Write Ids
-                for (int i = 0; i < players.Count; i++)
+                for (int i = 1; i < players.Count; i++)
                 {
-                    newSheet.Cells[i + 1, 1] = i + 1;
-                    newSheet.Cells[i + 1, 1].AllowEdit = false;
+                    newSheet.Cells[i + 1, 1] = i;
                 }
 
                 //Resize columns
@@ -348,19 +347,16 @@ namespace TournamentCalculator
 
                     //Write data
                     var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
-
-                    for (int i = 0; i < players.Count; i++)
+                    
+                    for (int i = 1; i < players.Count; i++)
                     {
-                        newSheet.Cells[i + 1, 1] = currentRound;
-                        newSheet.Cells[i + 1, 2] = i + 1;
-                        /*TODO: */
-                        /*newSheet.Cells[i + 1, 3] = Fórmula para coger el nombre de la primera hoja, segun el id;*/
-                        /*newSheet.Cells[i + 1, 6] = Fórmula para coger el equipo de la primera hoja, segun el id;*/
+                        int fila = i + 1;
 
-                        newSheet.Cells[i + 1, 1].AllowEdit = false;
-                        newSheet.Cells[i + 1, 2].AllowEdit = false;
-                        newSheet.Cells[i + 1, 3].AllowEdit = false;
-                        newSheet.Cells[i + 1, 6].AllowEdit = false;
+                        newSheet.Cells[fila, 1] = currentRound;
+                        newSheet.Cells[fila, 2] = i;
+                        
+                        newSheet.Cells[fila, 3].Formula = string.Format("=PlayersAndTeams!B{0}", fila);
+                        newSheet.Cells[fila, 6].FormulaLocal = string.Format("=PlayersAndTeams!C{0}", fila);
                     }
 
                     //Resize columns
@@ -377,7 +373,7 @@ namespace TournamentCalculator
                 }
 
                 //Saving file
-                string excelName = "Score_Tables_" + makingDate;
+                string excelName = "Score_Tables_" + creationDate;
                 excelWorkBook.SaveAs(excelName,
                     NsExcel.XlFileFormat.xlWorkbookNormal);
                 try
@@ -386,15 +382,15 @@ namespace TournamentCalculator
                         Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                         + "\\" + excelName + ".xls");
                 }
-                catch (Exception)
+                catch
                 {
-                    MessageBox.Show("Excel file couldn't be saved.");
+                    MessageBox.Show(this, "Excel file couldn't be saved.");
                     return;
                 }
             }
-            catch
+            catch(Exception exception)
             {
-                MessageBox.Show("Something was wrong, please try again.");
+                MessageBox.Show(this, exception.Message);
                 return;
             }
         }
@@ -531,7 +527,38 @@ namespace TournamentCalculator
 
         #endregion
 
-        #region Private methods
+        #region Calculation methods
+
+        private void InitializeCalculation()
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            DisableAll();
+            ShowProgressBar();
+            numPlayers = decimal.ToInt32(numUpDownPlayers.Value);
+            numRounds = decimal.ToInt32(numUpDownRounds.Value);
+            numTriesMax = decimal.ToInt32(numUpDownTriesMax.Value);
+        }
+
+        private void GeneratePlayers()
+        {
+            for (int i = 1; i <= numPlayers / 4; i++)//Recorremos cada equipo
+            {
+                int tableId = (4 * i) / 4;//Generamos el id del equipo
+                for (int j = 1; j <= 4; j++)//Recorremos cada jugador del equipo
+                {
+                    //Generamos el id del jugador
+                    int playerId = (4 * i) - (4 - j);
+                    //Creamos el jugador
+                    Player player = new Player(playerId.ToString(),
+                        string.Format("Name {0}", playerId.ToString()),
+                        string.Format("Team {0}", tableId.ToString()));
+                    //Añadimos el jugador
+                    players.Add(player);
+                }
+            }
+        }
+
+        public delegate void UpdateProgressBarDelegate();
 
         private int GenerateTournament(int numRounds)
         {
@@ -767,24 +794,6 @@ namespace TournamentCalculator
             }
         }
 
-        private void EnableAll()
-        {
-            numUpDownPlayers.Enabled = true;
-            numUpDownRounds.Enabled = true;
-            numUpDownTriesMax.Enabled = true;
-            btnCalculate.Enabled = true;
-            btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
-        }
-
-        private void DisableAll()
-        {
-            numUpDownPlayers.Enabled = false;
-            numUpDownRounds.Enabled = false;
-            numUpDownTriesMax.Enabled = false;
-            btnCalculate.Enabled = false;
-            btnCalculate.BackColor = Color.FromArgb(224, 224, 224);
-        }
-
         private void GenerateSPlayers()
         {
             foreach (Player p in players)
@@ -819,6 +828,46 @@ namespace TournamentCalculator
                     t.player3Id.ToString(),
                     t.player4Id.ToString(), });
             }
+        }
+
+        #endregion
+
+        #region Views methods
+
+        private void MakeViewsActive()
+        {
+            numUpDownPlayers.Enabled = true;
+            numUpDownRounds.Enabled = true;
+            numUpDownTriesMax.Enabled = true;
+            btnCalculate.BackColor = Color.FromArgb(0, 177, 106);
+            btnCalculate.Text = "Go";
+            Cursor.Current = Cursors.WaitCursor;
+        }
+
+        private void DisableAll()
+        {
+            numUpDownPlayers.Enabled = false;
+            numUpDownRounds.Enabled = false;
+            numUpDownTriesMax.Enabled = false;
+            btnCalculate.BackColor = Color.FromArgb(224, 224, 224);
+            btnCalculate.Text = "Stop";
+        }
+
+        private void ShowProgressBar()
+        {
+            progressBar.Visible = true;
+            progressBar.Show();
+        }
+
+        private void HideProgressBar()
+        {
+            progressBar.Hide();//TODO: ¿Es necesario?
+            progressBar.Visible = false;
+        }
+
+        private void UpdateProgressBar(int value)
+        {
+            progressBar.Value = value;
         }
 
         #endregion

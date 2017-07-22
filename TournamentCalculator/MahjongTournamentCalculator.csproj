@@ -70,6 +70,7 @@
     <Compile Include="CustomViews\CustomProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ExcelUtils.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,12 +78,15 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Rivals.cs" />
-    <Compile Include="Model\TableWithAll.cs" />
+    <Compile Include="Model\Table.cs" />
     <Compile Include="Model\TablePlayer.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.aa-DJ.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.en.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

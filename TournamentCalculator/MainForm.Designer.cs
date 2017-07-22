@@ -37,8 +37,11 @@
             this.numUpDownPlayers = new System.Windows.Forms.NumericUpDown();
             this.labelPlayers = new System.Windows.Forms.Label();
             this.imgLogoMM = new System.Windows.Forms.PictureBox();
-            this.progressBar = new MahjongTournamentCalculator.CustomViews.CustomProgressBar();
             this.imgLogoEMA = new System.Windows.Forms.PictureBox();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.btnMinimize = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.progressBar = new MahjongTournamentCalculator.CustomViews.CustomProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownPlayers)).BeginInit();
@@ -54,6 +57,7 @@
             // 
             // btnCalculate
             // 
+            resources.ApplyResources(this.btnCalculate, "btnCalculate");
             this.btnCalculate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
             this.btnCalculate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCalculate.FlatAppearance.BorderColor = System.Drawing.Color.White;
@@ -61,7 +65,6 @@
             this.btnCalculate.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnCalculate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
             this.btnCalculate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(127)))), ((int)(((byte)(56)))));
-            resources.ApplyResources(this.btnCalculate, "btnCalculate");
             this.btnCalculate.ForeColor = System.Drawing.Color.White;
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.UseVisualStyleBackColor = false;
@@ -69,10 +72,10 @@
             // 
             // numUpDownRounds
             // 
+            resources.ApplyResources(this.numUpDownRounds, "numUpDownRounds");
             this.numUpDownRounds.BackColor = System.Drawing.Color.White;
             this.numUpDownRounds.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numUpDownRounds.Cursor = System.Windows.Forms.Cursors.Default;
-            resources.ApplyResources(this.numUpDownRounds, "numUpDownRounds");
             this.numUpDownRounds.Maximum = new decimal(new int[] {
             20,
             0,
@@ -98,10 +101,10 @@
             // 
             // numUpDownTriesMax
             // 
+            resources.ApplyResources(this.numUpDownTriesMax, "numUpDownTriesMax");
             this.numUpDownTriesMax.BackColor = System.Drawing.Color.White;
             this.numUpDownTriesMax.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numUpDownTriesMax.Cursor = System.Windows.Forms.Cursors.Default;
-            resources.ApplyResources(this.numUpDownTriesMax, "numUpDownTriesMax");
             this.numUpDownTriesMax.Increment = new decimal(new int[] {
             1000,
             0,
@@ -126,10 +129,10 @@
             // 
             // numUpDownPlayers
             // 
+            resources.ApplyResources(this.numUpDownPlayers, "numUpDownPlayers");
             this.numUpDownPlayers.BackColor = System.Drawing.Color.White;
             this.numUpDownPlayers.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numUpDownPlayers.Cursor = System.Windows.Forms.Cursors.Default;
-            resources.ApplyResources(this.numUpDownPlayers, "numUpDownPlayers");
             this.numUpDownPlayers.Increment = new decimal(new int[] {
             4,
             0,
@@ -147,7 +150,7 @@
             0});
             this.numUpDownPlayers.Name = "numUpDownPlayers";
             this.numUpDownPlayers.Value = new decimal(new int[] {
-            60,
+            80,
             0,
             0,
             0});
@@ -164,26 +167,57 @@
             this.imgLogoMM.Name = "imgLogoMM";
             this.imgLogoMM.TabStop = false;
             // 
-            // progressBar
-            // 
-            resources.ApplyResources(this.progressBar, "progressBar");
-            this.progressBar.MarqueeAnimationSpeed = 1;
-            this.progressBar.Maximum = 10;
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Step = 1;
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            // 
             // imgLogoEMA
             // 
             resources.ApplyResources(this.imgLogoEMA, "imgLogoEMA");
             this.imgLogoEMA.Name = "imgLogoEMA";
             this.imgLogoEMA.TabStop = false;
             // 
+            // btnExit
+            // 
+            resources.ApplyResources(this.btnExit, "btnExit");
+            this.btnExit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            this.btnExit.Name = "btnExit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // btnMinimize
+            // 
+            resources.ApplyResources(this.btnMinimize, "btnMinimize");
+            this.btnMinimize.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMinimize.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnMinimize.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnMinimize.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnMinimize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
+            this.btnMinimize.Name = "btnMinimize";
+            this.btnMinimize.UseVisualStyleBackColor = true;
+            this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
+            // progressBar
+            // 
+            resources.ApplyResources(this.progressBar, "progressBar");
+            this.progressBar.BackColor = System.Drawing.Color.White;
+            this.progressBar.CustomText = null;
+            this.progressBar.DisplayStyle = MahjongTournamentCalculator.CustomViews.ProgressBarDisplayText.Percentage;
+            this.progressBar.Maximum = 10000;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Step = 1;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.btnMinimize);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.imgLogoEMA);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.imgLogoMM);
@@ -199,7 +233,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownPlayers)).EndInit();
@@ -221,6 +254,9 @@
         private System.Windows.Forms.PictureBox imgLogoMM;
         private MahjongTournamentCalculator.CustomViews.CustomProgressBar progressBar;
         private System.Windows.Forms.PictureBox imgLogoEMA;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnMinimize;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 
