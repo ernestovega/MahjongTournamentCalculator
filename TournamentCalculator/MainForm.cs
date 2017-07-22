@@ -49,12 +49,11 @@ namespace TournamentCalculator
                 Application.Exit();
             }
 
-            backgroundWorker1.WorkerReportsProgress = true;
-            backgroundWorker1.WorkerSupportsCancellation = true;
+            InitializeWorker();
         }
 
         #region Events
-        
+
         private void btnCalculate_Click(object sender, EventArgs e)
         {
             if (backgroundWorker1.IsBusy == true)
@@ -87,15 +86,10 @@ namespace TournamentCalculator
 
         #region BackgroundWorker
 
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void InitializeWorker()
         {
-            progressBar.Value = e.ProgressPercentage;
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            MakeViewsEnabled();
-            SystemSounds.Exclamation.Play();
+            backgroundWorker1.WorkerReportsProgress = true;
+            backgroundWorker1.WorkerSupportsCancellation = true;
         }
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -162,6 +156,17 @@ namespace TournamentCalculator
             }
 
             ExportScoreTables(worker, e);
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MakeViewsEnabled();
+            SystemSounds.Exclamation.Play();
         }
 
         #endregion
