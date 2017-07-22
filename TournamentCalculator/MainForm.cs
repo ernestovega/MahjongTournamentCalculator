@@ -52,17 +52,15 @@ namespace TournamentCalculator
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
         }
+
+        #region Events
         
         private void btnCalculate_Click(object sender, EventArgs e)
         {
             if (backgroundWorker1.IsBusy == true)
             {
-                if (backgroundWorker1.WorkerSupportsCancellation == true)
-                {
-                    // Cancel the asynchronous operation.
-                    backgroundWorker1.CancelAsync();
-                    MakeViewsEnabled();
-                }
+                backgroundWorker1.CancelAsync();
+                MakeViewsEnabled();
             }
             else
             {
@@ -70,6 +68,24 @@ namespace TournamentCalculator
                 backgroundWorker1.RunWorkerAsync();
             }
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            if (backgroundWorker1.IsBusy == true)
+            {
+                backgroundWorker1.CancelAsync();
+            }
+            Close();
+        }
+
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        #endregion
+
+        #region BackgroundWorker
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -86,6 +102,12 @@ namespace TournamentCalculator
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
             GeneratePlayers();
 
             creationDate = string.Format("{0}{1}{2}_{3}{4}{5}", DateTime.Now.Year, DateTime.Now.Month,
@@ -96,7 +118,7 @@ namespace TournamentCalculator
             countTries = 0;
             while (result < 0 && countTries < numTriesMax)
             {
-                if(worker.CancellationPending)
+                if (worker.CancellationPending)
                 {
                     e.Cancel = true;
                     return;
@@ -142,15 +164,7 @@ namespace TournamentCalculator
             ExportScoreTables(worker, e);
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void btnMinimize_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
+        #endregion
 
         #region Excel methods
 
