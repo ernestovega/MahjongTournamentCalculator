@@ -13,3 +13,18 @@ C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\T
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\en\Mahjong Tournament Calculator.resources.dll
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.MainForm.en.resources
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\en\Mahjong Tournament Calculator.resources.dll
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.exe.config
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\Mahjong Tournament Calculator.exe
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\Mahjong Tournament Calculator.pdb
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.exe
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\Mahjong Tournament Calculator.pdb
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\aa-DJ\Mahjong Tournament Calculator.resources.dll
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\bin\Debug\en\Mahjong Tournament Calculator.resources.dll
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\MahjongTournamentCalculator.csprojResolveAssemblyReference.cache
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.MainForm.resources
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\MahjongTournamentCalculator.Properties.Resources.resources
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.MainForm.aa-DJ.resources
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\TournamentCalculator.MainForm.en.resources
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\MahjongTournamentCalculator.csproj.GenerateResource.Cache
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\aa-DJ\Mahjong Tournament Calculator.resources.dll
+C:\Users\Lid\Source\Repos\MahjongTournamentCalculator\TournamentCalculator\obj\Debug\en\Mahjong Tournament Calculator.resources.dll
