@@ -669,7 +669,7 @@ namespace TournamentCalculator
                 newSheet.Cells[1, 3] = "Team";
 
                 //Write Ids
-                for (int i = 1; i < players.Count; i++)
+                for (int i = 1; i <= players.Count; i++)
                 {
                     newSheet.Cells[i + 1, 1] = i;
                 }
@@ -722,7 +722,7 @@ namespace TournamentCalculator
                     //Write data
                     var currentRoundTables = tablesWithAll.FindAll(x => x.roundId == currentRound).ToList();
                     
-                    for (int i = 1; i < players.Count; i++)
+                    for (int i = 1; i <= players.Count; i++)
                     {
                         int fila = i + 1;
 
@@ -776,7 +776,7 @@ namespace TournamentCalculator
                 newSheet.Cells[1, 4] = "Score";
 
                 //Write Ids
-                for (int i = 1; i < players.Count; i++)
+                for (int i = 1; i <= players.Count; i++)
                 {
                     newSheet.Cells[i + 1, 1] = i;
                 }
@@ -789,7 +789,7 @@ namespace TournamentCalculator
 
                 //Write data
 
-                for (int i = 1; i < players.Count; i++)
+                for (int i = 1; i <= players.Count; i++)
                 {
                     int fila = i + 1;
 
