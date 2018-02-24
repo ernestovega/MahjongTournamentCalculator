@@ -117,6 +117,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="MMLogo.png" />
+    <None Include="EMALogo.png" />
     <Content Include="favicon %281%29.ico" />
     <Content Include="favicon.ico" />
     <Content Include="icon32.ico" />

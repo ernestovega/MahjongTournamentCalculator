@@ -56,7 +56,7 @@
             this.lblRounds.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblRounds.Font = new System.Drawing.Font("Century Gothic", 9.75F);
             this.lblRounds.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblRounds.Location = new System.Drawing.Point(148, 249);
+            this.lblRounds.Location = new System.Drawing.Point(105, 204);
             this.lblRounds.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.lblRounds.Name = "lblRounds";
             this.lblRounds.Size = new System.Drawing.Size(55, 17);
@@ -76,10 +76,10 @@
             this.btnCalculate.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnCalculate.ForeColor = System.Drawing.Color.White;
             this.btnCalculate.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCalculate.Location = new System.Drawing.Point(129, 295);
+            this.btnCalculate.Location = new System.Drawing.Point(59, 250);
             this.btnCalculate.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.btnCalculate.Name = "btnCalculate";
-            this.btnCalculate.Size = new System.Drawing.Size(174, 50);
+            this.btnCalculate.Size = new System.Drawing.Size(242, 50);
             this.btnCalculate.TabIndex = 3;
             this.btnCalculate.Text = "Go!";
             this.btnCalculate.UseVisualStyleBackColor = false;
@@ -91,7 +91,7 @@
             this.numUpDownRounds.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numUpDownRounds.Cursor = System.Windows.Forms.Cursors.Default;
             this.numUpDownRounds.Font = new System.Drawing.Font("Century Gothic", 9.75F);
-            this.numUpDownRounds.Location = new System.Drawing.Point(212, 250);
+            this.numUpDownRounds.Location = new System.Drawing.Point(169, 205);
             this.numUpDownRounds.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.numUpDownRounds.Maximum = new decimal(new int[] {
             20,
@@ -119,7 +119,7 @@
             this.lblTriesMax.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTriesMax.Font = new System.Drawing.Font("Century Gothic", 9.75F);
             this.lblTriesMax.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTriesMax.Location = new System.Drawing.Point(126, 363);
+            this.lblTriesMax.Location = new System.Drawing.Point(84, 330);
             this.lblTriesMax.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.lblTriesMax.Name = "lblTriesMax";
             this.lblTriesMax.Size = new System.Drawing.Size(73, 17);
@@ -137,7 +137,7 @@
             0,
             0,
             0});
-            this.numUpDownTriesMax.Location = new System.Drawing.Point(203, 364);
+            this.numUpDownTriesMax.Location = new System.Drawing.Point(161, 331);
             this.numUpDownTriesMax.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.numUpDownTriesMax.Maximum = new decimal(new int[] {
             100000000,
@@ -172,7 +172,7 @@
             0,
             0,
             0});
-            this.numUpDownPlayers.Location = new System.Drawing.Point(212, 213);
+            this.numUpDownPlayers.Location = new System.Drawing.Point(169, 168);
             this.numUpDownPlayers.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.numUpDownPlayers.Maximum = new decimal(new int[] {
             1000,
@@ -200,7 +200,7 @@
             this.labelPlayers.Cursor = System.Windows.Forms.Cursors.Default;
             this.labelPlayers.Font = new System.Drawing.Font("Century Gothic", 9.75F);
             this.labelPlayers.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.labelPlayers.Location = new System.Drawing.Point(148, 212);
+            this.labelPlayers.Location = new System.Drawing.Point(105, 167);
             this.labelPlayers.Margin = new System.Windows.Forms.Padding(50, 50, 50, 10);
             this.labelPlayers.Name = "labelPlayers";
             this.labelPlayers.Size = new System.Drawing.Size(51, 17);
@@ -210,12 +210,12 @@
             // imgLogoMM
             // 
             this.imgLogoMM.ErrorImage = ((System.Drawing.Image)(resources.GetObject("imgLogoMM.ErrorImage")));
-            this.imgLogoMM.Image = ((System.Drawing.Image)(resources.GetObject("imgLogoMM.Image")));
+            this.imgLogoMM.Image = global::MahjongTournamentCalculator.Properties.Resources.MMLogo;
             this.imgLogoMM.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.imgLogoMM.Location = new System.Drawing.Point(53, 30);
+            this.imgLogoMM.Location = new System.Drawing.Point(59, 59);
             this.imgLogoMM.Margin = new System.Windows.Forms.Padding(3, 50, 3, 3);
             this.imgLogoMM.Name = "imgLogoMM";
-            this.imgLogoMM.Size = new System.Drawing.Size(150, 150);
+            this.imgLogoMM.Size = new System.Drawing.Size(64, 64);
             this.imgLogoMM.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgLogoMM.TabIndex = 48;
             this.imgLogoMM.TabStop = false;
@@ -223,12 +223,12 @@
             // imgLogoEMA
             // 
             this.imgLogoEMA.ErrorImage = ((System.Drawing.Image)(resources.GetObject("imgLogoEMA.ErrorImage")));
-            this.imgLogoEMA.Image = ((System.Drawing.Image)(resources.GetObject("imgLogoEMA.Image")));
+            this.imgLogoEMA.Image = global::MahjongTournamentCalculator.Properties.Resources.EMALogo;
             this.imgLogoEMA.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.imgLogoEMA.Location = new System.Drawing.Point(232, 30);
+            this.imgLogoEMA.Location = new System.Drawing.Point(237, 59);
             this.imgLogoEMA.Margin = new System.Windows.Forms.Padding(3, 50, 3, 3);
             this.imgLogoEMA.Name = "imgLogoEMA";
-            this.imgLogoEMA.Size = new System.Drawing.Size(150, 150);
+            this.imgLogoEMA.Size = new System.Drawing.Size(64, 64);
             this.imgLogoEMA.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgLogoEMA.TabIndex = 62;
             this.imgLogoEMA.TabStop = false;
@@ -244,7 +244,7 @@
             this.btnExit.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
             this.btnExit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnExit.Location = new System.Drawing.Point(411, -1);
+            this.btnExit.Location = new System.Drawing.Point(338, 2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(20, 30);
             this.btnExit.TabIndex = 6;
@@ -263,7 +263,7 @@
             this.btnMinimize.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnMinimize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
             this.btnMinimize.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnMinimize.Location = new System.Drawing.Point(388, -3);
+            this.btnMinimize.Location = new System.Drawing.Point(315, 0);
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.Size = new System.Drawing.Size(20, 30);
             this.btnMinimize.TabIndex = 5;
@@ -283,7 +283,7 @@
             this.lblAuthor.BackColor = System.Drawing.Color.White;
             this.lblAuthor.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblAuthor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
-            this.lblAuthor.Location = new System.Drawing.Point(0, 408);
+            this.lblAuthor.Location = new System.Drawing.Point(0, 383);
             this.lblAuthor.Name = "lblAuthor";
             this.lblAuthor.Padding = new System.Windows.Forms.Padding(6, 0, 0, 6);
             this.lblAuthor.Size = new System.Drawing.Size(272, 19);
@@ -297,10 +297,10 @@
             this.progressBar.DisplayStyle = MahjongTournamentCalculator.CustomViews.ProgressBarDisplayText.Percentage;
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.progressBar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.progressBar.Location = new System.Drawing.Point(0, 427);
+            this.progressBar.Location = new System.Drawing.Point(0, 402);
             this.progressBar.Maximum = 10000;
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(434, 23);
+            this.progressBar.Size = new System.Drawing.Size(360, 23);
             this.progressBar.Step = 1;
             this.progressBar.TabIndex = 61;
             this.progressBar.Visible = false;
@@ -311,7 +311,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(434, 450);
+            this.ClientSize = new System.Drawing.Size(360, 425);
             this.Controls.Add(this.lblAuthor);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnExit);
@@ -330,7 +330,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(434, 400);
+            this.MinimumSize = new System.Drawing.Size(360, 425);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mahjong Tournament Calculator";
