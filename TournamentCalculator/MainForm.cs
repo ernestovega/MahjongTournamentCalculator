@@ -43,7 +43,7 @@ namespace TournamentCalculator
 
             if (!ExcelUtils.isExcelInstalled())
             {
-                MessageBox.Show(this, "Excel not present on your computer.\nPlease get it.");
+                MessageBox.Show(new Form() { TopMost = true }, "Excel not present on your computer.\nPlease get it.");
                 Application.Exit();
             }
 
@@ -160,7 +160,8 @@ namespace TournamentCalculator
               se muestra la lista de jugadores y se termina*/
             if (countTries == numTriesMax)
             {
-                MessageBox.Show(this, "Can't calculate tournament after " + numTriesMax + " tries.\nIf you want to try again, select more tries and calculate again.");
+                MessageBox.Show(new Form() { TopMost = true }, 
+                    "Can't calculate tournament after " + numTriesMax + " tries.\nIf you want to try again, select more tries and calculate again.");
             }
             MakeViewsEnabled();
             SystemSounds.Exclamation.Play();
@@ -617,13 +618,13 @@ namespace TournamentCalculator
                 }
                 catch
                 {
-                    MessageBox.Show(this, "Tournament Excel file couldn't be saved.");
+                    MessageBox.Show(new Form() { TopMost = true }, "Tournament Excel file couldn't be saved.");
                     return;
                 }
             }
             catch(Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show(new Form() { TopMost = true }, exception.Message);
                 return;
             }
         }
@@ -835,7 +836,7 @@ namespace TournamentCalculator
                 }
                 catch
                 {
-                    MessageBox.Show(this, "Excel file couldn't be saved.");
+                    MessageBox.Show(new Form() { TopMost = true }, "Excel file couldn't be saved.");
                     return;
                 }
 
@@ -843,7 +844,7 @@ namespace TournamentCalculator
             }
             catch (Exception exception)
             {
-                MessageBox.Show(this, exception.Message);
+                MessageBox.Show(new Form() { TopMost = true }, exception.Message);
                 return;
             }
         }
