@@ -11,3 +11,18 @@ C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\T
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\aa-DJ\Mahjong Tournament Calculator.resources.dll
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\Mahjong Tournament Calculator.exe
 C:\Users\Eto\Documents\Visual Studio 2015\Projects\MahjongTournamentCalculator\TournamentCalculator\obj\Release\Mahjong Tournament Calculator.pdb
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\bin\Release\Mahjong Tournament Calculator.exe.config
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\bin\Release\Mahjong Tournament Calculator.exe
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\bin\Release\Mahjong Tournament Calculator.pdb
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\bin\Release\aa-DJ\Mahjong Tournament Calculator.resources.dll
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\bin\Release\en\Mahjong Tournament Calculator.resources.dll
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\MahjongTournamentCalculator.csprojResolveAssemblyReference.cache
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.MainForm.resources
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\MahjongTournamentCalculator.Properties.Resources.resources
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.MainForm.aa-DJ.resources
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\TournamentCalculator.MainForm.en.resources
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\MahjongTournamentCalculator.csproj.GenerateResource.Cache
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\aa-DJ\Mahjong Tournament Calculator.resources.dll
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\en\Mahjong Tournament Calculator.resources.dll
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\Mahjong Tournament Calculator.exe
+C:\Users\Ernesto\Proyectos\MahjongTournamentCalculator\TournamentCalculator\obj\Release\Mahjong Tournament Calculator.pdb

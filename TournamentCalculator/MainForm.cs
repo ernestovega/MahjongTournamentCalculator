@@ -3,13 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.OleDb;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Media;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 using TournamentCalculator.Model;
 using NsExcel = Microsoft.Office.Interop.Excel;
@@ -258,7 +254,7 @@ namespace TournamentCalculator
                             /*Si el elegido ya ha jugado contra alguno de los de la mesa actual
                               o es del mismo equipo que alguno de los de la mesa actual
                               hay que buscar un nuevo candidato para esta mesa*/
-                            if (anyoneHavePlayed || currentTablePlayers.Select(x => x.team).Contains(choosenOne.team))
+                            if (anyoneHavePlayed || (checkBoxTeams.Checked && currentTablePlayers.Select(x => x.team).Contains(choosenOne.team)))
                                 playerFounded = false;
                             else
                             {/*Si no ha jugado contra ninguno ni son de su mismo equipo, lo añadimos a la mesa

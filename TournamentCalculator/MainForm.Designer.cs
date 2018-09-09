@@ -43,6 +43,8 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.lblAuthor = new System.Windows.Forms.Label();
             this.progressBar = new MahjongTournamentCalculator.CustomViews.CustomProgressBar();
+            this.checkBoxTeams = new System.Windows.Forms.CheckBox();
+            this.lblTeamsCheckBox = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownRounds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTriesMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownPlayers)).BeginInit();
@@ -76,7 +78,7 @@
             this.btnCalculate.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnCalculate.ForeColor = System.Drawing.Color.White;
             this.btnCalculate.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCalculate.Location = new System.Drawing.Point(59, 250);
+            this.btnCalculate.Location = new System.Drawing.Point(59, 297);
             this.btnCalculate.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(242, 50);
@@ -119,7 +121,7 @@
             this.lblTriesMax.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTriesMax.Font = new System.Drawing.Font("Century Gothic", 9.75F);
             this.lblTriesMax.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTriesMax.Location = new System.Drawing.Point(84, 330);
+            this.lblTriesMax.Location = new System.Drawing.Point(84, 381);
             this.lblTriesMax.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.lblTriesMax.Name = "lblTriesMax";
             this.lblTriesMax.Size = new System.Drawing.Size(73, 17);
@@ -137,7 +139,7 @@
             0,
             0,
             0});
-            this.numUpDownTriesMax.Location = new System.Drawing.Point(161, 331);
+            this.numUpDownTriesMax.Location = new System.Drawing.Point(161, 382);
             this.numUpDownTriesMax.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
             this.numUpDownTriesMax.Maximum = new decimal(new int[] {
             100000000,
@@ -283,7 +285,7 @@
             this.lblAuthor.BackColor = System.Drawing.Color.White;
             this.lblAuthor.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblAuthor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(106)))));
-            this.lblAuthor.Location = new System.Drawing.Point(0, 383);
+            this.lblAuthor.Location = new System.Drawing.Point(0, 420);
             this.lblAuthor.Name = "lblAuthor";
             this.lblAuthor.Padding = new System.Windows.Forms.Padding(6, 0, 0, 6);
             this.lblAuthor.Size = new System.Drawing.Size(272, 19);
@@ -297,7 +299,7 @@
             this.progressBar.DisplayStyle = MahjongTournamentCalculator.CustomViews.ProgressBarDisplayText.Percentage;
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.progressBar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.progressBar.Location = new System.Drawing.Point(0, 402);
+            this.progressBar.Location = new System.Drawing.Point(0, 439);
             this.progressBar.Maximum = 10000;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(360, 23);
@@ -305,13 +307,39 @@
             this.progressBar.TabIndex = 61;
             this.progressBar.Visible = false;
             // 
+            // checkBoxTeams
+            // 
+            this.checkBoxTeams.AutoSize = true;
+            this.checkBoxTeams.Checked = true;
+            this.checkBoxTeams.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxTeams.Location = new System.Drawing.Point(198, 250);
+            this.checkBoxTeams.Name = "checkBoxTeams";
+            this.checkBoxTeams.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxTeams.TabIndex = 64;
+            this.checkBoxTeams.UseVisualStyleBackColor = true;
+            // 
+            // lblTeamsCheckBox
+            // 
+            this.lblTeamsCheckBox.AutoSize = true;
+            this.lblTeamsCheckBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblTeamsCheckBox.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+            this.lblTeamsCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTeamsCheckBox.Location = new System.Drawing.Point(107, 248);
+            this.lblTeamsCheckBox.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
+            this.lblTeamsCheckBox.Name = "lblTeamsCheckBox";
+            this.lblTeamsCheckBox.Size = new System.Drawing.Size(48, 17);
+            this.lblTeamsCheckBox.TabIndex = 65;
+            this.lblTeamsCheckBox.Text = "Teams";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(360, 425);
+            this.ClientSize = new System.Drawing.Size(360, 462);
+            this.Controls.Add(this.lblTeamsCheckBox);
+            this.Controls.Add(this.checkBoxTeams);
             this.Controls.Add(this.lblAuthor);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnExit);
@@ -359,6 +387,8 @@
         private System.Windows.Forms.Button btnMinimize;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label lblAuthor;
+        private System.Windows.Forms.CheckBox checkBoxTeams;
+        private System.Windows.Forms.Label lblTeamsCheckBox;
     }
 }
 
